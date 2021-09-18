@@ -1,0 +1,27 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <% if (categoryes.length > 0) { %>
+            <div>
+                <% for (let category of categoryes) { %>
+                    <article >
+                        <header >
+                            <h1><%= category.title %></h1>
+                        </header>
+                        <div >
+                            <img src="<%= category.imageUrl %>"
+                                alt="<%= category.title %>">
+                        </div>
+                    </article>
+                <% } %>
+            </div>
+        <% } else { %>
+            <h1>No Categoryes Found!</h1>
+        <% } %>
+    </main>
+<%- include('../includes/end.ejs') %>
