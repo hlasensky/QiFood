@@ -6,6 +6,7 @@ const User = require("../models/user");
 
 
 exports.postLogout = (req, res, next) => {
+	/* destroing session(logging out) */
 	req.session.destroy((err) => {
 		console.log(err);
 		res.redirect("/");
@@ -14,40 +15,32 @@ exports.postLogout = (req, res, next) => {
 
 
 exports.getLogin = (req, res, next) => {
-	let message = req.flash("error");
-	if (message.length > 0) {
-		message = message[0];
-	} else {
-		message = null;
-	}
+	/* rendering loggin site */
 	res.render("auth/login", {
 		path: "/login",
 		pageTitle: "Login",
-        errorMessage: message,
+        errorMessage: "",
         
 	});
 };
 
 exports.getSignup = (req, res, next) => {
-	let message = req.flash("error");
-	if (message.length > 0) {
-		message = message[0];
-	} else {
-		message = null;
-	}
+	/* rendering signup site */
 	res.render("auth/signup", {
 		path: "/signup",
 		pageTitle: "Signup",
-		errorMessage: message,
+		errorMessage: "",
 	});
 };
 
 exports.postSignup = (req, res, next) => {
+	/* looking to db if user allready exists, if not creating new one */
 	const email = req.body.email;
 	const password = req.body.password;
 	User.findOne({ email: email })
 		.then((user) => {
 			return bcrypt
+				//creating hashed password
 				.hash(password, 12)
 				.then((hashedPassword) => {
 					const user = new User({
@@ -68,6 +61,7 @@ exports.postSignup = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
+	/* looking to db if user enter valide user information */
 	const email = req.body.email;
 	const password = req.body.password;
 	User.findOne({ email: email }).then((user) => {
@@ -75,11 +69,13 @@ exports.postLogin = (req, res, next) => {
 			req.flash("error", "Invalid email or password.");
 			return res.redirect("/login");
 		}
+		//compering passords with bcrypt.compare
 		bcrypt
 			.compare(password, user.password)
             .then((doMatch) => {
                 console.log(doMatch)
 				if (doMatch) {
+					//adding useful information in session for later use
 					req.session.isLoggedIn = true;
 					req.session.user = user;
 					req.session.isAdmin = user.isAdmin;

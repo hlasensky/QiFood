@@ -1,7 +1,39 @@
 <%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/category.css">
     </head>
 
     <body>
         <%- include('../includes/navigation.ejs') %>
+
+        <main>
+            <% if (categoryes.length > 0) { %>
+                <div class="categoryesContainer">
+                    <% for (let category of categoryes) { %>
+                        <article class="categoryContainer">
+                            <a class="categoryUrl" href="<%= category.url %>">
+                            <div class="categoryImageContainer" >
+                                <img class="categoryImage" src="/images/<%= category.imageUrl %>"
+                                    alt="<%= category.title %>">
+                            </div>
+                            <header class="categoryTitleHeader">
+                                <h2 class="categoryTitle"><%= category.title %></h2>
+                            </header>
+                            </a>
+                        </article>
+                        <% for (let product of category.products.productsArray) { %>
+                            <div>
+                                <h2><%= product.productId.title %></h2>
+                                <h2><%= product.productId.price %></h2>
+                                <h2><%= product.productId.description %></h2>
+                                <img class="categoryImage" src="/images/<%= product.productId.imageUrl %>"
+                                        alt="<%= product.productId.imageUrl %>">
+                                <h2><%= product.productId.category %></h2>
+                            </div>
+                        <% } %>
+                    <% } %>
+                </div>
+            <% } else { %>
+                <h1>No Categoryes Found!</h1>
+            <% } %>
 
         <%- include('../includes/end.ejs') %>

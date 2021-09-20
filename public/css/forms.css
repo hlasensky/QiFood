@@ -1,3 +1,45 @@
 .active {
-    color: #FF6D59;   
+    color: #FF6D59 !important;   
+}
+
+.nav {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.navUl {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #F8EDED;
+}
+
+.navLi {
+    margin: 0 10px;
+    list-style: none;
+}
+
+.navLi a{
+    color: #F8EDED ;
+}
+
+.wave {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.header {
+    margin-bottom: 80px;
+}
+
+.logo {
+    width: 15vw;
+    height: auto;
 }

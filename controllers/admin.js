@@ -2,6 +2,7 @@ const Product = require("../models/product");
 const Category = require("../models/category");
 
 exports.getAddProduct = (req, res, next) => {
+	/* Rendering site for add product, plus passing categoryes */
 	Category.find()
 		.then((categoryes) => {
 			res.render("admin/edit-product", {
@@ -15,6 +16,7 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.getAddCategory = (req, res, next) => {
+	/* Rendering site for add colection */
 	res.render("admin/add-category", {
 		path: "/add-category",
 		pageTitle: "Add category",
@@ -22,6 +24,7 @@ exports.getAddCategory = (req, res, next) => {
 };
 
 exports.postAddCategory = (req, res, next) => {
+	/* adding new category to db */
 	const title = req.body.title;
 	const imageUrl = req.body.imageUrl;
 	const url = req.body.url;
@@ -40,6 +43,7 @@ exports.postAddCategory = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
+	/* adding new product to db and pushing it to an array in proper category in db*/
 	const title = req.body.title;
 	const price = req.body.price;
 	const description = req.body.description;

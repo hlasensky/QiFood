@@ -25,3 +25,11 @@ a:link {
   color: black;
 }
 
+a:visited {
+  color: black ;
+}
+/* mouse over link */
+a:hover {
+  color: #FF6D59 ;
+}
+

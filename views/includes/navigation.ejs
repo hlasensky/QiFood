@@ -2,37 +2,47 @@
     <link rel="stylesheet" href="/css/forms.css">
 </head>
 
-<header >
-    <nav >
-        <ul >
-            <li >
+<header class="header">
+
+    <nav class="nav">
+            <svg class="wave" width="1920" height="169" viewBox="0 0 1920 169" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <mask id="mask0" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="-18" y="-85" width="1947" height="254">
+            <rect x="-18" y="-85" width="1947" height="254" fill="#C4C4C4"/>
+            </mask>
+            <g mask="url(#mask0)">
+            <path d="M1063.16 -37.4062C857.797 44.4762 231.937 -59.9537 -33.5001 3.00005C-172.439 35.9522 194 187.975 527 140C1058 63.5001 1978.21 200.035 2018.95 169.542C2347 -75.9999 1259.65 -115.753 1063.16 -37.4062Z" fill="#313131"/>
+            </g>
+            </svg>
+        <img class="logo" src="/images/logo.png" alt="QiFood">
+        <ul class="navUl">
+            <li class="navLi">
                 <a class="<%= path === '/' ? 'active' : '' %>" href="/">Domů</a>
             </li>
-            <li >
+            <li class="navLi">
                 <a class="<%= path === '/menu' ? 'active' : '' %>" href="/menu">Menu</a>
             </li>
-            <li >
+            <li class="navLi">
                 <a class="<%= path === '/kontakt' ? 'active' : '' %>" href="/kontakt">Kontakt</a>
             </li>
             <% if (isAdmin) { %>
-                <li >
+                <li class="navLi">
                     <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product
                     </a>
                 </li>
-                <li >
+                <li class="navLi">
                     <a class="<%= path === '/admin/add-category' ? 'active' : '' %>" href="/admin/add-category">Add Category
                     </a>
                 </li>
-                <li >
+                <li class="navLi">
                     <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Products
                     </a>
                 </li>
             <% } %>
             <% if (isAuthenticated) { %>
-                <li>
+                <li class="navLi">
                     <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
                 </li>
-                <li >
+                <li class="navLi">
                     <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
                 </li>
 
@@ -40,14 +50,14 @@
         </ul>
         <ul >
             <% if (!isAuthenticated) { %>
-                <li >
+                <li class="navLi">
                     <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
                 </li>
-                <li >
+                <li class="navLi">
                     <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
                 </li>
             <% } else { %>
-                <li >
+                <li class="navLi">
                     <form action="/logout" method="post">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <button type="submit">Logout</button>
