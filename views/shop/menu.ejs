@@ -23,7 +23,7 @@
                         <% for (let product of category.products.productsArray) { %>
                             <div>
                                 <h2><%= product.productId.title %></h2>
-                                <h2><%= product.productId.price %></h2>
+                                <h2><%= product.productId.price %> Kč</h2>
                                 <h2><%= product.productId.description %></h2>
                                 <img class="categoryImage" src="/images/<%= product.productId.imageUrl %>"
                                         alt="<%= product.productId.imageUrl %>">

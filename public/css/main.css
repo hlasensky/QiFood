@@ -9,6 +9,7 @@ body {
   margin: 0;
   font-family: 'Baloo Thambi 2', cursive;
   font-weight: 500;
+  transition: all 300ms ease;
 }
 
 main {
@@ -30,6 +31,6 @@ a:visited {
 }
 /* mouse over link */
 a:hover {
-  color: #FF6D59 ;
+  color: #ffcec7 !important;
 }
 

@@ -1,5 +1,7 @@
 .active {
-    color: #FF6D59 !important;   
+    color: #FF6D59 !important; 
+    font-weight: bold !important;
+    font-size: large; 
 }
 
 .nav {
