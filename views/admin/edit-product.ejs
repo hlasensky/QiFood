@@ -5,6 +5,32 @@
 
 <body>
    <%- include('../includes/navigation.ejs') %>
-
+   <form action="/admin/add-product" method="POST">
+        <div>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title">
+        </div>
+        <div>
+            <label for="price">Price</label>
+            <input type="number" name="price" id="price" step="0.1">
+        </div>
+        <div>
+            <label for="description">Description</label>
+            <input type="text" name="description" id="description">
+        </div>
+        <div>
+            <label for="imageUrl">Image Name</label>
+            <input type="text" name="imageUrl" id="imageUrl">
+        </div>
+        <div>
+            <% for (let category of categoryes) { %>
+                <label for="<%= category.title %>"><%= category.title %></label>
+                <input type="radio" name="radioCategory" id="<%= category.title %>" value="<%= category._id %>">
+            <% } %>            
+        </div>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <input type="hidden" name="userId" value="<%= userId %>">
+        <button class="btn" type="submit">Add Product</button>
+    </form>
 
 <%- include('../includes/end.ejs') %>

@@ -1,5 +1,5 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="/css/category.css">
 </head>
 
 <body>
@@ -7,16 +7,18 @@
 
     <main>
         <% if (categoryes.length > 0) { %>
-            <div>
+            <div class="categoryesContainer">
                 <% for (let category of categoryes) { %>
-                    <article >
-                        <header >
-                            <h1><%= category.title %></h1>
-                        </header>
-                        <div >
-                            <img src="<%= category.imageUrl %>"
+                    <article class="categoryContainer">
+                        <a class="categoryUrl" href="<%= category.url %>">
+                        <div class="categoryImageContainer" >
+                            <img class="categoryImage" src="/images/<%= category.imageUrl %>"
                                 alt="<%= category.title %>">
                         </div>
+                        <header class="categoryTitleHeader">
+                            <h2 class="categoryTitle"><%= category.title %></h2>
+                        </header>
+                        </a>
                     </article>
                 <% } %>
             </div>

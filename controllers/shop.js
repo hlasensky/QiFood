@@ -21,7 +21,8 @@ exports.getMenu = (req, res, next) => {
     res.render('shop/menu', {
       pageTitle: 'Menu',
       path: '/menu',
-      
+      categoryes: categoryes,
+      products: products
     });
 }
 
@@ -32,3 +33,4 @@ exports.getKontakt = (req, res, next) => {
       
     });
 }
+

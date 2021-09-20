@@ -58,6 +58,7 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
 	res.locals.isAdmin = req.session.isAdmin;
 	res.locals.isAuthenticated = req.session.isLoggedIn;
+	res.locals.userId = req.session.userId;
 	res.locals.csrfToken = req.csrfToken();
 	next()
 })
@@ -67,6 +68,8 @@ app.use(shopRoutes);
 app.use(authRoutes);
 
 app.use(errorController.get404);
+
+mongoose.set('useFindAndModify', false);
 
 mongoose
 	.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })

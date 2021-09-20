@@ -83,6 +83,7 @@ exports.postLogin = (req, res, next) => {
 					req.session.isLoggedIn = true;
 					req.session.user = user;
 					req.session.isAdmin = user.isAdmin;
+					req.session.userId = user._id;
 					return req.session.save((err) => {
 						console.log(err);
 						res.redirect("/");

@@ -1,0 +1,38 @@
+.categoryesContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 100px;
+}
+
+.categoryContainer {
+    padding: 20px;
+    width: 270px;
+    height: 320px;
+    background: #F8F8F8;
+    box-shadow: -5px -5px 8px 0px rgba(224, 224, 224, 0.5), 5px 5px 10px 0px rgba(0, 0, 0, 0.20);
+    border-radius: 45px;
+    margin: 0 auto;
+}
+
+.categoryImageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.categoryImage {
+    border-radius: 30px;
+    width: 235px;
+    height: 235px;
+}
+
+.categoryTitleHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.categoryUrl {
+    width: 100%;
+    height: 100%;
+}
