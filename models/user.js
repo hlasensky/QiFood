@@ -12,10 +12,9 @@ const userSchema = new Schema({
     required: true
   },
   isAdmin: {
-    required: false
+    type: Boolean,
+    required: true
   },
-  resetToken: String,
-  resetTokenExpiration: Date,
   cart: {
     items: [
       {
@@ -27,9 +26,17 @@ const userSchema = new Schema({
         quantity: { type: Number, required: true }
       }
     ]
-  }
+  },
+  expireDate: {  },
+  
+  resetToken: String,
+  resetTokenExpiration: Date,
 });
 
+
+userSchema.methods.addToCart = function (product, productQuantity) {
+  console.log(product._id, productQuantity)
+}
 
 module.exports = mongoose.model('User', userSchema);
 

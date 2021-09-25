@@ -1,39 +1,48 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/category.css">
-    </head>
+<link rel="stylesheet" href="/css/product.css" />
+</head>
 
-    <body>
-        <%- include('../includes/navigation.ejs') %>
+<body>
+	<%- include('../includes/navigation.ejs') %>
 
-        <main>
-            <% if (categoryes.length > 0) { %>
-                <div class="categoryesContainer">
-                    <% for (let category of categoryes) { %>
-                        <article class="categoryContainer">
-                            <a class="categoryUrl" href="<%= category.url %>">
-                            <div class="categoryImageContainer" >
-                                <img class="categoryImage" src="/images/<%= category.imageUrl %>"
-                                    alt="<%= category.title %>">
-                            </div>
-                            <header class="categoryTitleHeader">
-                                <h2 class="categoryTitle"><%= category.title %></h2>
-                            </header>
-                            </a>
-                        </article>
-                        <% for (let product of category.products.productsArray) { %>
-                            <div>
-                                <h2><%= product.productId.title %></h2>
-                                <h2><%= product.productId.price %> Kč</h2>
-                                <h2><%= product.productId.description %></h2>
-                                <img class="categoryImage" src="/images/<%= product.productId.imageUrl %>"
-                                        alt="<%= product.productId.imageUrl %>">
-                                <h2><%= product.productId.category %></h2>
-                            </div>
-                        <% } %>
-                    <% } %>
-                </div>
-            <% } else { %>
-                <h1>No Categoryes Found!</h1>
-            <% } %>
-
-        <%- include('../includes/end.ejs') %>
+	<main>
+		<% if (categoryes.length > 0) { %>
+		<div class="menuContainer">
+			<% for (let category of categoryes) { %>
+			<article class="categoryContainerMenu">
+				<div class="categoryImageMenu" style="background-image: url('/images/<%= category.imageUrl.split(dot)[0] %>Dark.<%=category.imageUrl.split(dot)[1] %>');  ">
+				<header class="categoryHeaderMenu">
+					<h2><%= category.title %></h2>
+				</header>
+            </div>
+			</article>
+			<div class="produtContainer">
+				<% for (let product of category.products.productsArray) { %>
+				<div class="product">
+					<div class="containerMain">
+						<img
+							class="productImage"
+							src="/images/<%= product.productId.imageUrl %>"
+							alt="<%= product.productId.imageUrl %>"
+						/>
+						<div class="productInfo">
+							<h2><%= product.productId.title %></h2>
+                            <h3><%= product.productId.description %></h3>
+						</div>
+					</div>
+                    
+                    <!--<h2><%= product.productId.category %></h2>-->
+					<div class="productPrice">
+                        <h2><%= product.productId.price %> Kč</h2>
+                        <%- include('../includes/add-to-cart.ejs', {product: product.productId}) %> 
+					</div>
+				</div>
+                <% } %>
+			</div>
+			<% } %>
+		</div>
+		<% } else { %>
+		<h1>No Categoryes Found!</h1>
+		<% } %> <%- include('../includes/end.ejs') %>
+	</main>
+</body>

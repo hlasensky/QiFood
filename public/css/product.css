@@ -1,0 +1,50 @@
+.product {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.productImage {
+    width: 200px;
+    height: 200px;
+    border-radius: 30px;
+    margin: 40px;
+}
+
+.produtContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+
+.categoryImageMenu {
+    width: 850px;
+    height: 430px;
+    filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.25));
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+}
+
+.categoryHeaderMenu {
+    margin-left: 5vw;
+}
+
+.categoryHeaderMenu h2{
+    font-size: 4.5rem;
+    color: #F8EDED;
+}
+
+.containerMain {
+    display: flex;
+    align-items: center;
+}
+
+.productPrice {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-direction: column;
+}

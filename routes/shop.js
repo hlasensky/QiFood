@@ -1,4 +1,4 @@
-const path = require('path');
+const { check, body } = require("express-validator");
 
 const express = require('express');
 
@@ -13,6 +13,8 @@ router.get("/menu", shopController.getMenu);
 
 router.get("/kontakt", shopController.getKontakt);
 
+router.get('/cart',  shopController.getCart);
 
+router.post('/cart',  shopController.postCart);
 
 module.exports = router;
