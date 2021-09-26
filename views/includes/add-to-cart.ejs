@@ -1,6 +1,6 @@
-<form action="/cart" method="post">
+<form action="<%= action %>" method="post">
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <input class="quantity"type="number" name="productQuantity" min="1" max="10" value="1">
-    <button class="btn" type="submit">Přidat do košíku</button>
+    <input class="quantity"type="number" name="productQuantity" min="1" max="10" value="<%= quantity %>">
+    <button class="btn" type="submit"><%= btnText %></button>
     <input type="hidden" name="productId" value="<%= product._id %>">
 </form>

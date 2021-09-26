@@ -5,14 +5,10 @@
 <header class="header">
 
     <nav class="nav">
-            <svg class="wave" width="1920" height="169" viewBox="0 0 1920 169" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <mask id="mask0" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="-18" y="-85" width="1947" height="254">
-            <rect x="-18" y="-85" width="1947" height="254" fill="#C4C4C4"/>
-            </mask>
-            <g mask="url(#mask0)">
-            <path d="M1063.16 -37.4062C857.797 44.4762 231.937 -59.9537 -33.5001 3.00005C-172.439 35.9522 194 187.975 527 140C1058 63.5001 1978.21 200.035 2018.95 169.542C2347 -75.9999 1259.65 -115.753 1063.16 -37.4062Z" fill="#313131"/>
-            </g>
-            </svg>
+        <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#313131" fill-opacity="1" d="M0,96L48,106.7C96,117,192,139,288,138.7C384,139,480,117,576,133.3C672,149,768,203,864,224C960,245,1056,235,1152,208C1248,181,1344,139,1392,117.3L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+          </svg>
+            
         <img class="logo" src="/images/logo.png" alt="QiFood">
         <ul class="navUl">
             <li class="navLi">
@@ -37,16 +33,13 @@
                     <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Products
                     </a>
                 </li>
-            <% } %>
-            <% if (isAuthenticated) { %>
-                <li class="navLi">
-                    <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
-                </li>
-                <li class="navLi">
-                    <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
-                </li>
-
-            <% } %>
+            <% } %> 
+            <li class="navLi">
+                <a class="<%= path === '/cart' ? 'active' : '' %> numberOfProducts" href="/cart">Cart</a>
+            </li>
+            <li class="navLi">
+                <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
+            </li>           
         </ul>
         <ul >
             <% if (!isAuthenticated) { %>
@@ -66,5 +59,11 @@
             <% } %>
         </ul>
     </nav>
+    <style>
+        .numberOfProducts::after {
+            content: "<%= productsForAfter %>";
+        }
+    </style>            
+
 </header>
 

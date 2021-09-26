@@ -34,7 +34,8 @@
                     <!--<h2><%= product.productId.category %></h2>-->
 					<div class="productPrice">
                         <h2><%= product.productId.price %> Kč</h2>
-                        <%- include('../includes/add-to-cart.ejs', {product: product.productId}) %> 
+                        <%- include('../includes/add-to-cart.ejs', {product:
+                            product.productId, btnText: "Přidat do košíku", quantity: 1, action: "/cart"}) %> 
 					</div>
 				</div>
                 <% } %>

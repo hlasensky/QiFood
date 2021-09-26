@@ -13,13 +13,17 @@ exports.getIndex = (req, res, next) => {
 				const user = new User({
 					email: "anonym",
 					password: hashedPassword,
-          isAdmin: false,
-          cart: { items: [] },
-					expireDate: { type: Date, expires: 60 * 60 * 24 }
+					isAdmin: false,
+					cart: { items: [] },
+					createdAt: {
+						type: Date,
+						expires: "1440m",
+						default: Date.now,
+					},
 				});
 				user.save()
-          .then((user) => {
-						req.session.isLoggedIn = true;
+					.then((user) => {
+						req.session.isLoggedIn = false;
 						req.session.user = user;
 						req.session.isAdmin = user.isAdmin;
 						req.session.userId = user._id;
@@ -54,8 +58,8 @@ exports.getMenu = (req, res, next) => {
 			res.render("shop/menu", {
 				pageTitle: "Menu",
 				path: "/menu",
-        categoryes: categoryes,
-        dot: "."
+				categoryes: categoryes,
+				dot: ".",
 			});
 		});
 };
@@ -69,11 +73,18 @@ exports.getKontakt = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
-	res.render("shop/cart", {
-		pageTitle: "Košík",
-		path: "/cart",
-		products: "", //doplnit
-	});
+	User.findById(req.user)
+		.populate({
+			path: "cart.items.productId",
+		})
+		.exec(function (err, products) {
+			console.log(products.cart.items);
+			res.render("shop/cart", {
+				pageTitle: "Košík",
+				path: "/cart",
+				products: products.cart.items,
+			});
+		});
 };
 
 exports.postCart = (req, res, next) => {
@@ -81,7 +92,33 @@ exports.postCart = (req, res, next) => {
 	productQuantity = req.body.productQuantity;
 	Product.findById(productId)
 		.then((product) => {
-			req.user
-				.addToCart(product, productQuantity)
-		}).catch((err) => console.log(err));
+			req.user.addToCart(product, productQuantity);
+		})
+		.then(() => {
+			res.status(202).redirect("/menu");
+		})
+		.catch((err) => console.log(err));
+};
+
+exports.postUpdateCart = (req, res, next) => {
+	productId = req.body.productId;
+	productQuantity = req.body.productQuantity;
+	Product.findById(productId)
+		.then((product) => {
+			req.user.updateCart(product, productQuantity);
+		})
+		.then(() => {
+			res.status(202).redirect("/cart");
+		})
+		.catch((err) => console.log(err));
+};
+
+exports.postRemoveFormCart = (req, res, next) => {
+	productId = req.body.deleteProductId;
+	req.user
+		.removeFromCart(productId)
+		.then(() => {
+			res.status(202).redirect("/cart");
+		})
+		.catch((err) => console.log(err));
 };

@@ -8,7 +8,6 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 const csrf = require("csurf");
 const flash = require("connect-flash");
 
-
 const errorController = require("./controllers/error");
 const User = require("./models/user");
 
@@ -56,12 +55,19 @@ app.use((req, res, next) => {
 		.catch((err) => console.log(err));
 });
 
-
-
 app.use((req, res, next) => {
 	res.locals.isAdmin = req.session.isAdmin;
 	res.locals.isAuthenticated = req.session.isLoggedIn;
 	res.locals.userId = req.session.userId;
+	if (!req.session.user) {
+		res.locals.productsForAfter = [];
+	} else {
+		const quantity = req.user.cart.items.map(
+			(productQ) => productQ.quantity
+		);
+		let sum = quantity.reduce((partial_sum, a) => partial_sum + a, 0);
+		res.locals.productsForAfter = sum;		
+	}
 	res.locals.csrfToken = req.csrfToken();
 	next();
 });

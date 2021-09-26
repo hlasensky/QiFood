@@ -15,6 +15,9 @@ router.get("/kontakt", shopController.getKontakt);
 
 router.get('/cart',  shopController.getCart);
 
-router.post('/cart',  shopController.postCart);
+router.post('/cart', shopController.postCart);
 
+router.post('/updateCart',  shopController.postUpdateCart);
+
+router.post('/removeFormCart',  shopController.postRemoveFormCart);
 module.exports = router;

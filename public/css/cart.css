@@ -1,2 +1,14 @@
+.productPriceCart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-direction: column;
+}
 
+.productPriceCart h2 {
+    margin: 0;
+}
 
+.productPriceCart h4 {
+    margin:  0;
+}
