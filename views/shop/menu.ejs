@@ -30,7 +30,14 @@
                             <h3><%= product.productId.description %></h3>
 						</div>
 					</div>
-                    
+					<% if (isAdmin) { %>
+						<form action="admin/edit-product" method="POST">
+							<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+							<button class="btn" type="submit">Edit product</button>
+							<input type="hidden" name="productId" value="<%= product.productId._id %>">
+
+						</form>
+					<% } %>
                     <!--<h2><%= product.productId.category %></h2>-->
 					<div class="productPrice">
                         <h2><%= product.productId.price %> Kč</h2>

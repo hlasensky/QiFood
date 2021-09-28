@@ -12,7 +12,7 @@ router.get("/add-product", isAuth, adminController.getAddProduct);
 
 router.get("/add-category", isAuth, adminController.getAddCategory);
 
-//router.get("/products", isAuth, adminController.getProduct);
+router.post("/edit-product", isAuth, adminController.postEditProduct);
 
 router.post("/add-category", [
 

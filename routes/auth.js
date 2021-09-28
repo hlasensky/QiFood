@@ -14,7 +14,15 @@ router.get("/signup", authController.getSignup);
 router.post(
 	"/login",
 	[
-		body("email", "Please enter a valid email.").isEmail(),
+		body("email", "Please enter a valid email.").isEmail().custom((email, { req }) => {
+			return User.findOne({ email: email }).then((user) => {
+				if (!user) {
+					return Promise.reject(
+						"Wrong email or password!"
+					);
+				}
+			});
+		}),
         body("password", "Enter password at least 5 characters long.")
         .isLength(
 			{ min: 5 }

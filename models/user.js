@@ -34,50 +34,58 @@ const userSchema = new Schema({
 });
 
 userSchema.methods.addToCart = function (product, productQuantity) {
+	/* this method add or change quantity of product */
 	const productId = product._id.toString();
 	const cartList = [...this.cart.items];
-	const found = cartList.find(
-		(foundProduct) =>
-			foundProduct.productId.toString() === productId.toString()
-	);
 
-	if (!found) {
+	/* This metod try to find product in cart, if it fails, it return undefined else it return the object */
+	const foundProduct = cartList.find(
+		(found =>
+			found.productId.toString() === productId.toString()
+	));
+
+	if (!foundProduct) {
 		cartList.push({
 			productId: productId,
 			quantity: productQuantity,
 		});
-	} else {
-		const index = cartList.indexOf(found);
+	} else { /* updating quantity of product */
+		const index = cartList.indexOf(foundProduct);
+		/* removing old object from cartList*/
 		if (index !== -1) {
 			cartList.splice(index, 1);
 		}
-		const newQuantity = Number(found.quantity) + Number(productQuantity);
-		found.quantity = newQuantity;
-		cartList.push(found);
+		/* making new quantity */
+		const newQuantity = Number(foundProduct.quantity) + Number(productQuantity);
+		/* passing new quantity to product */
+		foundProduct.quantity = newQuantity;
+		cartList.push(foundProduct);
 	}
-
+	/* making desirable data structure */
 	const updatedCart = {
 		items: cartList,
 	};
+	/* updating cart for 'this' user */
 	this.cart = updatedCart;
 	return this.save().catch((err) => console.log(err));
 };
 
 userSchema.methods.updateCart = function (product, productQuantity) {
+	/* this method update quantity of product */
 	const productId = product._id.toString();
 	const cartList = [...this.cart.items];
-	const found = cartList.find(
-		(foundProduct) =>
-			foundProduct.productId.toString() === productId.toString()
+	const foundProduct = cartList.find(
+		(found) =>
+			found.productId.toString() === productId.toString()
 	);
 
-	const index = cartList.indexOf(found);
+	const index = cartList.indexOf(foundProduct);
 	if (index !== -1) {
 		cartList.splice(index, 1);
 	}
 	const newQuantity = Number(productQuantity);
-	found.quantity = newQuantity;
-	cartList.push(found);
+	foundProduct.quantity = newQuantity;
+	cartList.push(foundProduct);
 
 	const updatedCart = {
 		items: cartList,
@@ -87,14 +95,15 @@ userSchema.methods.updateCart = function (product, productQuantity) {
 };
 
 userSchema.methods.removeFromCart = function (productId) {
+	/* this method remove product from cart */
 	const cartProductId = productId.toString();
 	const cartList = [...this.cart.items];
-	const found = cartList.find(
-		(foundProduct) =>
-			foundProduct._id.toString() === cartProductId.toString()
+	const foundProduct = cartList.find(
+		(found) =>
+			found._id.toString() === cartProductId.toString()
 	);
 
-	const index = cartList.indexOf(found);
+	const index = cartList.indexOf(foundProduct);
 	if (index !== -1) {
 		cartList.splice(index, 1);
 	}

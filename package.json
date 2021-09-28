@@ -1,15 +1,15 @@
 {
-  "name": "nodejs-complete-guide",
+  "name": "QiFood",
   "version": "1.0.0",
-  "description": "Complete Node.js Guide",
+  "description": "E-shop for food.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
     "start-server": "node app.js"
   },
-  "author": "Maximilian Schwarzmüller",
-  "license": "ISC",
+  "author": "",
+  "license": "",
   "devDependencies": {
     "nodemon": "^2.0.12"
   },
@@ -27,7 +27,6 @@
     "express-validator": "^6.12.1",
     "mongodb": "^3.1.6",
     "mongoose": "^5.2.17",
-    "mysql2": "^1.6.1",
     "nodemailer": "^6.6.3"
   }
 }

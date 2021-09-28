@@ -5,6 +5,7 @@
 }
 
 .categoryContainer {
+    transition: all 300ms ease;
     padding: 20px;
     width: 270px;
     height: 320px;
@@ -12,6 +13,14 @@
     box-shadow: -5px -5px 8px 0px rgba(224, 224, 224, 0.5), 5px 5px 10px 0px rgba(0, 0, 0, 0.20);
     border-radius: 45px;
     margin: 0 auto;
+}
+
+.categoryContainer:hover {
+    box-shadow: -7px -7px 10px 0px rgba(224, 224, 224, 0.7), 7px 7px 12px 0px rgba(0, 0, 0, 0.30);
+}
+
+.categoryContainer:hover .categoryTitle{
+    color: black !important;
 }
 
 .categoryImageContainer {

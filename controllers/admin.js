@@ -1,18 +1,35 @@
 const Product = require("../models/product");
 const Category = require("../models/category");
+const product = require("../models/product");
 
 exports.getAddProduct = (req, res, next) => {
 	/* Rendering site for add product, plus passing categoryes */
 	Category.find()
 		.then((categoryes) => {
-			res.render("admin/edit-product", {
-				pageTitle: "Add Product",
-				path: "/admin/add-product",
-				editing: false,
-				categoryes: categoryes,
-			});
-		})
+				res.render("admin/edit-product", {
+					pageTitle: "Add Product",
+					path: "/admin/add-product",
+					categoryes: categoryes,
+					product: ""
+				});
+			})
 		.catch((err) => console.log(err));
+};
+
+exports.postEditProduct = (req, res, next) => {
+	productId = req.body.productId;
+	/* Rendering site for add product, plus passing categoryes */
+	Category.find()
+		.then((categoryes) => {
+			Product.findById(productId).then(product => {
+				res.render("admin/edit-product", {
+					pageTitle: "Add Product",
+					path: "/admin/edit-product",
+					categoryes: categoryes,
+					product: product
+				});
+			}).catch((err) => console.log(err));
+		}).catch((err) => console.log(err));
 };
 
 exports.getAddCategory = (req, res, next) => {
@@ -76,3 +93,4 @@ exports.postAddProduct = (req, res, next) => {
 		})
 		.catch((err) => console.log(err));
 };
+

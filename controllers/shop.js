@@ -7,6 +7,7 @@ const bcrypt = require("bcryptjs");
 exports.getIndex = (req, res, next) => {
 	/* rendering landing page with fetched data from category collection */
 	if (!req.session.user) {
+		/* this part make anonym user for every new visite of landing page */
 		bcrypt
 			.hash(Math.random().toString(), 12)
 			.then((hashedPassword) => {
@@ -15,9 +16,9 @@ exports.getIndex = (req, res, next) => {
 					password: hashedPassword,
 					isAdmin: false,
 					cart: { items: [] },
-					createdAt: {
+					createdAt: { /*adding expire time */
 						type: Date,
-						expires: "1440m",
+						expires: "770m",
 						default: Date.now,
 					},
 				});
@@ -73,6 +74,7 @@ exports.getKontakt = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
+	/* render cart with user's cart */
 	User.findById(req.user)
 		.populate({
 			path: "cart.items.productId",
@@ -88,6 +90,7 @@ exports.getCart = (req, res, next) => {
 };
 
 exports.postCart = (req, res, next) => {
+	/* add product with quantity to user's cart using  schema method*/
 	productId = req.body.productId;
 	productQuantity = req.body.productQuantity;
 	Product.findById(productId)
@@ -101,6 +104,7 @@ exports.postCart = (req, res, next) => {
 };
 
 exports.postUpdateCart = (req, res, next) => {
+	/* update products and quantity in user's cart using schema method*/
 	productId = req.body.productId;
 	productQuantity = req.body.productQuantity;
 	Product.findById(productId)
@@ -114,6 +118,7 @@ exports.postUpdateCart = (req, res, next) => {
 };
 
 exports.postRemoveFormCart = (req, res, next) => {
+	/* remove product from user's cart using  schema method*/
 	productId = req.body.deleteProductId;
 	req.user
 		.removeFromCart(productId)

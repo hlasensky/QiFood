@@ -17,7 +17,12 @@ router.get('/cart',  shopController.getCart);
 
 router.post('/cart', shopController.postCart);
 
-router.post('/updateCart',  shopController.postUpdateCart);
+router.post('/updateCart', [
+    body("productQuantity", "Change only on munbers").isNumeric()
+],  shopController.postUpdateCart);
 
-router.post('/removeFormCart',  shopController.postRemoveFormCart);
+router.post('/removeFormCart', [
+    body("deleteProductId", "Bad ID").isAlphanumeric()
+], shopController.postRemoveFormCart);
+
 module.exports = router;
