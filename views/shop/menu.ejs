@@ -31,12 +31,10 @@
 						</div>
 					</div>
 					<% if (isAdmin) { %>
-						<form action="admin/edit-product" method="POST">
-							<input type="hidden" name="_csrf" value="<%= csrfToken %>">
-							<button class="btn" type="submit">Edit product</button>
-							<input type="hidden" name="productId" value="<%= product.productId._id %>">
-
-						</form>
+						<%- include('../includes/button.ejs', {product:
+                            product.productId._id, btnText: "Edit product", action: "admin/edit-product"}) %> 
+						<%- include('../includes/button.ejs', {product:
+							product.productId._id, btnText: "Delete product", action: "admin/delete-product"}) %> 
 					<% } %>
                     <!--<h2><%= product.productId.category %></h2>-->
 					<div class="productPrice">

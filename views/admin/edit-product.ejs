@@ -32,6 +32,7 @@
                 <% } %>
             <% } %>            
         </div>
+        <input type="hidden" name="productId" value="<%= product.length !== 0 ? product._id : '' %>">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <input type="hidden" name="userId" value="<%= userId %>">
         <button class="btn" type="submit">Add Product</button>

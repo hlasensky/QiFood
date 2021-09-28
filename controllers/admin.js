@@ -6,13 +6,13 @@ exports.getAddProduct = (req, res, next) => {
 	/* Rendering site for add product, plus passing categoryes */
 	Category.find()
 		.then((categoryes) => {
-				res.render("admin/edit-product", {
-					pageTitle: "Add Product",
-					path: "/admin/add-product",
-					categoryes: categoryes,
-					product: ""
-				});
-			})
+			res.render("admin/edit-product", {
+				pageTitle: "Add Product",
+				path: "/admin/add-product",
+				categoryes: categoryes,
+				product: "",
+			});
+		})
 		.catch((err) => console.log(err));
 };
 
@@ -21,15 +21,18 @@ exports.postEditProduct = (req, res, next) => {
 	/* Rendering site for add product, plus passing categoryes */
 	Category.find()
 		.then((categoryes) => {
-			Product.findById(productId).then(product => {
-				res.render("admin/edit-product", {
-					pageTitle: "Add Product",
-					path: "/admin/edit-product",
-					categoryes: categoryes,
-					product: product
-				});
-			}).catch((err) => console.log(err));
-		}).catch((err) => console.log(err));
+			Product.findById(productId)
+				.then((product) => {
+					res.render("admin/edit-product", {
+						pageTitle: "Add Product",
+						path: "/admin/edit-product",
+						categoryes: categoryes,
+						product: product,
+					});
+				})
+				.catch((err) => console.log(err));
+		})
+		.catch((err) => console.log(err));
 };
 
 exports.getAddCategory = (req, res, next) => {
@@ -67,6 +70,7 @@ exports.postAddProduct = (req, res, next) => {
 	const imageUrl = req.body.imageUrl;
 	const category = req.body.radioCategory;
 	const userId = req.body.userId;
+	const productId = req.body.productId;
 	const product = new Product({
 		title: title,
 		price: price,
@@ -75,22 +79,70 @@ exports.postAddProduct = (req, res, next) => {
 		category: category,
 		userId: userId,
 	});
-	product
-		.save()
+	if (!productId) {
+		product
+			.save()
+			.then((product) => {
+				Category.findById(category)
+					.then((categoryObj) => {
+						const productsUpdate = [
+							...categoryObj.products.productsArray,
+						];
+						productsUpdate.push({ productId: product._id });
+						const updatedProducts = {
+							productsArray: productsUpdate,
+						};
+						categoryObj.products = updatedProducts;
+						categoryObj.save().catch((err) => console.log(err));
+					})
+					.catch((err) => console.log(err));
+				res.redirect("/admin/add-product");
+			})
+			.catch((err) => console.log(err));
+	} else {
+		Product.findOneAndUpdate(
+			{ _id: productId },
+			{
+				title: title,
+				price: price,
+				description: description,
+				imageUrl: imageUrl,
+				category: category,
+				userId: userId,
+			}
+		)
+			.then(() => {
+				console.log("updated");
+				res.redirect("/admin/add-product");
+			})
+			.catch((err) => console.log(err));
+	}
+};
+
+exports.postDeleteProduct = (req, res, next) => {
+	/* adding new product to db and pushing it to an array in proper category in db*/
+	const productId = req.body.productId;
+	Product.findByIdAndDelete(productId)
 		.then((product) => {
-			Category.findById(category)
+			Category.findById(product.category)
 				.then((categoryObj) => {
-					const productsUpdate = [
-						...categoryObj.products.productsArray
+					let productsUpdate = [
+						...categoryObj.products.productsArray,
 					];
-					productsUpdate.push({ productId: product._id });
-					const updatedProducts = { productsArray: productsUpdate };
+
+					productsUpdate = productsUpdate.filter(obj => {
+						
+						obj.productId !== product._id
+					})
+
+					const updatedProducts = {
+						productsArray: productsUpdate,
+					};
 					categoryObj.products = updatedProducts;
-					categoryObj.save();
+					categoryObj.save().catch((err) => console.log(err));
 				})
 				.catch((err) => console.log(err));
-			res.redirect("/admin/add-product");
+			res.redirect("/menu");
 		})
 		.catch((err) => console.log(err));
 };
-
