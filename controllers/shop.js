@@ -16,12 +16,13 @@ exports.getIndex = (req, res, next) => {
 					password: hashedPassword,
 					isAdmin: false,
 					cart: { items: [] },
-					createdAt: { /*adding expire time */
+					expireAt: {
+						/*adding expire time */
 						type: Date,
-						expires: "770m",
-						default: Date.now,
+						index: { expires: "3000s" },
 					},
 				});
+
 				user.save()
 					.then((user) => {
 						req.session.isLoggedIn = false;
@@ -80,7 +81,6 @@ exports.getCart = (req, res, next) => {
 			path: "cart.items.productId",
 		})
 		.exec(function (err, products) {
-			console.log(products.cart.items);
 			res.render("shop/cart", {
 				pageTitle: "Košík",
 				path: "/cart",
@@ -124,6 +124,57 @@ exports.postRemoveFormCart = (req, res, next) => {
 		.removeFromCart(productId)
 		.then(() => {
 			res.status(202).redirect("/cart");
+		})
+		.catch((err) => console.log(err));
+};
+
+exports.postOrder = (req, res, next) => {
+	User.findById(req.user)
+		.populate({
+			path: "cart.items.productId",
+		})
+		.exec(function (err, user) {
+			const orderList = [...user.cart.items];
+			const updatedOrderList = [];
+			orderList.forEach((product) => {
+				updatedOrderList.push({
+					product: product.productId,
+					quantity: product.quantity,
+				});
+			});
+			const order = new Order({
+				products: updatedOrderList,
+				user: req.user._id,
+			});
+			order
+				.save()
+				.then(() => {
+					res.status(202).redirect("/orders");
+					req.user.removeCart();
+				})
+				.catch((err) => console.log(err));
+		});
+};
+
+exports.getOrders = (req, res, next) => {
+	populatedOrders = [];
+	Order.find({ userId: req.userId })
+		.then((orders) => {
+			orders.forEach((order) => {
+				Order.findOne(order._id)
+					.populate("products.product")
+					.exec((err, populatedOrder) => {
+						if (populatedOrder) {
+							populatedOrders.push(populatedOrder);
+							console.log(populatedOrders);
+							res.render("shop/orders", {
+								pageTitle: "Objednávky",
+								path: "/orders",
+								orders: populatedOrders,
+							});
+						}
+					});
+				});
 		})
 		.catch((err) => console.log(err));
 };

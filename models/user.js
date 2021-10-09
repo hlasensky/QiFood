@@ -27,7 +27,9 @@ const userSchema = new Schema({
 			},
 		],
 	},
-	createdAt: {},
+	expireAt: {
+		
+	},
 
 	resetToken: String,
 	resetTokenExpiration: Date,
@@ -110,6 +112,14 @@ userSchema.methods.removeFromCart = function (productId) {
 
 	const updatedCart = {
 		items: cartList,
+	};
+	this.cart = updatedCart;
+	return this.save().catch((err) => console.log(err));
+};
+
+userSchema.methods.removeCart = function () {
+	const updatedCart = {
+		items: [],
 	};
 	this.cart = updatedCart;
 	return this.save().catch((err) => console.log(err));

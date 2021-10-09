@@ -21,16 +21,17 @@ router.post("/add-category", [
 ], isAuth, adminController.postAddCategory);
 
 router.post("/add-product",
-    body("category").custom((url) => {
+    body("radioCategory")
+        .custom((url) => {
         Category
-        .findById(url)
-        .then(result => {
-            if (!result) {
-                return Promise.reject(
-                    "Choose valid category!"
-                );
-            }
-    })
+            .findById(url)
+                .then(result => {
+                if (!result) {
+                    return Promise.reject(
+                        "Choose valid category!"
+                    );
+                }
+        }).catch((err) => console.log(err));
 }), isAuth, adminController.postAddProduct);
 
 
