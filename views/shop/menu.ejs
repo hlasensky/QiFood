@@ -17,7 +17,7 @@
             </div>
 			</article>
 			<div class="produtContainer">
-				<% for (let product of category.products.productsArray) { %>
+				<% for (let product of category.products) { %>
 				<div class="product">
 					<div class="containerMain">
 						<img
@@ -32,9 +32,9 @@
 					</div>
 					<% if (isAdmin) { %>
 						<%- include('../includes/button.ejs', {product:
-                            product.productId._id, btnText: "Edit product", action: "admin/edit-product"}) %> 
+                            product.productId._id, btnText: "Edit product", action: "admin/edit-product", method: "post"}) %> 
 						<%- include('../includes/button.ejs', {product:
-							product.productId._id, btnText: "Delete product", action: "admin/delete-product"}) %> 
+							product.productId._id, btnText: "Delete product", action: "admin/delete-product",  method: "post"}) %> 
 					<% } %>
                     <!--<h2><%= product.productId.category %></h2>-->
 					<div class="productPrice">

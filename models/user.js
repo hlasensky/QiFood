@@ -27,9 +27,7 @@ const userSchema = new Schema({
 			},
 		],
 	},
-	expireAt: {
-		
-	},
+	expireAt: {},
 
 	resetToken: String,
 	resetTokenExpiration: Date,
@@ -42,23 +40,24 @@ userSchema.methods.addToCart = function (product, productQuantity) {
 
 	/* This metod try to find product in cart, if it fails, it return undefined else it return the object */
 	const foundProduct = cartList.find(
-		(found =>
-			found.productId.toString() === productId.toString()
-	));
+		(found) => found.productId.toString() === productId.toString()
+	);
 
 	if (!foundProduct) {
 		cartList.push({
 			productId: productId,
 			quantity: productQuantity,
 		});
-	} else { /* updating quantity of product */
+	} else {
+		/* updating quantity of product */
 		const index = cartList.indexOf(foundProduct);
 		/* removing old object from cartList*/
 		if (index !== -1) {
 			cartList.splice(index, 1);
 		}
 		/* making new quantity */
-		const newQuantity = Number(foundProduct.quantity) + Number(productQuantity);
+		const newQuantity =
+			Number(foundProduct.quantity) + Number(productQuantity);
 		/* passing new quantity to product */
 		foundProduct.quantity = newQuantity;
 		cartList.push(foundProduct);
@@ -77,8 +76,7 @@ userSchema.methods.updateCart = function (product, productQuantity) {
 	const productId = product._id.toString();
 	const cartList = [...this.cart.items];
 	const foundProduct = cartList.find(
-		(found) =>
-			found.productId.toString() === productId.toString()
+		(found) => found.productId.toString() === productId.toString()
 	);
 
 	const index = cartList.indexOf(foundProduct);
@@ -101,8 +99,7 @@ userSchema.methods.removeFromCart = function (productId) {
 	const cartProductId = productId.toString();
 	const cartList = [...this.cart.items];
 	const foundProduct = cartList.find(
-		(found) =>
-			found._id.toString() === cartProductId.toString()
+		(found) => found._id.toString() === cartProductId.toString()
 	);
 
 	const index = cartList.indexOf(foundProduct);
@@ -123,6 +120,19 @@ userSchema.methods.removeCart = function () {
 	};
 	this.cart = updatedCart;
 	return this.save().catch((err) => console.log(err));
+};
+
+userSchema.methods.totalPrice = function (products) {
+	const arrayProduct = products.map((product) => {
+		product.productId.price * product.quantity;
+	});
+	
+	if (arrayProduct.length === 0) {
+		return [];
+	} else {
+		const sum = arrayProduct.reduce((a, b) => a + b);
+		return sum;
+	}
 };
 
 module.exports = mongoose.model("User", userSchema);

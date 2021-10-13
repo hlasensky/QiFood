@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
+const product = require("./product");
 
 const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
 	products: [
 		{
-			product: {
+			productId: {
 				type: Schema.Types.ObjectId,
 				required: true,
 				ref: "Product",
@@ -18,6 +19,8 @@ const orderSchema = new Schema({
 		required: true,
 		ref: "User",
 	},
+	date: { type: Date, default: Date.now }
 });
+
 
 module.exports = mongoose.model("Order", orderSchema);

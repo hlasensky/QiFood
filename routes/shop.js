@@ -21,6 +21,8 @@ router.post('/order', shopController.postOrder);
 
 router.get('/orders', shopController.getOrders);
 
+router.get('/order-detail:Id', shopController.getOrderDetail);
+
 router.post('/updateCart', [
     body("productQuantity", "Change only on munbers").isNumeric()
 ],  shopController.postUpdateCart);

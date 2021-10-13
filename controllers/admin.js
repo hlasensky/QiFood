@@ -52,7 +52,7 @@ exports.postAddCategory = (req, res, next) => {
 		title: title,
 		imageUrl: imageUrl,
 		url: url,
-		products: { productsArray: [] },
+		products: []
 	});
 	category
 		.save()
@@ -70,7 +70,7 @@ exports.postAddProduct = (req, res, next) => {
 	const imageUrl = req.body.imageUrl;
 	const category = req.body.radioCategory;
 	const userId = req.body.userId;
-	const productId = req.body.productId;
+	const productId = req.body.Id;
 	const product = new Product({
 		title: title,
 		price: price,
@@ -86,13 +86,10 @@ exports.postAddProduct = (req, res, next) => {
 				Category.findById(category)
 					.then((categoryObj) => {
 						const productsUpdate = [
-							...categoryObj.products.productsArray,
+							...categoryObj.products,
 						];
 						productsUpdate.push({ productId: product._id });
-						const updatedProducts = {
-							productsArray: productsUpdate,
-						};
-						categoryObj.products = updatedProducts;
+						categoryObj.products = productsUpdate;
 						categoryObj.save().catch((err) => console.log(err));
 					})
 					.catch((err) => console.log(err));
@@ -121,13 +118,13 @@ exports.postAddProduct = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
 	/* adding new product to db and pushing it to an array in proper category in db*/
-	const productId = req.body.productId;
+	const productId = req.body.Id;
 	Product.findByIdAndDelete(productId)
 		.then((product) => {
 			Category.findById(product.category)
 				.then((categoryObj) => {
 					let productsUpdate = [
-						...categoryObj.products.productsArray,
+						...categoryObj.products,
 					];
 
 					productsUpdate = productsUpdate.filter(obj => {
@@ -135,10 +132,8 @@ exports.postDeleteProduct = (req, res, next) => {
 						obj.productId !== product._id
 					})
 
-					const updatedProducts = {
-						productsArray: productsUpdate,
-					};
-					categoryObj.products = updatedProducts;
+					
+					categoryObj.products = productsUpdate;
 					categoryObj.save().catch((err) => console.log(err));
 				})
 				.catch((err) => console.log(err));

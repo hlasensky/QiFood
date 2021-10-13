@@ -54,7 +54,7 @@ exports.getMenu = (req, res, next) => {
 	/* rendering menu page with fetched data from category collection and populating array of products*/
 	Category.find()
 		.populate({
-			path: "products.productsArray.productId",
+			path: "products.productId",
 		})
 		.exec(function (err, categoryes) {
 			res.render("shop/menu", {
@@ -85,6 +85,7 @@ exports.getCart = (req, res, next) => {
 				pageTitle: "Košík",
 				path: "/cart",
 				products: products.cart.items,
+				totalPrice: req.user.totalPrice(products.cart.items),
 			});
 		});
 };
@@ -105,7 +106,7 @@ exports.postCart = (req, res, next) => {
 
 exports.postUpdateCart = (req, res, next) => {
 	/* update products and quantity in user's cart using schema method*/
-	productId = req.body.productId;
+	productId = req.body.Id;
 	productQuantity = req.body.productQuantity;
 	Product.findById(productId)
 		.then((product) => {
@@ -138,7 +139,7 @@ exports.postOrder = (req, res, next) => {
 			const updatedOrderList = [];
 			orderList.forEach((product) => {
 				updatedOrderList.push({
-					product: product.productId,
+					productId: product.productId,
 					quantity: product.quantity,
 				});
 			});
@@ -158,23 +159,65 @@ exports.postOrder = (req, res, next) => {
 
 exports.getOrders = (req, res, next) => {
 	populatedOrders = [];
+
+	const summary = (orders) => {
+		const summedOrders = [];
+		orders.forEach((order) => {
+			const priceArray = order.products.map((product) => {
+				return product.productId.price * product.quantity;
+			});
+			const quantityArray = order.products.map((product) => {
+				return product.quantity;
+			});
+
+			const sumedPrices = priceArray.reduce((a, b) => a + b);
+			const sumedQuantities = quantityArray.reduce((a, b) => a + b);
+			summedOrders.push({
+				orderId: order._id,
+				totalPrice: sumedPrices,
+				totalQuantity: sumedQuantities,
+				date: order.date,
+			});
+		});
+
+		return summedOrders;
+	};
+
 	Order.find({ userId: req.userId })
 		.then((orders) => {
 			orders.forEach((order) => {
-				Order.findOne(order._id)
-					.populate("products.product")
+				Order.findOne(order)
+					.populate("products.productId")
 					.exec((err, populatedOrder) => {
-						if (populatedOrder) {
-							populatedOrders.push(populatedOrder);
-							console.log(populatedOrders);
+						populatedOrders.push(populatedOrder);
+						if (populatedOrders.length === orders.length) {
 							res.render("shop/orders", {
 								pageTitle: "Objednávky",
 								path: "/orders",
-								orders: populatedOrders,
+								orders: summary(populatedOrders),
 							});
 						}
 					});
-				});
+			});
 		})
 		.catch((err) => console.log(err));
+};
+
+exports.getOrderDetail = (req, res, next) => {
+	const orderId = req.query.Id;
+	if (!orderId) {
+		return res.redirect("/orders");
+	}
+	
+	Order.findById(orderId)
+		.populate("products.productId")
+		.exec((err, populatedOrder) => {
+			console.log(populatedOrder)
+			res.render("shop/orderDetail", {
+				pageTitle: "Objednávky",
+				path: "/order-detail",
+				order: populatedOrder,
+			});
+			
+		});
 };

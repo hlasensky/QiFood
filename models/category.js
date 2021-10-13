@@ -15,17 +15,15 @@ const categorySchema = new Schema({
     type: String,
     required: true
   },
-  products: {
-    productsArray: [
-      {
-        productId: {
-          type: Schema.Types.ObjectId,
-          ref: 'Product',
-          required: true
-        }
+  products: [
+    {
+      productId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true
       }
-    ]
-  }
+    }
+  ]
   
 });
 
