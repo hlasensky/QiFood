@@ -7,6 +7,8 @@ const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const csrf = require("csurf");
 const flash = require("connect-flash");
+const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
 
 const errorController = require("./controllers/error");
 const User = require("./models/user");
@@ -40,6 +42,11 @@ app.use(
 		store: store,
 	})
 );
+
+app.use(express.json({ limit: '10kb' })) //limit to prevent DOS attacks
+app.use(mongoSanitize()); //prevent NoSQL Injection Attacks
+app.use(helmet());//Preventing XSS Attacks
+
 app.use(csrfProtection);
 app.use(flash());
 
