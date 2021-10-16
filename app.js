@@ -50,7 +50,7 @@ app.use(helmet());//Preventing XSS Attacks
 // Sets "X-Frame-Options: DENY"
 app.use(
 	helmet.frameguard({
-	  action: "allow",
+	  action: "deny",
 	})
 );
 
