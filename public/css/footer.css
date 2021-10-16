@@ -1,0 +1,67 @@
+.footer {
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	height: 100vh;
+	background-image: url(/images/footer.svg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.footerSvg {
+	position: absolute;
+	left: 0;
+	z-index: -5;
+	height: 70%;
+	width: 100%;
+	overflow: hidden;
+}
+
+.footerSvg path {
+	overflow: hidden;
+}
+
+.gmap_canvas {
+	border-radius: 30px;
+    overflow: hidden;
+    background: none !important;
+    height: 50vh;
+    width: 40vw;
+    
+}
+
+.mapouter {
+    
+}
+.footerContainer {
+	position: absolute;
+	left: 0;
+	z-index: 5;
+	width: 100%;
+	padding: 20vh 5vw 8vh 5vw;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.footerUl {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+}
+
+.footerLi {
+	font-size: 2rem;
+	line-height: 55px;
+	color: #f8eded;
+	margin: 32px 0px;
+	display: inline-flex;
+	align-items: center;
+}
+
+.footerLi img {
+	width: 3vw;
+	height: auto;
+	margin-right: 30px;
+}
