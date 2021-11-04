@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const product = require("./product");
 
 const Schema = mongoose.Schema;
 
@@ -14,7 +13,7 @@ const orderSchema = new Schema({
 			quantity: { type: Number, required: true },
 		},
 	],
-	user: {
+	userId: {
 		type: Schema.Types.ObjectId,
 		required: true,
 		ref: "User",

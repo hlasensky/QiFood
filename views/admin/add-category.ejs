@@ -5,20 +5,19 @@
 
 <body>
    <%- include('../includes/navigation.ejs') %>
-    <form action="/admin/add-category" method="POST">
+    <form action="/admin/add-category?_csrf=<%=csrfToken%>" method="POST" enctype="multipart/form-data">
         <div>
             <label for="title">Title</label>
             <input type="text" name="title" id="title">
         </div>
         <div>
-            <label for="imageUrl">Image Name</label>
-            <input type="text" name="imageUrl" id="imageUrl">
+            <label for="categoryImage">Image</label>
+            <input type="file" name="categoryImage" id="categoryImage" >
         </div>
         <div>
             <label for="url">Url</label>
             <input type="text" name="url" id="url">
         </div>
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button class="btn" type="submit">Add category</button>
     </form>
 

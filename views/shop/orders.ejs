@@ -7,18 +7,18 @@
 	<%- include('../includes/navigation.ejs') %>
 
 	<main>
-        <% if (orders.length === 0) {%> 
-			<h1>Žádné objednávky</h1>
-		<% } else {%> 
-                <% for (let order of orders) { %>
-                    <h2>Celková cena objednávky: <%= order.totalPrice %>Kč</h2>
-                    <h2>Počet produktů v objednávce: <%= order.totalQuantity %></h2>
-                    <h2> <%= order.date %></h2>
-                    <%- include('../includes/button.ejs', {product:
-                        order.orderId, btnText: "Detail produktu", action: "/order-detail:" + order.orderId, method: "get"}) %> 
-                        
+                <% if (orders.length === 0) {%> 
+                                <h1>Žádné objednávky</h1>
+                <% } else {%> 
+                        <% for (let order of orders) { %>
+                        <h3>Celková cena objednávky: <bold><%= order.totalPrice %>Kč</bold></h3>
+                        <h3>Počet produktů v objednávce: <bold><%= order.totalQuantity %></bold></h3>
+                        <h3> <%= (order.date).toString().split(" ").filter((element, index) => index < 5).join(" ") %></h3>
+                        <%- include('../includes/button.ejs', {product:
+                                order.orderId, btnText: "Detail produktu", action: "/order-detail:" + order.orderId, method: "get"}) %> 
+                                
+                        <% } %>
                 <% } %>
-        <% } %>
+        </main>
         <%- include('../includes/end.ejs') %>
-	</main>
 </body>
