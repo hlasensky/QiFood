@@ -1,6 +1,8 @@
 const Product = require("../models/product");
 const Category = require("../models/category");
-const product = require("../models/product");
+const QRCode = require("qrcode");
+const { PDFDocument } = require('pdf-lib');
+const fs = require("fs");
 
 exports.getAddProduct = (req, res, next) => {
 	/* Rendering site for add product, plus passing categoryes */
@@ -43,21 +45,101 @@ exports.getAddCategory = (req, res, next) => {
 	});
 };
 
+exports.getQR = (req, res, next) => {
+	/* Rendering site for add colection */
+
+	const dir = 'public/templates/';
+
+	const dirTablesQR = 'public/pdf/';
+
+	try {
+		const files = fs.readdirSync(dir);
+		const filesQR = fs.readdirSync(dirTablesQR);
+		
+		res.render("admin/make-qr", {
+			path: "/make-qr",
+			pageTitle: "Make QR code",
+			templates: files,
+			tablesQR: filesQR
+		});
+
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+exports.postQR = (req, res, next) => {
+	/* adding new category to db */
+	const tableNumber = req.body.tableNumber;
+	const templateTitle = req.body.radioCategory;
+
+	const opts = {
+		margin: 1,
+		quality: 1,
+		scale: 4,
+		width: 256,
+	  }
+
+	//edit output of file and change render on site
+	
+	QRCode.toFile("public/menus/qr.png", req.headers.host.toString() + "/" + tableNumber.toString(), opts)
+		.then(() => {
+			PDFDocument.load(fs.readFileSync(`public/templates/${templateTitle}`)).then((pdfDoc) => {
+				pdfDoc.embedPng(fs.readFileSync("public/menus/qr.png")).then((img) => {
+					const imagePage = pdfDoc.getPages()[ 0 ];
+					imagePage.drawImage(img, {
+						x: 310,
+						y: 250,
+						width: 256,
+						height: 256
+					});
+					
+					pdfDoc.save().then(pdfBytes => {
+						const newFilePath = `public/pdf/table-${tableNumber}-template-${templateTitle}.pdf`;
+						fs.writeFileSync(newFilePath, pdfBytes);
+					}).catch(err => console.log(err))
+				}).catch(err => console.log(err))
+			}).catch(err => console.log(err))
+		})
+		.catch((err) => {
+			console.error(err);
+		});	
+
+	const dir = 'public/templates/';
+
+	const dirTablesQR = 'public/pdf/';
+
+	try {
+		const files = fs.readdirSync(dir);
+		const filesQR = fs.readdirSync(dirTablesQR);
+		
+		res.render("admin/make-qr", {
+			path: "/make-qr",
+			pageTitle: "Make QR code",
+			templates: files,
+			tablesQR: filesQR
+		});
+
+	} catch (err) {
+		console.log(err);
+	}
+};
+
 exports.postAddCategory = (req, res, next) => {
 	/* adding new category to db */
 	const title = req.body.title;
-	const imageUrl = req.body.imageUrl;
+	const image = req.file;
 	const url = req.body.url;
 	const category = new Category({
 		title: title,
-		imageUrl: imageUrl,
+		imageUrl: image.path.replace('public\\', "").replace('\\', "/"),
 		url: url,
-		products: []
+		products: [],
 	});
 	category
 		.save()
 		.then(() => {
-			res.redirect("/add-category");
+			res.redirect("add-category");
 		})
 		.catch((err) => console.log(err));
 };
@@ -67,7 +149,10 @@ exports.postAddProduct = (req, res, next) => {
 	const title = req.body.title;
 	const price = req.body.price;
 	const description = req.body.description;
-	const imageUrl = req.body.imageUrl;
+	const image = req.file;
+	if (!image) {
+		return res.status(422).render("admin/edit-product")
+	}
 	const category = req.body.radioCategory;
 	const userId = req.body.userId;
 	const productId = req.body.Id;
@@ -75,7 +160,7 @@ exports.postAddProduct = (req, res, next) => {
 		title: title,
 		price: price,
 		description: description,
-		imageUrl: imageUrl,
+		imageUrl: image.path.replace('public\\', ""),
 		category: category,
 		userId: userId,
 	});
@@ -85,9 +170,7 @@ exports.postAddProduct = (req, res, next) => {
 			.then((product) => {
 				Category.findById(category)
 					.then((categoryObj) => {
-						const productsUpdate = [
-							...categoryObj.products,
-						];
+						const productsUpdate = [...categoryObj.products];
 						productsUpdate.push({ productId: product._id });
 						categoryObj.products = productsUpdate;
 						categoryObj.save().catch((err) => console.log(err));
@@ -103,7 +186,7 @@ exports.postAddProduct = (req, res, next) => {
 				title: title,
 				price: price,
 				description: description,
-				imageUrl: imageUrl,
+				imageUrl: image,
 				category: category,
 				userId: userId,
 			}
@@ -123,16 +206,12 @@ exports.postDeleteProduct = (req, res, next) => {
 		.then((product) => {
 			Category.findById(product.category)
 				.then((categoryObj) => {
-					let productsUpdate = [
-						...categoryObj.products,
-					];
+					let productsUpdate = [...categoryObj.products];
 
-					productsUpdate = productsUpdate.filter(obj => {
-						
-						obj.productId !== product._id
-					})
+					productsUpdate = productsUpdate.filter((obj) => {
+						obj.productId !== product._id;
+					});
 
-					
 					categoryObj.products = productsUpdate;
 					categoryObj.save().catch((err) => console.log(err));
 				})
