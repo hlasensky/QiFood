@@ -16,8 +16,8 @@
 					<div class="containerMain">
 						<img
 							class="productImage"
-							src="/images/<%= product.productId.imageUrl %>"
-							alt="<%= product.productId.imageUrl %>"
+							src="/images/products/<%= product.productId.image %>"
+							alt="<%= product.productId.image %>"
 						/>
 						<div class="productInfo">
 							<h2><%= product.productId.title %></h2>
@@ -49,6 +49,6 @@
 				<button class="btn" type="submit">Objednat</button>
 			</form>
 		<% } %>
-        <%- include('../includes/end.ejs') %>
 	</main>
+	<%- include('../includes/end.ejs') %>
 </body>

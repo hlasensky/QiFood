@@ -10,7 +10,7 @@
 		<div class="menuContainer">
 			<% for (let category of categoryes) { %>
 			<article class="categoryContainerMenu">
-				<div class="categoryImageMenu" style="background-image: url('/images/<%= category.imageUrl.split(dot)[0] %>Dark.<%=category.imageUrl.split(dot)[1] %>');  ">
+				<div class="categoryImageMenu" style="background-image: url('<%= category.imageUrl %>');  ">
 				<header class="categoryHeaderMenu">
 					<h2><%= category.title %></h2>
 				</header>
@@ -22,7 +22,7 @@
 					<div class="containerMain">
 						<img
 							class="productImage"
-							src="/images/<%= product.productId.imageUrl %>"
+							src="<%= product.productId.imageUrl %>"
 							alt="<%= product.productId.imageUrl %>"
 						/>
 						<div class="productInfo">
@@ -48,7 +48,8 @@
 			<% } %>
 		</div>
 		<% } else { %>
-		<h1>No Categoryes Found!</h1>		
-		<% } %> <%- include('../includes/end.ejs') %>
+			<h1>No Categoryes Found!</h1>
+		<% } %> 		
 	</main>
+	<%- include('../includes/end.ejs') %>
 </body>

@@ -27,7 +27,7 @@ const userSchema = new Schema({
 			},
 		],
 	},
-	expireAt: {},
+	expireDate: {},
 
 	resetToken: String,
 	resetTokenExpiration: Date,
@@ -124,9 +124,8 @@ userSchema.methods.removeCart = function () {
 
 userSchema.methods.totalPrice = function (products) {
 	const arrayProduct = products.map((product) => {
-		product.productId.price * product.quantity;
+		return product.productId.price * product.quantity;
 	});
-	
 	if (arrayProduct.length === 0) {
 		return [];
 	} else {

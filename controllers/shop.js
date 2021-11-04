@@ -16,10 +16,9 @@ exports.getIndex = (req, res, next) => {
 					password: hashedPassword,
 					isAdmin: false,
 					cart: { items: [] },
-					expireAt: {
+					expireDate: {
 						/*adding expire time */
-						type: Date,
-						index: { expires: "3000s" },
+						index: { expireAfterSeconds: 4200 },
 					},
 				});
 
@@ -28,7 +27,6 @@ exports.getIndex = (req, res, next) => {
 						req.session.isLoggedIn = false;
 						req.session.user = user;
 						req.session.isAdmin = user.isAdmin;
-						req.session.userId = user._id;
 						return req.session.save((err) => {
 							console.log(err);
 						});
@@ -145,7 +143,7 @@ exports.postOrder = (req, res, next) => {
 			});
 			const order = new Order({
 				products: updatedOrderList,
-				user: req.user._id,
+				userId: req.user._id,
 			});
 			order
 				.save()
@@ -182,23 +180,31 @@ exports.getOrders = (req, res, next) => {
 
 		return summedOrders;
 	};
-
-	Order.find({ userId: req.userId })
+	
+	Order.find({ userId: req.user._id })
 		.then((orders) => {
-			orders.forEach((order) => {
-				Order.findOne(order)
-					.populate("products.productId")
-					.exec((err, populatedOrder) => {
-						populatedOrders.push(populatedOrder);
-						if (populatedOrders.length === orders.length) {
-							res.render("shop/orders", {
-								pageTitle: "Objednávky",
-								path: "/orders",
-								orders: summary(populatedOrders),
-							});
-						}
-					});
-			});
+			if (orders.length === 0) {
+				res.render("shop/orders", {
+					pageTitle: "Objednávky",
+					path: "/orders",
+					orders: [],
+				});
+			} else {
+				orders.forEach((order) => {
+					Order.findOne(order)
+						.populate("products.productId")
+						.exec((err, populatedOrder) => {
+							populatedOrders.push(populatedOrder);
+							if (populatedOrders.length === orders.length) {
+								res.render("shop/orders", {
+									pageTitle: "Objednávky",
+									path: "/orders",
+									orders: summary(populatedOrders),
+								});
+							}
+						});
+				});
+			}
 		})
 		.catch((err) => console.log(err));
 };
