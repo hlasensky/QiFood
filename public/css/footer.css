@@ -52,10 +52,11 @@
 }
 
 .footerLi {
-	font-size: 1.5rem;
+
+	font-size: 2rem;
 	line-height: 55px;
 	color: #f8eded;
-	margin: 24px 0px;
+	margin: 32px 0px;
 	display: inline-flex;
 	align-items: center;
 }
