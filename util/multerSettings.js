@@ -1,9 +1,11 @@
 const multer = require("multer");
 
+/* settings for multer */
 
+//storage setings
 exports.fileStorageProductImg = multer.diskStorage({
 	destination: (req, file, cb) => {
-		cb(null, "public/images/products");
+		cb(null, "public/images/products/");
 	},
 	filename: (req, file, cb) => {
 		cb(null, new Date().getDate() + "-" + file.originalname);
@@ -21,14 +23,15 @@ exports.fileStorageCategoryImg = multer.diskStorage({
 
 exports.fileStoragePdf = multer.diskStorage({
 	destination: (req, file, cb) => {
-		console.log(file)
-		cb(null, "public/templates/");
+		cb(null, "public/templates");
 	},
 	filename: (req, file, cb) => {
-		cb(null, new Date().toISOString() + "-" + file.originalname);
+		cb(null, new Date().getDate() + "-" + file.originalname);
 	},
 });
 
+
+//filters
 exports.fileFilterImg = (req, file, cb) => {
 	if (
 		file.mimetype === "image/png" ||
@@ -44,7 +47,7 @@ exports.fileFilterImg = (req, file, cb) => {
 
 exports.fileFilterPdf = (req, file, cb) => {
 	if (
-		file.mimetype === "file/pdf"
+		file.mimetype === "application/pdf"
 	) {
 		cb(null, true);
 	} else {

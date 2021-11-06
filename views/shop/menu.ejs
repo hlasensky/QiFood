@@ -9,13 +9,13 @@
 		<% if (categoryes.length > 0) { %>
 		<div class="menuContainer">
 			<% for (let category of categoryes) { %>
-			<article class="categoryContainerMenu">
+			<div class="categoryContainerMenu">
 				<div class="categoryImageMenu" style="background-image: url('<%= category.imageUrl %>');  ">
-				<header class="categoryHeaderMenu">
-					<h2><%= category.title %></h2>
-				</header>
-            </div>
-			</article>
+					<header class="categoryHeaderMenu">
+						<h2><%= category.title %></h2>
+					</header>
+            	</div>
+			</div>
 			<div class="produtContainer">
 				<% for (let product of category.products) { %>
 				<div class="product">

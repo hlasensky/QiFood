@@ -1,5 +1,6 @@
 const path = require("path");
 
+//external mudules
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
@@ -8,46 +9,62 @@ const csrf = require("csurf");
 const flash = require("connect-flash");
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
+const https = require('https')
 
+//internal modules
+const fs = require("fs");
 const errorController = require("./controllers/error");
 const User = require("./models/user");
 
+//.env 
 require("dotenv").config();
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = process.env.MONGODB_URI; //taking mongoDB url from .env
+
 
 const app = express();
+
+//utilizing sessions
 const store = new MongoDBStore({
 	uri: MONGODB_URI,
 	collection: "sessions",
 });
 
 const csrfProtection = csrf();
+
 app.use(express.static(path.join(__dirname, "public")));
 
+//seting views and engine for them
 app.set("view engine", "ejs");
 app.set("views", "views");
 
+//importing routes
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const authRoutes = require("./routes/auth");
 
-app.use(express.urlencoded({ extended: true }));
+//parser for urlencoded requists
+app.use(express.urlencoded({ extended: false }));
 
+//making new session
 app.use(
 	session({
-		secret: "my secret",
+		secret: process.env.SEDDION_SECRET,
 		resave: false,
+		cookie: {
+			maxAge: 1000 * 60 * 60 * 12 // 12 hours
+		},
 		saveUninitialized: false,
 		store: store,
 	})
 );
 
+//securyty 
 app.use(express.json({ limit: "10kb" })); //limit to prevent DOS attacks
 app.use(mongoSanitize()); //prevent NoSQL Injection Attacks
 app.use(helmet()); //Preventing XSS Attacks
-
 app.use(
+	//this option permit to use iframes
 	helmet.contentSecurityPolicy({
 		useDefaults: true,
 		directives: {
@@ -56,10 +73,12 @@ app.use(
 		},
 	})
 );
-
 app.use(csrfProtection);
+
+//error handeling
 app.use(flash());
 
+//saving user in req, if some exists
 app.use((req, res, next) => {
 	if (!req.session.user) {
 		return next();
@@ -72,10 +91,14 @@ app.use((req, res, next) => {
 		.catch((err) => console.log(err));
 });
 
+
 app.use((req, res, next) => {
+	//saving useful thinks in locals
 	res.locals.isAdmin = req.session.isAdmin;
 	res.locals.isAuthenticated = req.session.isLoggedIn;
 	res.locals.userId = req.session.userId;
+	res.locals.csrfToken = req.csrfToken();
+	//counting how much products user have in cart and saving the quantity to locals
 	if (!req.session.user) {
 		res.locals.productsForAfter = [];
 	} else {
@@ -85,23 +108,29 @@ app.use((req, res, next) => {
 		let sum = quantity.reduce((partial_sum, a) => partial_sum + a, 0);
 		res.locals.productsForAfter = sum;
 	}
-	res.locals.csrfToken = req.csrfToken();
 	next();
 });
 
+//using routes
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
+app.use(errorController.get404); //404 error handeling
 
-app.use(errorController.get404);
 
-mongoose.set("useFindAndModify", false);
 
 mongoose
 	.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => {
-		app.listen(3000);
+		https.createServer({
+			key: fs.readFileSync('server.key', {encoding: "utf8"}),
+			cert: fs.readFileSync('server.cert', {encoding: "utf8"})
+		  }, app).listen(3000, () => {
+			console.log('Listening...')
+		  })
 	})
 	.catch((err) => {
 		console.log(err);
 	});
+
+	

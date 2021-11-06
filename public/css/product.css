@@ -29,7 +29,11 @@
 }
 
 .categoryHeaderMenu {
-    margin-left: 5vw;
+    border-radius: 30px;
+    padding-left: 5vw;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .categoryHeaderMenu h2{

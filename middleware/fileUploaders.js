@@ -1,3 +1,4 @@
+const { check } = require("express-validator");
 const multer = require("multer");
 
 const {
@@ -8,6 +9,9 @@ const {
     fileFilterPdf,
 } = require("../util/multerSettings");
 
+
+/* middlewares for saving files on server */
+
 exports.productImage = (req, res, next) => {
     multer({ storage: fileStorageProductImg, fileFilter: fileFilterImg }).single(
 		"image"
@@ -17,6 +21,7 @@ exports.productImage = (req, res, next) => {
 		} else if (err) {
 			console.log(err)
 		}
+		//check('image').isEmpty().withMessage('Image is required!!!')
         next()
     });
 }
@@ -36,13 +41,14 @@ exports.categoryImage = (req, res, next) => {
  
  
 exports.templatePdf = (req, res, next) => {
-	multer({ storage: fileStoragePdf, fileFilter: fileFilterPdf }).single("pdf")
+	multer({ storage: fileStoragePdf, limits: { fileSize: 1048576 }, fileFilter: fileFilterPdf }).single("pdf")
 		(req, res, function (err) {
+		console.log(req.file)
 		if (err instanceof multer.MulterError) {
 			console.log(err)
 		} else if (err) {
 			console.log(err)
 		}
-        next()
+        res.redirect("/admin/make-qr")
     });
  }

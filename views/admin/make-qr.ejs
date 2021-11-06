@@ -5,15 +5,14 @@
 
 <body>
    <%- include('../includes/navigation.ejs') %>
-   <form action="/admin/upload-template" method="POST">
+   <form action="/admin/upload-template?_csrf=<%=csrfToken%>" method="POST" enctype='multipart/form-data'>
         <div>
             <label for="pdf">Vybrat template</label>
             <input type="file" name="pdf" id="pdf" >
         </div>
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button class="btn" type="submit">Nahrát</button>
     </form>
-   <form action="/admin/make-qr" method="POST">
+   <form action="/admin/make-qr?_csrf=<%=csrfToken%>" method="POST">
         <% if (templates.length !== 0) { %>
             <div class="templatesContainer">
                 <% for (let templateTitle of templates) { %>
@@ -35,7 +34,6 @@
             <label for="tableNumber">Číslo stolu</label>
             <input type="number" name="tableNumber" id="tableNumber">
         </div> 
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button class="btn" type="submit">Vytvořit</button>
     </form>
     <% if (tablesQR.length !== 0) { %>
@@ -50,7 +48,7 @@
             <% } %>
         </div>
     <% } else { %>
-        <h1>Žádné templaty!</h1>                  
+        <h1>Žádné menu!</h1>                  
     <% } %>
 
 <%- include('../includes/end.ejs') %>

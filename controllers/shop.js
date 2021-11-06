@@ -55,6 +55,7 @@ exports.getMenu = (req, res, next) => {
 			path: "products.productId",
 		})
 		.exec(function (err, categoryes) {
+
 			res.render("shop/menu", {
 				pageTitle: "Menu",
 				path: "/menu",
@@ -104,7 +105,7 @@ exports.postCart = (req, res, next) => {
 
 exports.postUpdateCart = (req, res, next) => {
 	/* update products and quantity in user's cart using schema method*/
-	productId = req.body.Id;
+	productId = req.body.productId;
 	productQuantity = req.body.productQuantity;
 	Product.findById(productId)
 		.then((product) => {
@@ -128,6 +129,7 @@ exports.postRemoveFormCart = (req, res, next) => {
 };
 
 exports.postOrder = (req, res, next) => {
+	//looking for every order that user made and adding new one from cart
 	User.findById(req.user)
 		.populate({
 			path: "cart.items.productId",
@@ -156,8 +158,10 @@ exports.postOrder = (req, res, next) => {
 };
 
 exports.getOrders = (req, res, next) => {
+	//rendering orders in summed form
 	populatedOrders = [];
 
+	//function that summariz orders so they show only ID, price, quantity and date
 	const summary = (orders) => {
 		const summedOrders = [];
 		orders.forEach((order) => {
@@ -181,6 +185,7 @@ exports.getOrders = (req, res, next) => {
 		return summedOrders;
 	};
 	
+	//finding all orders that user made, populating them and passing them to summary function 
 	Order.find({ userId: req.user._id })
 		.then((orders) => {
 			if (orders.length === 0) {
@@ -210,15 +215,16 @@ exports.getOrders = (req, res, next) => {
 };
 
 exports.getOrderDetail = (req, res, next) => {
+	//rendering detail of order
 	const orderId = req.query.Id;
 	if (!orderId) {
 		return res.redirect("/orders");
 	}
 	
+	//finding and population specific order
 	Order.findById(orderId)
 		.populate("products.productId")
 		.exec((err, populatedOrder) => {
-			console.log(populatedOrder)
 			res.render("shop/orderDetail", {
 				pageTitle: "Objednávky",
 				path: "/order-detail",
