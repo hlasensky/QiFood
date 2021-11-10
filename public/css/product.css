@@ -52,3 +52,14 @@
     justify-content: center;
     flex-direction: column;
 }
+
+.productInfo h2{
+    font-size: 2rem;
+    text-decoration: underline;
+    text-decoration-color: #FF6D59;
+    margin-bottom: 5px;
+}
+
+.productInfo h3{
+    margin-top: 5px;
+}

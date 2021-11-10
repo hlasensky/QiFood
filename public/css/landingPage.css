@@ -10,8 +10,8 @@
     z-index: 5;
     display: flex;
     align-items: center;
-    font-size: 4rem;
-    margin: 30px 0 0 30px;
+    font-size: 6rem;
+    margin: 30px 0 0 100px;
 }
 .h1Header {
     margin-top: -27vh;
