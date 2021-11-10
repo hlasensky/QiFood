@@ -18,10 +18,6 @@
             <label for="description">Description</label>
             <input type="text" name="description" id="description" value="<%= product.length !== 0 ? product.description : '' %>">
         </div>
-        <!--<div>
-            <label for="imageUrl">Image Name</label>
-            <input type="text" name="imageUrl" id="imageUrl" value="<%= product.length !== 0 ? product.imageUrl : '' %>">
-        </div>-->
         <div>
             <% for (let category of categoryes) { %>
                 <label for="<%= category.title %>"><%= category.title %></label>
@@ -34,7 +30,7 @@
                     </div>
         <div>
             <label for="image">Image</label>
-            <input type="file" name="image" id="image" >
+            <input type="file" name="image" id="image" value="<%= product.length !== 0 ? product.imageUrl : '' %>">
         </div>
         <input type="hidden" name="productId" value="<%= product.length !== 0 ? product._id : '' %>">
         <input type="hidden" name="userId" value="<%= userId %>">

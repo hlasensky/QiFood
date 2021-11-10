@@ -13,6 +13,7 @@ const orderSchema = new Schema({
 			quantity: { type: Number, required: true },
 		},
 	],
+	table: {},
 	userId: {
 		type: Schema.Types.ObjectId,
 		required: true,

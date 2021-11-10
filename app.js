@@ -9,18 +9,17 @@ const csrf = require("csurf");
 const flash = require("connect-flash");
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
-const https = require('https')
+const https = require("https");
 
 //internal modules
 const fs = require("fs");
 const errorController = require("./controllers/error");
 const User = require("./models/user");
 
-//.env 
+//.env
 require("dotenv").config();
 
 const MONGODB_URI = process.env.MONGODB_URI; //taking mongoDB url from .env
-
 
 const app = express();
 
@@ -46,20 +45,23 @@ const authRoutes = require("./routes/auth");
 //parser for urlencoded requists
 app.use(express.urlencoded({ extended: false }));
 
+
 //making new session
 app.use(
 	session({
 		secret: process.env.SEDDION_SECRET,
 		resave: false,
 		cookie: {
-			maxAge: 1000 * 60 * 60 * 12 // 12 hours
+			maxAge: 1000 * 60 * 60 * 12, // 12 hours
 		},
 		saveUninitialized: false,
 		store: store,
 	})
 );
 
-//securyty 
+
+
+//securyty
 app.use(express.json({ limit: "10kb" })); //limit to prevent DOS attacks
 app.use(mongoSanitize()); //prevent NoSQL Injection Attacks
 app.use(helmet()); //Preventing XSS Attacks
@@ -78,19 +80,42 @@ app.use(csrfProtection);
 //error handeling
 app.use(flash());
 
+
+
 //saving user in req, if some exists
 app.use((req, res, next) => {
 	if (!req.session.user) {
 		return next();
 	}
 	User.findById(req.session.user._id)
-		.then((user) => {
-			req.user = user;
-			next();
-		})
-		.catch((err) => console.log(err));
+	.then((user) => {
+		req.user = user;
+		next();
+	})
+	.catch((err) => console.log(err));
 });
 
+//CHECK FOR BUGS
+//middleware for deleting expired anonymous users
+
+app.use((req, res, next) => {
+	if (req.session.user) {
+		User.findById(req.session.user._id).then(user => {//deleting session for expired user
+			if (!user) {
+				req.session.destroy((err) => {
+					console.log(err);
+				});
+			}
+		}).catch((err) => console.log(err));
+	}
+	if (new Date().getHours()  === 0) {
+		const date = Date.now();
+		User.deleteMany({ expireDate: { $lt: date } }).then((result) => {//checking if the user expireDate is smaller them now
+			console.log(result);
+		}).catch((err) => console.log(err));
+	}
+	next()
+});
 
 app.use((req, res, next) => {
 	//saving useful thinks in locals
@@ -111,6 +136,8 @@ app.use((req, res, next) => {
 	next();
 });
 
+
+
 //using routes
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
@@ -119,18 +146,22 @@ app.use(errorController.get404); //404 error handeling
 
 
 
+
 mongoose
 	.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => {
-		https.createServer({
-			key: fs.readFileSync('server.key', {encoding: "utf8"}),
-			cert: fs.readFileSync('server.cert', {encoding: "utf8"})
-		  }, app).listen(3000, () => {
-			console.log('Listening...')
-		  })
+		https
+			.createServer(
+				{
+					key: fs.readFileSync("server.key", { encoding: "utf8" }),
+					cert: fs.readFileSync("server.cert", { encoding: "utf8" }),
+				},
+				app
+			)
+			.listen(3000, () => {
+				console.log("Listening...");
+			});
 	})
 	.catch((err) => {
 		console.log(err);
 	});
-
-	

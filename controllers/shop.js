@@ -9,21 +9,19 @@ exports.getIndex = (req, res, next) => {
 	if (!req.session.user) {
 		/* this part make anonym user for every new visite of landing page */
 		bcrypt
-			.hash(Math.random().toString(), 12)
+		.hash(Math.random().toString(), 12)
 			.then((hashedPassword) => {
+				const date = Date.now() + 43200000;
 				const user = new User({
 					email: "anonym",
 					password: hashedPassword,
 					isAdmin: false,
 					cart: { items: [] },
-					expireDate: {
-						/*adding expire time */
-						index: { expireAfterSeconds: 4200 },
-					},
+					expireDate: date /*adding expire time */
 				});
-
+				
 				user.save()
-					.then((user) => {
+				.then((user) => {
 						req.session.isLoggedIn = false;
 						req.session.user = user;
 						req.session.isAdmin = user.isAdmin;
@@ -32,9 +30,13 @@ exports.getIndex = (req, res, next) => {
 						});
 					})
 					.catch((err) => console.log(err));
-			})
-			.catch((err) => console.log(err));
+				})
+				.catch((err) => console.log(err));
 	}
+	if (req.query.table) {
+		req.session.table = req.query.table
+	}
+
 	Category.find()
 		.then((categoryes) => {
 			res.render("shop/index", {
@@ -130,6 +132,7 @@ exports.postRemoveFormCart = (req, res, next) => {
 
 exports.postOrder = (req, res, next) => {
 	//looking for every order that user made and adding new one from cart
+	let table = null;
 	User.findById(req.user)
 		.populate({
 			path: "cart.items.productId",
@@ -143,9 +146,13 @@ exports.postOrder = (req, res, next) => {
 					quantity: product.quantity,
 				});
 			});
+			if (req.session.table) {
+					table = req.session.table
+			}
 			const order = new Order({
 				products: updatedOrderList,
 				userId: req.user._id,
+				table: table
 			});
 			order
 				.save()

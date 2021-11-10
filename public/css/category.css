@@ -1,14 +1,15 @@
 .categoryesContainer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-    gap: 100px;
+    gap: 150px;
+    padding: 0 50px 100px 50px;
 }
 
 .categoryContainer {
     transition: all 300ms ease;
-    padding: 20px;
-    width: 270px;
-    height: 320px;
+    padding: 25px 20px 30px 20px;
+    width: 320px;
+    height: 380px;
     background: #F8F8F8;
     box-shadow: -5px -5px 8px 0px rgba(224, 224, 224, 0.5), 5px 5px 10px 0px rgba(0, 0, 0, 0.20);
     border-radius: 45px;
@@ -31,8 +32,8 @@
 
 .categoryImage {
     border-radius: 30px;
-    width: 235px;
-    height: 235px;
+    width: 260px;
+    height: 275px;
 }
 
 .categoryTitleHeader {

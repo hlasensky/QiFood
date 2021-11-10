@@ -19,7 +19,7 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postEditProduct = (req, res, next) => {
-	productId = req.body.productId;
+	productId = req.body.Id;
 	/* Rendering site for add product, plus passing categoryes */
 	Category.find()
 		.then((categoryes) => {
@@ -47,6 +47,7 @@ exports.getAddCategory = (req, res, next) => {
 
 exports.getQR = (req, res, next) => {
 	/* Rendering veiw with all files that are in dir and dirTablesQR */
+	
 
 	const dir = "public/templates/";
 	const dirTablesQR = "public/pdf/";
@@ -83,7 +84,7 @@ exports.postQR = (req, res, next) => {
 
 	QRCode.toFile(
 		"public/menus/qr.png",
-		"https://" + req.headers.host.toString() + "/" + tableNumber.toString(),
+		"https://" + req.headers.host.toString() + "/?table=" + tableNumber.toString(),
 		opts
 	) //passing url as data to be stored in QR code (req.headers.host.toString() is header of site so it should be dynamic)
 		.then(() => {
@@ -109,7 +110,7 @@ exports.postQR = (req, res, next) => {
 							pdfDoc
 								.save()
 								.then((pdfBytes) => {
-									const newFilePath = `public/pdf/table-${tableNumber}-template-${templateTitle}.pdf`;
+									const newFilePath = `public/pdf/table-${tableNumber}-template-${templateTitle}`;
 									fs.writeFileSync(newFilePath, pdfBytes);
 								})
 								.catch((err) => console.log(err));

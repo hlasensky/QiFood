@@ -9,7 +9,7 @@
 		<% if (categoryes.length > 0) { %>
 		<div class="menuContainer">
 			<% for (let category of categoryes) { %>
-			<div class="categoryContainerMenu">
+			<div class="categoryContainerMenu" id="<%= category.url.split('#')[1] %>">
 				<div class="categoryImageMenu" style="background-image: url('<%= category.imageUrl %>');  ">
 					<header class="categoryHeaderMenu">
 						<h2><%= category.title %></h2>
