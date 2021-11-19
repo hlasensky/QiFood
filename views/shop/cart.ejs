@@ -44,7 +44,7 @@
 		<% } %>
 		</div>
 		<% if (products.length !== 0) {%> 
-			<form action="/order" method="post">
+			<form action="<%= table ? '/orderTable' : '/order' %>" method="post">
 				<input type="hidden" name="_csrf" value="<%= csrfToken %>">
 				<button class="btn" type="submit">Objednat</button>
 			</form>

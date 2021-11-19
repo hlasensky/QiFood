@@ -149,7 +149,7 @@ app.use(errorController.get404); //404 error handeling
 mongoose
 	.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => {
-		/*https
+		https
 			.createServer(
 				{
 					key: fs.readFileSync("server.key", { encoding: "utf8" }),
@@ -159,9 +159,7 @@ mongoose
 			)
 			.listen(3000, () => {
 				console.log("Listening...");
-			});*/
-		express().listen(5000);
-
+			});
 	})
 	.catch((err) => {
 		console.log(err);

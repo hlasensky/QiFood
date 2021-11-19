@@ -87,6 +87,7 @@ exports.getCart = (req, res, next) => {
 				path: "/cart",
 				products: products.cart.items,
 				totalPrice: req.user.totalPrice(products.cart.items),
+				table: req.session.table
 			});
 		});
 };
@@ -148,9 +149,6 @@ exports.postOrder = (req, res, next) => {
 			});
 			if (req.session.table) {
 					table = req.session.table
-			} else {
-				res.redirect("/")
-				console.log("no table")
 			}
 			const order = new Order({
 				products: updatedOrderList,
