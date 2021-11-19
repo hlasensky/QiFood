@@ -16,7 +16,7 @@ const errorController = require("./controllers/error");
 const User = require("./models/user");
 
 //.env
-const aws = require('aws-sdk');
+require('dotenv').config();
 
 const MONGODB_URI = process.env.MONGODB_URI; //taking mongoDB url from .env
 
@@ -148,7 +148,8 @@ app.use(errorController.get404); //404 error handeling
 mongoose
 	.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => {
-		express().listen(3000);
+		app.listen(3000, 
+			() => console.log("Server is running..."));
 	})
 	.catch((err) => {
 		console.log(err);
