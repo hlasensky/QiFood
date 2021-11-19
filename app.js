@@ -9,15 +9,14 @@ const csrf = require("csurf");
 const flash = require("connect-flash");
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
-const https = require("https");
+
 
 //internal modules
-const fs = require("fs");
 const errorController = require("./controllers/error");
 const User = require("./models/user");
 
 //.env
-require("dotenv").config();
+const aws = require('aws-sdk');
 
 const MONGODB_URI = process.env.MONGODB_URI; //taking mongoDB url from .env
 
