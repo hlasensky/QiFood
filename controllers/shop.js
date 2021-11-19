@@ -148,6 +148,9 @@ exports.postOrder = (req, res, next) => {
 			});
 			if (req.session.table) {
 					table = req.session.table
+			} else {
+				res.redirect("/")
+				console.log("no table")
 			}
 			const order = new Order({
 				products: updatedOrderList,

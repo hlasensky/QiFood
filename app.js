@@ -97,7 +97,6 @@ app.use((req, res, next) => {
 
 //CHECK FOR BUGS
 //middleware for deleting expired anonymous users
-
 app.use((req, res, next) => {
 	if (req.session.user) {
 		User.findById(req.session.user._id).then(user => {//deleting session for expired user
@@ -138,7 +137,7 @@ app.use((req, res, next) => {
 
 
 
-//using routes
+//routes
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
@@ -150,7 +149,7 @@ app.use(errorController.get404); //404 error handeling
 mongoose
 	.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => {
-		https
+		/*https
 			.createServer(
 				{
 					key: fs.readFileSync("server.key", { encoding: "utf8" }),
@@ -160,7 +159,9 @@ mongoose
 			)
 			.listen(3000, () => {
 				console.log("Listening...");
-			});
+			});*/
+		express().listen(5000);
+
 	})
 	.catch((err) => {
 		console.log(err);
