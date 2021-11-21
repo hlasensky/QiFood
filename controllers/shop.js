@@ -133,7 +133,6 @@ exports.postRemoveFormCart = (req, res, next) => {
 
 exports.postOrder = (req, res, next) => {
 	//looking for every order that user made and adding new one from cart
-	let table = null;
 	User.findById(req.user)
 		.populate({
 			path: "cart.items.productId",
@@ -147,13 +146,10 @@ exports.postOrder = (req, res, next) => {
 					quantity: product.quantity,
 				});
 			});
-			if (req.session.table) {
-					table = req.session.table
-			}
 			const order = new Order({
 				products: updatedOrderList,
 				userId: req.user._id,
-				table: table
+				table: req.session.table
 			});
 			order
 				.save()
@@ -163,6 +159,13 @@ exports.postOrder = (req, res, next) => {
 				})
 				.catch((err) => console.log(err));
 		});
+};
+
+exports.getOrderAndDelivery = (req, res, next) => {
+	res.render("shop/deliveryAndPayment", {
+		pageTitle: "Doprava a platba",
+		path: "/doruceni",
+	});
 };
 
 exports.getOrders = (req, res, next) => {

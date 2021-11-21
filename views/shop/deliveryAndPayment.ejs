@@ -1,0 +1,25 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+   <form class="formContainer" action="/admin/add-product?_csrf=<%=csrfToken%>" method="POST" enctype="multipart/form-data">
+        <div class="inputContainer">
+            <label class="label" for="nameAndSecondname">Jméno a příjmení</label>
+            <input class="input" type="text" name="nameAndSecondname" id="nameAndSecondname" placeholder="Řízek" required>
+        </div>
+        <div class="inputContainer">
+            <label class="label" for="phonenumber">Telefon</label>
+            <input class="input" type="tel" name="phonenumber" id="phonenumber" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required>
+        </div>
+        <div class="inputContainer">
+            <label class="label" for="address">Adresa doručení</label>
+            <input class="input" type="text" name="address" id="address"  required>
+        </div>
+        <input type="hidden" name="userId" value="<%= userId %>">
+        <button class="btn" type="submit">btn</button>
+    </form>
+
+<%- include('../includes/end.ejs') %>
