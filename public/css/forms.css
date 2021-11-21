@@ -5,10 +5,13 @@
 }
 
 .warning {
-	width: 100%;
-	background-color: #ff6d59;
-	color: #f8eded;
-	font-size: 2rem;
+    display: flex;
+    height: 3rem;
+    width: 100%;
+    justify-content: center;
+    background-color: #ff6d59;
+    color: #f8eded;
+    font-size: 1.5rem;
 }
 
 .nav {
