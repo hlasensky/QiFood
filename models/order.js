@@ -14,6 +14,9 @@ const orderSchema = new Schema({
 		},
 	],
 	table: {},
+	name: { type: String },
+	phoneNumber: { type: String },
+	address: { type: String },
 	userId: {
 		type: Schema.Types.ObjectId,
 		required: true,

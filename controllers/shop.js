@@ -3,13 +3,15 @@ const Category = require("../models/category");
 const Order = require("../models/order");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
+const { validationResult } = require("express-validator");
+const CoinGecko = require("coingecko-api");
 
 exports.getIndex = (req, res, next) => {
 	/* rendering landing page with fetched data from category collection */
 	if (!req.session.user) {
 		/* this part make anonym user for every new visite of landing page */
 		bcrypt
-		.hash(Math.random().toString(), 12)
+			.hash(Math.random().toString(), 12)
 			.then((hashedPassword) => {
 				const date = Date.now() + 43200000;
 				const user = new User({
@@ -17,11 +19,11 @@ exports.getIndex = (req, res, next) => {
 					password: hashedPassword,
 					isAdmin: false,
 					cart: { items: [] },
-					expireDate: date /*adding expire time */
+					expireDate: date /*adding expire time */,
 				});
-				
+
 				user.save()
-				.then((user) => {
+					.then((user) => {
 						req.session.isLoggedIn = false;
 						req.session.user = user;
 						req.session.isAdmin = user.isAdmin;
@@ -30,11 +32,11 @@ exports.getIndex = (req, res, next) => {
 						});
 					})
 					.catch((err) => console.log(err));
-				})
-				.catch((err) => console.log(err));
+			})
+			.catch((err) => console.log(err));
 	}
 	if (req.query.table) {
-		req.session.table = req.query.table
+		req.session.table = req.query.table;
 	}
 
 	Category.find()
@@ -57,7 +59,6 @@ exports.getMenu = (req, res, next) => {
 			path: "products.productId",
 		})
 		.exec(function (err, categoryes) {
-
 			res.render("shop/menu", {
 				pageTitle: "Menu",
 				path: "/menu",
@@ -87,7 +88,7 @@ exports.getCart = (req, res, next) => {
 				path: "/cart",
 				products: products.cart.items,
 				totalPrice: req.user.totalPrice(products.cart.items),
-				table: req.session.table
+				table: req.session.table,
 			});
 		});
 };
@@ -133,6 +134,30 @@ exports.postRemoveFormCart = (req, res, next) => {
 
 exports.postOrder = (req, res, next) => {
 	//looking for every order that user made and adding new one from cart
+	const name = req.body.nameAndSecondname;
+	const phoneNumber = req.body.phoneNumber;
+	const shipAddress = req.body.shipAddress;
+	console.log(name, phoneNumber, shipAddress);
+	if (!req.session.table) {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			console.log(errors.array());
+			return res.status(422).render("shop/deliveryAndPayment", {
+				pageTitle: "Doprava a platba",
+				path: "/doruceni",
+				errorMessage: errors.array()[0].msg,
+				oldInput: {
+					name: name,
+					phoneNumber: phoneNumber,
+					shipAddress: shipAddress,
+				},
+				validationErrors: errors.array(),
+				pay: ""
+			});
+		}
+	}
+
+	let order;
 	User.findById(req.user)
 		.populate({
 			path: "cart.items.productId",
@@ -146,15 +171,29 @@ exports.postOrder = (req, res, next) => {
 					quantity: product.quantity,
 				});
 			});
-			const order = new Order({
-				products: updatedOrderList,
-				userId: req.user._id,
-				table: req.session.table
-			});
+			if (req.session.table) {
+				order = new Order({
+					products: updatedOrderList,
+					userId: req.user._id,
+					table: req.session.table,
+				});
+			} else {
+				order = new Order({
+					products: updatedOrderList,
+					userId: req.user._id,
+					name: name,
+					phoneNumber: phoneNumber,
+					address: shipAddress,
+				});
+			}
 			order
 				.save()
 				.then(() => {
-					res.status(202).redirect("/orders");
+					if (req.session.table) {
+						res.status(202).redirect("/orders");
+					} else {
+						res.status(202).redirect("/pay");
+					}
 					req.user.removeCart();
 				})
 				.catch((err) => console.log(err));
@@ -162,10 +201,85 @@ exports.postOrder = (req, res, next) => {
 };
 
 exports.getOrderAndDelivery = (req, res, next) => {
-	res.render("shop/deliveryAndPayment", {
-		pageTitle: "Doprava a platba",
-		path: "/doruceni",
-	});
+	const CoinGeckoClient = new CoinGecko();
+	CoinGeckoClient.simple
+		.price({
+			ids: "ethereum",
+			vs_currencies: "czk",
+		})
+		.then((price) => {
+			const ethPrice = price.data.ethereum.czk;
+			User.findById(req.user)
+				.populate({
+					path: "cart.items.productId",
+				})
+				.exec(function (err, products) {
+					const data = {
+						to: "0x56408f297ea8cf3ad025181788b33d992eb65787",
+						value:
+							"0x" +
+							(
+								(req.user.totalPrice(products.cart.items) / ethPrice) * (10 ** 18)
+							).toString(16),
+						gas: "0x2710",
+					};
+					res.render("shop/deliveryAndPayment", {
+						pageTitle: "Doprava a platba",
+						path: "/doruceni",
+						validationErrors: [],
+						errorMessage: "",
+						oldInput: {
+							name: "",
+							phoneNumber: "",
+							shipAddress: "",
+						},
+						params: data,
+						pay: ""
+					});
+				});
+		});
+};
+
+
+//get fixed this shit
+exports.getPay = (req, res, next) => {
+	const CoinGeckoClient = new CoinGecko();
+	CoinGeckoClient.simple
+		.price({
+			ids: "ethereum",
+			vs_currencies: "czk",
+		})
+		.then((price) => {
+			const ethPrice = price.data.ethereum.czk;
+			User.findById(req.user)
+				.populate({
+					path: "cart.items.productId",
+				})
+				.exec(function (err, products) {
+					const data = {
+						to: "0x56408f297ea8cf3ad025181788b33d992eb65787",
+						value:
+							"0x" +
+							(
+								(req.user.totalPrice(products.cart.items) / ethPrice) * (10 ** 18)
+							).toString(16),
+						gas: "0x2710",
+					};
+					res.render("shop/deliveryAndPayment", {
+						pageTitle: "Doprava a platba",
+						path: "/doruceni",
+						validationErrors: [],
+						errorMessage: "",
+						oldInput: {
+							name: "",
+							phoneNumber: "",
+							shipAddress: "",
+						},
+						params: data,
+						pay: true
+					});
+				});
+		});
 };
 
 exports.getOrders = (req, res, next) => {
@@ -195,8 +309,8 @@ exports.getOrders = (req, res, next) => {
 
 		return summedOrders;
 	};
-	
-	//finding all orders that user made, populating them and passing them to summary function 
+
+	//finding all orders that user made, populating them and passing them to summary function
 	Order.find({ userId: req.user._id })
 		.then((orders) => {
 			if (orders.length === 0) {
@@ -204,6 +318,7 @@ exports.getOrders = (req, res, next) => {
 					pageTitle: "Objednávky",
 					path: "/orders",
 					orders: [],
+					validationErrors: [],
 				});
 			} else {
 				orders.forEach((order) => {
@@ -216,6 +331,7 @@ exports.getOrders = (req, res, next) => {
 									pageTitle: "Objednávky",
 									path: "/orders",
 									orders: summary(populatedOrders),
+									validationErrors: [],
 								});
 							}
 						});
@@ -231,7 +347,7 @@ exports.getOrderDetail = (req, res, next) => {
 	if (!orderId) {
 		return res.redirect("/orders");
 	}
-	
+
 	//finding and population specific order
 	Order.findById(orderId)
 		.populate("products.productId")
@@ -241,6 +357,5 @@ exports.getOrderDetail = (req, res, next) => {
 				path: "/order-detail",
 				order: populatedOrder,
 			});
-			
 		});
 };

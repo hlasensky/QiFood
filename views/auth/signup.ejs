@@ -10,7 +10,7 @@
         <% if (errorMessage) { %>
             <div><%= errorMessage %></div>
         <% } %>
-        <form  action="/signup" method="POST">
+        <form  action="/signup" method="POST" enctype="application/x-www-form-urlencoded">
             <div>
                 <label for="email">E-Mail</label>
                 <input type="email" name="email" id="email">

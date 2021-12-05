@@ -21,7 +21,40 @@ router.post('/order', shopController.postOrder);
 
 router.get('/orders', shopController.getOrders);
 
-router.get('/orderTable', shopController.getOrderAndDelivery);
+router.get('/pay', shopController.getPay);
+
+router.get('/orderNoTable', shopController.getOrderAndDelivery);
+
+router.post('/orderNoTable', [
+    body("nameAndSecondname").custom(value => {
+        if (!value) {
+            return Promise.reject('Prosím vyplňte vaše jméno!');
+        } else {
+            return true
+        }
+    }),
+    body("phoneNumber").custom(value => {
+        if (!Number(value.split(" ").join(""))) {
+            return Promise.reject('Prosím vyplňte správně váše telefoní číslo!');
+        }
+        if (value.split(" ").join("").length !== 9) {
+            return Promise.reject('Prosím vyplňte váše telefoní číslo v plné délce!');
+        } 
+        if (!value) {
+            return Promise.reject('Prosím vyplňte váš telefon!');
+        } else {
+            return true
+        }
+    }),
+    body("shipAddress").custom(value => {
+        if (!value) {
+            return Promise.reject('Prosím vyplňte adresu!');
+        } else {
+            return true
+        }
+    }),
+], shopController.postOrder);
+
 
 router.get('/order-detail:Id', shopController.getOrderDetail);
 

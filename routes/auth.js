@@ -46,14 +46,16 @@ router.post(
 					}
 				});
 			}),
-		/*body("password", "Enter password at least 5 characters long.").isLength(
+		body("password", "Enter password at least 5 characters long.").isLength(
 			{ min: 5 }
 		),
 		body("confirmPassword").custom((value, { req }) => {
 			if (value !== req.body.password) {
-				throw new Error("Password have to match!");
+				return Promise.reject("Password have to match!");
+			} else {
+				return true
 			}
-		}),*/
+		}),
 	],
 	authController.postSignup
 );

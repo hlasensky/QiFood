@@ -5,21 +5,47 @@
 
 <body>
    <%- include('../includes/navigation.ejs') %>
-   <form class="formContainer" action="/admin/add-product?_csrf=<%=csrfToken%>" method="POST" enctype="multipart/form-data">
+   <% if (errorMessage) { %>
+        <div><%= errorMessage %></div>
+    <% } %>
+   <form id="address-form" class="formContainer" action="/orderNoTable?_csrf=<%=csrfToken%>" method="POST" enctype="application/x-www-form-urlencoded">
         <div class="inputContainer">
             <label class="label" for="nameAndSecondname">Jméno a příjmení</label>
-            <input class="input" type="text" name="nameAndSecondname" id="nameAndSecondname" placeholder="Řízek" required>
+            <input 
+            class="input" 
+            type="text" 
+            name="nameAndSecondname" 
+            id="nameAndSecondname" 
+            placeholder="Karel Novák"
+            value="<%= oldInput.name %>"
+            required>
         </div>
         <div class="inputContainer">
-            <label class="label" for="phonenumber">Telefon</label>
-            <input class="input" type="tel" name="phonenumber" id="phonenumber" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required>
+            <label class="label" for="phoneNumber">Telefon</label>
+            <input 
+            class="input" 
+            type="tel" 
+            placeholder="111 222 333" 
+            name="phoneNumber" 
+            id="phoneNumber"  
+            value="<%= oldInput.phoneNumber %>"
+            required>
         </div>
         <div class="inputContainer">
-            <label class="label" for="address">Adresa doručení</label>
-            <input class="input" type="text" name="address" id="address"  required>
+            <label class="label" for="shipAddress">Adresa doručení</label>
+            <input
+            class="input"
+            id="shipAddress"
+            name="shipAddress"
+            placeholder="Ulice 13"
+            value="<%= oldInput.shipAddress %>"
+            required
+            autocomplete="off"
+          />
         </div>
         <input type="hidden" name="userId" value="<%= userId %>">
-        <button class="btn" type="submit">btn</button>
+        <button class="btn sendEthButton" type="submit">btn</button>
     </form>
-
+    
+    <script src="/js/metamask.js" to="<%= params.to %>" value="<%= params.value %>" gas="<%= params.gas %>" pay="<%= pay %>"></script>
 <%- include('../includes/end.ejs') %>
