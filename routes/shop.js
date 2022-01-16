@@ -21,8 +21,6 @@ router.post('/order', shopController.postOrder);
 
 router.get('/orders', shopController.getOrders);
 
-router.get('/pay', shopController.getPay);
-
 router.get('/orderNoTable', shopController.getOrderAndDelivery);
 
 router.post('/orderNoTable', [
@@ -54,6 +52,10 @@ router.post('/orderNoTable', [
         }
     }),
 ], shopController.postOrder);
+
+router.get('/pay', shopController.getPay);
+
+router.post('/pay', shopController.postPay);
 
 
 router.get('/order-detail:Id', shopController.getOrderDetail);

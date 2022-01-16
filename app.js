@@ -107,7 +107,7 @@ app.use((req, res, next) => {
 			}
 		}).catch((err) => console.log(err));
 	}
-	if (new Date().getHours()  === 13) {
+	if (new Date().getHours()  === 12) {
 		const date = Date.now();
 		User.deleteMany({ expireDate: { $lt: date } }).then((result) => {//checking if the user expireDate is smaller them now
 			console.log(result);

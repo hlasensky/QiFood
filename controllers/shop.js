@@ -5,6 +5,10 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 const CoinGecko = require("coingecko-api");
+const { numberToString } = require("pdf-lib");
+require("dotenv").config();
+
+const ACCOUNT = process.env.ACCOUNT;
 
 exports.getIndex = (req, res, next) => {
 	/* rendering landing page with fetched data from category collection */
@@ -137,12 +141,11 @@ exports.postOrder = (req, res, next) => {
 	const name = req.body.nameAndSecondname;
 	const phoneNumber = req.body.phoneNumber;
 	const shipAddress = req.body.shipAddress;
-	console.log(name, phoneNumber, shipAddress);
 	if (!req.session.table) {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
 			console.log(errors.array());
-			return res.status(422).render("shop/deliveryAndPayment", {
+			return res.status(422).render("shop/delivery", {
 				pageTitle: "Doprava a platba",
 				path: "/doruceni",
 				errorMessage: errors.array()[0].msg,
@@ -152,7 +155,8 @@ exports.postOrder = (req, res, next) => {
 					shipAddress: shipAddress,
 				},
 				validationErrors: errors.array(),
-				pay: ""
+				pay: "",
+				params: ""
 			});
 		}
 	}
@@ -184,6 +188,7 @@ exports.postOrder = (req, res, next) => {
 					name: name,
 					phoneNumber: phoneNumber,
 					address: shipAddress,
+					payment: "pending",
 				});
 			}
 			order
@@ -191,55 +196,60 @@ exports.postOrder = (req, res, next) => {
 				.then(() => {
 					if (req.session.table) {
 						res.status(202).redirect("/orders");
+						req.user.removeCart();
 					} else {
 						res.status(202).redirect("/pay");
 					}
-					req.user.removeCart();
 				})
 				.catch((err) => console.log(err));
 		});
 };
 
-exports.getOrderAndDelivery = (req, res, next) => {
-	const CoinGeckoClient = new CoinGecko();
-	CoinGeckoClient.simple
-		.price({
-			ids: "ethereum",
-			vs_currencies: "czk",
-		})
-		.then((price) => {
-			const ethPrice = price.data.ethereum.czk;
-			User.findById(req.user)
-				.populate({
-					path: "cart.items.productId",
-				})
-				.exec(function (err, products) {
-					const data = {
-						to: "0x56408f297ea8cf3ad025181788b33d992eb65787",
-						value:
-							"0x" +
-							(
-								(req.user.totalPrice(products.cart.items) / ethPrice) * (10 ** 18)
-							).toString(16),
-						gas: "0x2710",
-					};
-					res.render("shop/deliveryAndPayment", {
-						pageTitle: "Doprava a platba",
-						path: "/doruceni",
-						validationErrors: [],
-						errorMessage: "",
-						oldInput: {
-							name: "",
-							phoneNumber: "",
-							shipAddress: "",
-						},
-						params: data,
-						pay: ""
-					});
-				});
+exports.postPay = (req, res, next) => {
+	//looking for every order that user made and adding new one from cart
+	const metaError = req.body.metaError;
+	const paymentMethod = "eth"; //req.body.paymentMethod;
+	console.log(metaError, "metaError")
+	if (!metaError) {
+		Order.updateOne(
+			{ userId: req.user },
+			{ payment: "done with " + paymentMethod }
+		)
+			.then(() => {
+				//res.status(202).redirect("/orders");
+				req.user.removeCart();
+			})
+			.catch((err) => console.log(err));
+	} else {
+		res.render("shop/payment", {
+			pageTitle: "Doprava a platba",
+			path: "/doruceni",
+			validationErrors: [],
+			errorMessage: "Něco se pokazilo",
+			oldInput: {
+				name: "",
+				phoneNumber: "",
+				shipAddress: "",
+			},
+			params: "",
+			pay: "true",
 		});
+	}
 };
 
+exports.getOrderAndDelivery = (req, res, next) => {
+	res.render("shop/delivery", {
+		pageTitle: "Doprava a platba",
+		path: "/doruceni",
+		validationErrors: [],
+		errorMessage: "",
+		oldInput: {
+			name: "",
+			phoneNumber: "",
+			shipAddress: "",
+		},
+	});
+};
 
 //get fixed this shit
 exports.getPay = (req, res, next) => {
@@ -256,16 +266,19 @@ exports.getPay = (req, res, next) => {
 					path: "cart.items.productId",
 				})
 				.exec(function (err, products) {
+					console.log(req.user.totalPrice(products.cart.items));
 					const data = {
-						to: "0x56408f297ea8cf3ad025181788b33d992eb65787",
+						to: ACCOUNT,
 						value:
 							"0x" +
 							(
-								(req.user.totalPrice(products.cart.items) / ethPrice) * (10 ** 18)
+								Math.floor((req.user.totalPrice(products.cart.items) /
+									ethPrice) *
+								10 ** 18)
 							).toString(16),
 						gas: "0x2710",
 					};
-					res.render("shop/deliveryAndPayment", {
+					res.render("shop/payment", {
 						pageTitle: "Doprava a platba",
 						path: "/doruceni",
 						validationErrors: [],
@@ -276,7 +289,7 @@ exports.getPay = (req, res, next) => {
 							shipAddress: "",
 						},
 						params: data,
-						pay: true
+						pay: "true",
 					});
 				});
 		});

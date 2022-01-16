@@ -1,0 +1,32 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+   <% if (errorMessage) { %>
+        <div><%= errorMessage %></div>
+    <% } %>
+   <form id="address-form" class="formContainer" action="/pay?_csrf=<%=csrfToken%>" method="POST" enctype="application/x-www-form-urlencoded">
+       
+        <div>
+            <input class="radio eth" type="radio" name="payment" value="eth">
+            <label for="eth">Zaplatit s Etherem</label>
+    
+            <input class="radio" type="radio" name="payment" value="card">
+            <label for="card">Zaplatit kartou</label>
+    
+            <input class="radio" type="radio" name="payment" value="cash">
+            <label for="cash">Zaplatit při převzetí</label>
+        </div>
+
+        <input type="hidden" name="userId" value="<%= userId %>">
+        <input type="hidden" name="metaError" class="metaError" value="">
+        <div>
+            <button type="submit" class="paymentMethod">Submit</button>
+        </div>
+    </form>
+    <script src="/js/metamask.js" to="<%= params.to %>" value="<%= params.value %>" gas="<%= params.gas %>" pay="<%= pay %>"></script>
+    
+<%- include('../includes/end.ejs') %>

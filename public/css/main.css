@@ -52,3 +52,22 @@ img {
 	background-color: #ff6d59;
 	border-radius: 50%;
 }
+
+
+@media screen and (max-width: 1200px) {
+	body {
+	  font-size: 2em; 
+	}
+  }
+  
+  @media screen and (max-width: 800px) {
+	body {
+	  font-size: 1.5em; 
+	}
+  }
+  
+  @media screen and (max-width: 400px) {
+	body {
+	  font-size: 1em; 
+	}
+  }

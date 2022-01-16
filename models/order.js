@@ -17,6 +17,7 @@ const orderSchema = new Schema({
 	name: { type: String },
 	phoneNumber: { type: String },
 	address: { type: String },
+	payment: { type: String },
 	userId: {
 		type: Schema.Types.ObjectId,
 		required: true,
