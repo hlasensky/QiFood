@@ -16,6 +16,8 @@ submit.addEventListener("click", () => {
 		ethereum.request({ method: "eth_requestAccounts" }).then((accounts) => {
 			transaction(accounts);
 		});
+	} else {
+		return true;
 	};
 });
 
@@ -41,7 +43,6 @@ const transaction = (accounts) => {
 			metaError.value = error.code;
 		});
 };
-
 
 
 window.addEventListener( "load", function () {
