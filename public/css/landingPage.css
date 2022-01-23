@@ -15,7 +15,7 @@
     text-shadow: rgb(0 0 0) 5px 8px 15px;
 }
 .h1Header {
-    margin-top: -27vh;
+    margin-top: -35vh;
     overflow: hidden;
 }
 
@@ -31,19 +31,32 @@
   }
   
 @media screen and (max-width: 1000px) {
-.h1Header h1{
-    font-size: 4rem;
-}
-.h1Header img{
-    width: 120%;
-    
+    .h1Header h1{
+        font-size: 4rem;
+    }
+    .h1Header img{
+        width: 120%;
+        
 }
 }
   
 @media screen and (max-width: 810px) {
-.h1Header img{
-    width: 130%;
-    height: 100%;
+    .h1Header img {
+        width: 130%;
+    }
+    .h1Header h1{
+        font-size: 3.5rem;
+        margin-top: 90px;
+    }
 }
 
+@media screen and (max-width: 550px) {
+    .h1Header img {
+        width: 180vw;
+    }
+    .h1Header h1{
+        font-size: 8vw;
+        text-align: center;
+    }
 }
+
