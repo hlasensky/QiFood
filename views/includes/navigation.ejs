@@ -1,70 +1,150 @@
 <%- include('../includes/head.ejs') %>
     <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/landingPage.css">
 </head>
-
+<div class="backdrop"></div>
 <header class="header">
-    <h1 class="warning">Test site!!</h1>
-    <nav class="nav">
-        <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-            <path fill="#313131" fill-opacity="1" d="M0,96L48,106.7C96,117,192,139,288,138.7C384,139,480,117,576,133.3C672,149,768,203,864,224C960,245,1056,235,1152,208C1248,181,1344,139,1392,117.3L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
-          </svg>
-            
-        <img class="logo" src="/images/logo.png" alt="QiFood">
-        <ul class="navUl">
-            <li class="navLi">
-                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Domů</a>
-            </li>
-            <li class="navLi">
-                <a class="<%= path === '/menu' ? 'active' : '' %>" href="/menu">Menu</a>
-            </li>
-            <li class="navLi">
-                <a class="<%= path === '/kontakt' ? 'active' : '' %>" href="/kontakt">Kontakt</a>
-            </li>
-            <% if (isAdmin) { %>
-                <li class="navLi">
-                    <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product
-                    </a>
-                </li>
-                <li class="navLi">
-                    <a class="<%= path === '/admin/make-qr' ? 'active' : '' %>" href="/admin/make-qr">Tvůrce QR
-                    </a>
-                </li>
-                <li class="navLi">
-                    <a class="<%= path === '/admin/add-category' ? 'active' : '' %>" href="/admin/add-category">Add Category
-                    </a>
-                </li>
-            <% } %> 
-            <li class="navLi">
-                <a class="<%= path === '/cart' ? 'active' : '' %> numberOfProducts" href="/cart">Cart</a>
-            </li>
-            <li class="navLi">
-                <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
-            </li>           
-        </ul>
-        <ul >
-            <% if (!isAuthenticated) { %>
-                <li class="navLi">
-                    <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
-                </li>
-                <li class="navLi">
-                    <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
-                </li>
-            <% } else { %>
-                <li class="navLi">
-                    <form action="/logout" method="post">
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                        <button type="submit">Logout</button>
-                    </form>
-                </li>
-            <% } %>
-        </ul>
-    </nav>
-    <style>
-        .numberOfProducts::after {
-            content: "<%= productsForAfter %>";
-        }
-    </style>           
-    
 
+    <div class="nav-container">
+        <nav class="nav">
+            <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#313131" fill-opacity="1" d="M0,96L48,106.7C96,117,192,139,288,138.7C384,139,480,117,576,133.3C672,149,768,203,864,224C960,245,1056,235,1152,208C1248,181,1344,139,1392,117.3L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+            </svg>
+                
+            <a class="<%= path === '/' ? 'active' : '' %>" href="/"><img class="logo" src="/images/logo.png" alt="QiFood"></a>
+            <ul class="navUl">
+                <li class="navLi">
+                    <a class="<%= path === '/' ? 'active' : '' %>" href="/">Domů</a>
+                </li>
+                <li class="navLi">
+                    <a class="<%= path === '/menu' ? 'active' : '' %>" href="/menu">Menu</a>
+                </li>
+                <li class="navLi">
+                    <a class="<%= path === '/kontakt' ? 'active' : '' %>" href="/kontakt">Kontakt</a>
+                </li>
+                <% if (isAdmin) { %>
+                    <li class="navLi">
+                        <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product
+                        </a>
+                    </li>
+                    <li class="navLi">
+                        <a class="<%= path === '/admin/make-qr' ? 'active' : '' %>" href="/admin/make-qr">Tvůrce QR
+                        </a>
+                    </li>
+                    <li class="navLi">
+                        <a class="<%= path === '/admin/add-category' ? 'active' : '' %>" href="/admin/add-category">Add Category
+                        </a>
+                    </li>
+                <% } %> 
+                <li class="navLi">
+                    <a class="<%= path === '/cart' ? 'active' : '' %> numberOfProducts" href="/cart">Cart</a>
+                </li>
+                <li class="navLi">
+                    <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
+                </li>           
+            </ul>
+            <ul >
+                <% if (!isAuthenticated) { %>
+                    <li class="navLi">
+                        <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+                    </li>
+                    <li class="navLi">
+                        <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
+                    </li>
+                <% } else { %>
+                    <li class="navLi">
+                        <form action="/logout" method="post">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <button type="submit">Logout</button>
+                        </form>
+                    </li>
+                <% } %>
+            </ul>
+        </nav>
+    </div>
+        <div class="mobile-landing-page">
+            <svg class="mobile-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#313131" fill-opacity="1" d="M0,96L48,106.7C96,117,192,139,288,138.7C384,139,480,117,576,133.3C672,149,768,203,864,224C960,245,1056,235,1152,208C1248,181,1344,139,1392,117.3L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+            </svg>
+            <a class="<%= path === '/' ? 'active' : '' %>" href="/"><img class="mobile-logo" src="/images/logo.png" alt="QiFood"></a>
+        </div>
+        <button id="side-menu-toggle">
+            <svg width="62" height="55" viewBox="0 0 62 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_d_201_6)">
+                <line x1="37.5" y1="7.5" x2="54.5" y2="7.5" stroke="#313131" stroke-width="3" stroke-linecap="round"/>
+                <line x1="7.5" y1="27.5" x2="54.5" y2="27.5" stroke="#313131" stroke-width="3" stroke-linecap="round"/>
+                <line x1="7.5" y1="47.5" x2="44.5" y2="47.5" stroke="#313131" stroke-width="3" stroke-linecap="round"/>
+                </g>
+                <defs>
+                <filter id="filter0_d_201_6" x="0" y="0" width="62" height="55" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                <feOffset/>
+                <feGaussianBlur stdDeviation="3"/>
+                <feComposite in2="hardAlpha" operator="out"/>
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_201_6"/>
+                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_201_6" result="shape"/>
+                </filter>
+                </defs>
+                </svg>
+        </button>
+        <nav class="mobile-nav">    
+                <ul class="mobile-navUl">
+                    <li class="mobile-navLi">
+                        <a class="<%= path === '/' ? 'active' : '' %>" href="/">Domů</a>
+                    </li>
+                    <li class="mobile-navLi">
+                        <a class="<%= path === '/menu' ? 'active' : '' %>" href="/menu">Menu</a>
+                    </li>
+                    <li class="mobile-navLi">
+                        <a class="<%= path === '/kontakt' ? 'active' : '' %>" href="/kontakt">Kontakt</a>
+                    </li>
+                    <% if (isAdmin) { %>
+                        <li class="mobile-navLi">
+                            <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product
+                            </a>
+                        </li>
+                        <li class="mobile-navLi">
+                            <a class="<%= path === '/admin/make-qr' ? 'active' : '' %>" href="/admin/make-qr">Tvůrce QR
+                            </a>
+                        </li>
+                        <li class="mobile-navLi">
+                            <a class="<%= path === '/admin/add-category' ? 'active' : '' %>" href="/admin/add-category">Add Category
+                            </a>
+                        </li>
+                    <% } %> 
+                    <li class="mobile-navLi">
+                        <a class="<%= path === '/cart' ? 'active' : '' %> numberOfProducts" href="/cart">Cart</a>
+                    </li>
+                    <li class="mobile-navLi">
+                        <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
+                    </li>           
+                </ul>
+                <ul >
+                    <% if (!isAuthenticated) { %>
+                        <li class="mobile-navLi">
+                            <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+                        </li>
+                        <li class="mobile-navLi">
+                            <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
+                        </li>
+                    <% } else { %>
+                        <li class="mobile-navLi">
+                            <form action="/logout" method="post">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button type="submit">Logout</button>
+                            </form>
+                        </li>
+                    <% } %>
+                </ul>
+            </nav>
+        <style>
+            .numberOfProducts::after {
+                content: "<%= productsForAfter %>";
+            }
+        </style>           
 </header>
+
+
 

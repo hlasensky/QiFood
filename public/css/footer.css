@@ -41,7 +41,6 @@
 	width: 40vw;
 }
 
-
 .footerUl {
 	list-style: none;
 	display: flex;
@@ -86,7 +85,7 @@
 	left: -30px;
 	content: " ";
 	border-radius: 50%;
-	background: #FF6D59;
+	background: #ff6d59;
 	width: 100px;
 	height: 100px;
 }
@@ -105,7 +104,7 @@
 .OPTitle {
 	font-size: 2.4rem;
 	line-height: 74px;
-	margin:0 200px 0 0;
+	margin: 0 200px 0 0;
 }
 
 .OPLi {
@@ -116,19 +115,72 @@
 .OPUl {
 	list-style: none;
 
-	margin:0;
+	margin: 0;
 }
 
 .signature {
 	position: absolute;
-    z-index: 20;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    width: 100%;
+	z-index: 20;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	width: 100%;
 }
 
-.signature a{
-	color: #FF6D59;
+.signature a {
+	color: #ff6d59;
+}
+
+@media screen and (max-width: 900px) {
+	.footer {
+		padding-top: 100px;
+	}
+	
+	.footerContainer {
+		height: 100vh;
+		flex-direction: column;
+		padding: 20vh 3vw 6vh 3vw;
+		justify-content: space-evenly;
+	}
+	.footerLi {
+		font-size: 1.6rem;
+		line-height: 30px;
+		color: #f8eded;
+		margin: 20px 0px;
+		display: inline-flex;
+		align-items: center;
+	}
+	.gmap_canvas {
+		height: 30vh;
+		width: 60vw;
+	}
+	.footerOpenHoursContainer {
+		position: relative;
+		top: -80px;
+		z-index: 10;
+		width: 450px;
+		height: 250px;
+	}
+	.OPTitle {
+		font-size: 1.6rem;
+		margin: 0 180px 0 0;
+		line-height: 50px;
+	}
+	.OPLi {
+		font-size: 1.2rem;
+		line-height: 40px;
+	}
+	.footerOpenHoursContainer::before {
+		top: -15px;
+		right: -15px;
+		width: 50px;
+		height: 50px;
+	}
+	.footerOpenHoursContainer::after {
+		bottom: -15px;
+		left: -15px;
+		width: 50px;
+		height: 50px;
+	}
 }

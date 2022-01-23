@@ -16,6 +16,7 @@
 }
 .h1Header {
     margin-top: -27vh;
+    overflow: hidden;
 }
 
 
@@ -25,21 +26,24 @@
         justify-content: center;
         font-size: 5rem;
         margin: 30px auto;
+        
     }
   }
   
-  @media screen and (max-width: 1000px) {
-	.h1Header h1{
-        font-size: 4rem;
-    }
-    .h1Header img{
-        width: 120%;
-    }
-  }
+@media screen and (max-width: 1000px) {
+.h1Header h1{
+    font-size: 4rem;
+}
+.h1Header img{
+    width: 120%;
+    
+}
+}
   
-  @media screen and (max-width: 800px) {
-    .h1Header img{
-        width: 130%;
-        height: 100%;
-    }
-  }
+@media screen and (max-width: 810px) {
+.h1Header img{
+    width: 130%;
+    height: 100%;
+}
+
+}
