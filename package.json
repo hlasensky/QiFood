@@ -8,7 +8,7 @@
     "start": "nodemon app.js",
     "start-server": "node app.js"
   },
-  "author": "",
+  "author": "Tomas Hlasensky",
   "license": "",
   "devDependencies": {
     "nodemon": "^2.0.12"
