@@ -11,15 +11,14 @@
    <form id="address-form" class="formContainer" action="/pay?_csrf=<%=csrfToken%>" method="POST" enctype="application/x-www-form-urlencoded">
        
         <div>
+            <input class="radio" type="radio" name="payment" value="cash">
+            <label for="cash">Zaplatit při převzetí</label>
+            <input class="radio" type="radio" name="payment" value="card">
+            <label for="card">Zaplatit kartou</label>
             <input class="radio eth" type="radio" name="payment" value="eth">
             <label for="eth">Zaplatit s Etherem</label>
-    
-            <input class="radio eth" type="radio" name="payment" value="card">
-            <label for="card">Zaplatit kartou</label>
-    
-            <input class="radio eth" type="radio" name="payment" value="cash">
-            <label for="cash">Zaplatit při převzetí</label>
         </div>
+
 
         <input type="hidden" name="userId" value="<%= userId %>">
         <input type="hidden" name="metaError" class="metaError" value="">
