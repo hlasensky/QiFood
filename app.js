@@ -59,8 +59,6 @@ app.use(
 	})
 );
 
-
-
 //securyty
 app.use(express.json({ limit: "10kb" })); //limit to prevent DOS attacks
 app.use(mongoSanitize()); //prevent NoSQL Injection Attacks
@@ -80,8 +78,6 @@ app.use(csrfProtection);
 //error handeling
 app.use(flash());
 
-
-
 //saving user in req, if some exists
 app.use((req, res, next) => {
 	if (!req.session.user) {
@@ -95,7 +91,7 @@ app.use((req, res, next) => {
 	.catch((err) => console.log(err));
 });
 
-//CHECK FOR BUGS
+
 //middleware for deleting expired anonymous users
 app.use((req, res, next) => {
 	if (req.session.user) {
@@ -135,16 +131,11 @@ app.use((req, res, next) => {
 	next();
 });
 
-
-
 //routes
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
 app.use(errorController.get404); //404 error handeling
-
-
-
 
 mongoose
 	.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })

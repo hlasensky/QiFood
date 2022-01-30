@@ -5,7 +5,6 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 const CoinGecko = require("coingecko-api");
-const { numberToString } = require("pdf-lib");
 require("dotenv").config();
 
 const ACCOUNT = process.env.ACCOUNT;
@@ -156,7 +155,7 @@ exports.postOrder = (req, res, next) => {
 				},
 				validationErrors: errors.array(),
 				pay: "",
-				params: ""
+				params: "",
 			});
 		}
 	}
@@ -209,7 +208,7 @@ exports.postPay = (req, res, next) => {
 	//looking for every order that user made and adding new one from cart
 	const metaError = req.body.metaError;
 	const paymentMethod = "eth"; //req.body.paymentMethod;
-	console.log(metaError, "metaError")
+	console.log(metaError, "metaError");
 	if (!metaError) {
 		Order.updateOne(
 			{ userId: req.user },
@@ -271,10 +270,10 @@ exports.getPay = (req, res, next) => {
 						to: ACCOUNT,
 						value:
 							"0x" +
-							(
-								Math.floor((req.user.totalPrice(products.cart.items) /
+							Math.floor(
+								(req.user.totalPrice(products.cart.items) /
 									ethPrice) *
-								10 ** 18)
+									10 ** 18
 							).toString(16),
 						gas: "0x2710",
 					};
