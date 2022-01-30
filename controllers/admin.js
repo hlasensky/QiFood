@@ -5,7 +5,7 @@ const { PDFDocument } = require("pdf-lib");
 const fs = require("fs");
 
 exports.getAddProduct = (req, res, next) => {
-	/* Rendering site for add product, plus passing categoryes */
+	/* Rendering site for add product, plus passing categories */
 	Category.find()
 		.then((categoryes) => {
 			res.render("admin/edit-product", {
@@ -212,7 +212,7 @@ exports.postDeleteProduct = (req, res, next) => {
 	//deleting product
 	Product.findByIdAndDelete(productId)
 		.then((product) => {
-			//also deletiong product from category
+			//also deleting product from category
 			Category.findById(product.category)
 				.then((categoryObj) => {
 					const productsToFilter = [ ...categoryObj.products ];
