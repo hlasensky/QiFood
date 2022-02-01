@@ -21,6 +21,9 @@
 
 
 @media screen and (max-width: 1300px) {
+    .header {
+        margin-bottom: 60px;
+    }
 	.h1Header h1{
         width: 100%;
         justify-content: center;

@@ -7,11 +7,11 @@ const fs = require("fs");
 exports.getAddProduct = (req, res, next) => {
 	/* Rendering site for add product, plus passing categories */
 	Category.find()
-		.then((categoryes) => {
+		.then((categories) => {
 			res.render("admin/edit-product", {
 				pageTitle: "Add Product",
 				path: "/admin/add-product",
-				categoryes: categoryes,
+				categories: categories,
 				product: "",
 			});
 		})
@@ -20,15 +20,15 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postEditProduct = (req, res, next) => {
 	productId = req.body.Id;
-	/* Rendering site for add product, plus passing categoryes */
+	/* Rendering site for add product, plus passing categories */
 	Category.find()
-		.then((categoryes) => {
+		.then((categories) => {
 			Product.findById(productId)
 				.then((product) => {
 					res.render("admin/edit-product", {
 						pageTitle: "Add Product",
 						path: "/admin/edit-product",
-						categoryes: categoryes,
+						categories: categories,
 						product: product,
 					});
 				})
@@ -38,7 +38,7 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getAddCategory = (req, res, next) => {
-	/* Rendering site for add colection */
+	/* Rendering site for add collection */
 	res.render("admin/add-category", {
 		path: "/add-category",
 		pageTitle: "Add category",
@@ -46,7 +46,7 @@ exports.getAddCategory = (req, res, next) => {
 };
 
 exports.getQR = (req, res, next) => {
-	/* Rendering veiw with all files that are in dir and dirTablesQR */
+	/* Rendering view with all files that are in dir and dirTablesQR */
 	
 
 	const dir = "public/templates/";
@@ -161,11 +161,11 @@ exports.postAddProduct = (req, res, next) => {
 		title: title,
 		price: price,
 		description: description,
-		imageUrl: image.path.replace("public\\", ""), //taking path from file and remowing public\ so it can show up on the site
+		imageUrl: image.path.replace("public\\", ""), //taking path from file and removing public\ so it can show up on the site
 		category: category,
 		userId: userId,
 	});
-	//if product doesnt exist
+	//if product doesn't exist
 	console.log(!productId)
 	if (!productId) {
 		console.log("new")

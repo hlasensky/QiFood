@@ -4,7 +4,7 @@ const { validationResult } = require("express-validator");
 const User = require("../models/user");
 
 exports.postLogout = (req, res, next) => {
-	/* destroing session(logging out) */
+	/* destroying session(logging out) */
 	req.session.destroy((err) => {
 		console.log(err);
 		res.redirect("/");
@@ -12,7 +12,7 @@ exports.postLogout = (req, res, next) => {
 };
 
 exports.getLogin = (req, res, next) => {
-	/* rendering loggin site */
+	/* rendering logging site */
 	let message = req.flash("error");
 	if (message.length > 0) {
 		message = message[0];
@@ -46,7 +46,7 @@ exports.getSignup = (req, res, next) => {
 };
 
 exports.postSignup = (req, res, next) => {
-	/* looking to db if user allready exists, if not creating new one */
+	/* looking to db if user already exists, if not creating new one */
 	const errors = validationResult(req);
 	const email = req.body.email;
 	const password = req.body.password;
@@ -87,7 +87,7 @@ exports.postSignup = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-	/* looking to db if user enter valide user information */
+	/* looking to db if user enter valid user information */
 	const errors = validationResult(req);
 	const email = req.body.email;
 	const password = req.body.password;
@@ -101,7 +101,7 @@ exports.postLogin = (req, res, next) => {
 			validationErrors: errors.array(),
 		});
 	}
-	//compering passords with bcrypt.compare
+	//compering passwords with bcrypt.compare
 	User.findOne({ email: email }).then((user) => {
 		bcrypt
 			.compare(password, user.password)

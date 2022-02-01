@@ -12,7 +12,7 @@ const ACCOUNT = process.env.ACCOUNT;
 exports.getIndex = (req, res, next) => {
 	/* rendering landing page with fetched data from category collection */
 	if (!req.session.user) {
-		/* this part make anonym user for every new visite of landing page */
+		/* this part make anonym user for every new visiter of landing page */
 		bcrypt
 			.hash(Math.random().toString(), 12)
 			.then((hashedPassword) => {
@@ -43,9 +43,9 @@ exports.getIndex = (req, res, next) => {
 	}
 
 	Category.find()
-		.then((categoryes) => {
+		.then((categories) => {
 			res.render("shop/index", {
-				categoryes: categoryes,
+				categories: categories,
 				pageTitle: "QiFood",
 				path: "/",
 			});
@@ -61,11 +61,11 @@ exports.getMenu = (req, res, next) => {
 		.populate({
 			path: "products.productId",
 		})
-		.exec(function (err, categoryes) {
+		.exec(function (err, categories) {
 			res.render("shop/menu", {
 				pageTitle: "Menu",
 				path: "/menu",
-				categoryes: categoryes,
+				categories: categories,
 				dot: ".",
 			});
 		});
@@ -73,7 +73,7 @@ exports.getMenu = (req, res, next) => {
 
 exports.getKontakt = (req, res, next) => {
 	/* rendering contact page*/
-	res.render("shop/contakt", {
+	res.render("shop/contact", {
 		pageTitle: "Kontakt",
 		path: "/kontakt",
 	});
@@ -207,15 +207,14 @@ exports.postOrder = (req, res, next) => {
 exports.postPay = (req, res, next) => {
 	//looking for every order that user made and adding new one from cart
 	const metaError = req.body.metaError;
-	const paymentMethod = "eth"; //req.body.paymentMethod;
-	console.log(metaError, "metaError");
+	const paymentMethod = req.body.payment;
 	if (!metaError) {
 		Order.updateOne(
 			{ userId: req.user },
 			{ payment: "done with " + paymentMethod }
 		)
 			.then(() => {
-				//res.status(202).redirect("/orders");
+				res.status(202).redirect("/orders");
 				req.user.removeCart();
 			})
 			.catch((err) => console.log(err));
@@ -298,7 +297,7 @@ exports.getOrders = (req, res, next) => {
 	//rendering orders in summed form
 	populatedOrders = [];
 
-	//function that summariz orders so they show only ID, price, quantity and date
+	//function that summarize orders so they show only ID, price, quantity and date
 	const summary = (orders) => {
 		const summedOrders = [];
 		orders.forEach((order) => {
@@ -309,12 +308,12 @@ exports.getOrders = (req, res, next) => {
 				return product.quantity;
 			});
 
-			const sumedPrices = priceArray.reduce((a, b) => a + b);
-			const sumedQuantities = quantityArray.reduce((a, b) => a + b);
+			const summedPrices = priceArray.reduce((a, b) => a + b);
+			const summedQuantities = quantityArray.reduce((a, b) => a + b);
 			summedOrders.push({
 				orderId: order._id,
-				totalPrice: sumedPrices,
-				totalQuantity: sumedQuantities,
+				totalPrice: summedPrices,
+				totalQuantity: summedQuantities,
 				date: order.date,
 			});
 		});
