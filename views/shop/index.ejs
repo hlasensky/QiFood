@@ -10,9 +10,9 @@
         <img src="/images/landing.png" alt="error">
     </div>
     <main>
-        <% if (categoryes.length > 0) { %>
+        <% if (categories.length > 0) { %>
             <div class="categoryesContainer">
-                <% for (let category of categoryes) { %>
+                <% for (let category of categories) { %>
                     <article class="categoryContainer">
                         <a class="categoryUrl" href="<%= category.url %>">
                         <div class="categoryImageContainer" >
@@ -27,7 +27,7 @@
                 <% } %>
             </div>
         <% } else { %>
-            <h1>No Categoryes Found!</h1>
+            <h1>No Categories Found!</h1>
         <% } %>
     </main>
 <%- include('../includes/end.ejs') %>

@@ -1,4 +1,4 @@
-const { check, body } = require("express-validator");
+const { body } = require("express-validator");
 
 const express = require('express');
 
@@ -61,7 +61,7 @@ router.post('/pay', shopController.postPay);
 router.get('/order-detail:Id', shopController.getOrderDetail);
 
 router.post('/updateCart', [
-    body("productQuantity", "Change only on munbers").isNumeric()
+    body("productQuantity", "Change only on numbers").isNumeric()
 ],  shopController.postUpdateCart);
 
 router.post('/removeFormCart', [

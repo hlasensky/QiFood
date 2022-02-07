@@ -1,6 +1,6 @@
 const path = require("path");
 
-//external mudules
+//external modules
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
@@ -32,7 +32,7 @@ const csrfProtection = csrf();
 
 app.use(express.static(path.join(__dirname, "public")));
 
-//seting views and engine for them
+//setting views and engine for them
 app.set("view engine", "ejs");
 app.set("views", "views");
 
@@ -41,7 +41,7 @@ const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const authRoutes = require("./routes/auth");
 
-//parser for urlencoded requists
+//parser for urlencoded requests
 app.use(express.urlencoded({ extended: false }));
 
 
@@ -58,9 +58,7 @@ app.use(
 	})
 );
 
-
-
-//securyty
+//security
 app.use(express.json({ limit: "10kb" })); //limit to prevent DOS attacks
 app.use(mongoSanitize()); //prevent NoSQL Injection Attacks
 app.use(helmet()); //Preventing XSS Attacks
@@ -76,10 +74,8 @@ app.use(
 );
 app.use(csrfProtection);
 
-//error handeling
+//error handling
 app.use(flash());
-
-
 
 //saving user in req, if some exists
 app.use((req, res, next) => {
@@ -94,7 +90,7 @@ app.use((req, res, next) => {
 	.catch((err) => console.log(err));
 });
 
-//CHECK FOR BUGS
+
 //middleware for deleting expired anonymous users
 app.use((req, res, next) => {
 	if (req.session.user) {
@@ -134,16 +130,11 @@ app.use((req, res, next) => {
 	next();
 });
 
-
-
 //routes
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
-app.use(errorController.get404); //404 error handeling
-
-
-
+app.use(errorController.get404); //404 error handling
 
 mongoose
 	.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })

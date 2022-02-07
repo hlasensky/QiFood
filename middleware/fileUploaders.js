@@ -1,4 +1,3 @@
-const { check } = require("express-validator");
 const multer = require("multer");
 
 const {
@@ -21,7 +20,6 @@ exports.productImage = (req, res, next) => {
 		} else if (err) {
 			console.log(err)
 		}
-		//check('image').isEmpty().withMessage('Image is required!!!')
         next()
     });
 }

@@ -6,9 +6,9 @@
 	<%- include('../includes/navigation.ejs') %>
 
 	<main>
-		<% if (categoryes.length > 0) { %>
+		<% if (categories.length > 0) { %>
 		<div class="menuContainer">
-			<% for (let category of categoryes) { %>
+			<% for (let category of categories) { %>
 			<div class="categoryContainerMenu" id="<%= category.url.split('#')[1] %>">
 				<div class="categoryImageMenu" style="background-image: url('<%= category.imageUrl %>');  ">
 					<header class="categoryHeaderMenu">
@@ -48,7 +48,7 @@
 			<% } %>
 		</div>
 		<% } else { %>
-			<h1>No Categoryes Found!</h1>
+			<h1>No Categories Found!</h1>
 		<% } %> 		
 	</main>
 	<%- include('../includes/end.ejs') %>

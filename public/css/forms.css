@@ -21,12 +21,13 @@
 
 .nav {
 	width: 100%;
-	height: 100%;
-	position: relative;
+	position: absolute;
+	top: 0;
+	left: 0;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	
+	overflow-x: clip;
 }
 
 .navUl {
@@ -59,7 +60,7 @@
 	margin-bottom: 80px;
 	transition: all 300ms ease;
 	height: 25vh;
-	overflow: hidden;
+
 }
 
 .logo {
@@ -227,6 +228,7 @@ transform: translateX(0);
 
 .nav-container {
 	display: flex;
+	
 }
 
 .backdrop {

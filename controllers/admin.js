@@ -5,13 +5,13 @@ const { PDFDocument } = require("pdf-lib");
 const fs = require("fs");
 
 exports.getAddProduct = (req, res, next) => {
-	/* Rendering site for add product, plus passing categoryes */
+	/* Rendering site for add product, plus passing categories */
 	Category.find()
-		.then((categoryes) => {
+		.then((categories) => {
 			res.render("admin/edit-product", {
 				pageTitle: "Add Product",
 				path: "/admin/add-product",
-				categoryes: categoryes,
+				categories: categories,
 				product: "",
 			});
 		})
@@ -20,15 +20,15 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postEditProduct = (req, res, next) => {
 	productId = req.body.Id;
-	/* Rendering site for add product, plus passing categoryes */
+	/* Rendering site for add product, plus passing categories */
 	Category.find()
-		.then((categoryes) => {
+		.then((categories) => {
 			Product.findById(productId)
 				.then((product) => {
 					res.render("admin/edit-product", {
 						pageTitle: "Add Product",
 						path: "/admin/edit-product",
-						categoryes: categoryes,
+						categories: categories,
 						product: product,
 					});
 				})
@@ -38,7 +38,7 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getAddCategory = (req, res, next) => {
-	/* Rendering site for add colection */
+	/* Rendering site for add collection */
 	res.render("admin/add-category", {
 		path: "/add-category",
 		pageTitle: "Add category",
@@ -46,7 +46,7 @@ exports.getAddCategory = (req, res, next) => {
 };
 
 exports.getQR = (req, res, next) => {
-	/* Rendering veiw with all files that are in dir and dirTablesQR */
+	/* Rendering view with all files that are in dir and dirTablesQR */
 	
 
 	const dir = "public/templates/";
@@ -145,6 +145,7 @@ exports.postAddCategory = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
+	console.log("postAddProduct")
 	/* adding new product to db and pushing it to an array in proper category in db*/
 	const title = req.body.title;
 	const price = req.body.price;
@@ -155,17 +156,19 @@ exports.postAddProduct = (req, res, next) => {
 	}
 	const category = req.body.radioCategory;
 	const userId = req.body.userId;
-	const productId = req.body.Id;
+	const productId = req.body.productId;
 	const product = new Product({
 		title: title,
 		price: price,
 		description: description,
-		imageUrl: image.path.replace("public\\", ""), //takong path from file and remowing public\ so it can show up on the site
+		imageUrl: image.path.replace("public\\", ""), //taking path from file and removing public\ so it can show up on the site
 		category: category,
 		userId: userId,
 	});
-	//if product doesnt exist
+	//if product doesn't exist
+	console.log(!productId)
 	if (!productId) {
+		console.log("new")
 		product
 			.save()
 			.then((product) => {
@@ -183,13 +186,14 @@ exports.postAddProduct = (req, res, next) => {
 			.catch((err) => console.log(err));
 	} else {
 		//if it exists just update it
+		console.log("updating")
 		Product.findOneAndUpdate(
 			{ _id: productId },
 			{
 				title: title,
 				price: price,
 				description: description,
-				imageUrl: image,
+				imageUrl: image.path.replace("public\\", ""),
 				category: category,
 				userId: userId,
 			}
@@ -208,7 +212,7 @@ exports.postDeleteProduct = (req, res, next) => {
 	//deleting product
 	Product.findByIdAndDelete(productId)
 		.then((product) => {
-			//also deletiong product from category
+			//also deleting product from category
 			Category.findById(product.category)
 				.then((categoryObj) => {
 					const productsToFilter = [ ...categoryObj.products ];
