@@ -27,10 +27,7 @@ const userSchema = new Schema({
 			},
 		],
 	},
-	expireDate: {},
-
-	resetToken: String,
-	resetTokenExpiration: Date,
+	expireDate: {}
 });
 
 userSchema.methods.addToCart = function (product, productQuantity) {
