@@ -78,7 +78,10 @@
     .categoryContainer {
         padding: 25px 20px 30px 20px;
         width: 100%;
-        height: 300px;
+        height: 250px;
         border-radius: 35px;
+    }
+    .categoryImage {
+        height: 200px;
     }
   }
