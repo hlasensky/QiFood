@@ -14,7 +14,7 @@
 	left: 0;
 	z-index: 5;
 	width: 100%;
-	padding: 30vh 5vw 8vh 5vw;
+	padding: 40vh 5vw 8vh 5vw;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -64,7 +64,7 @@
 
 .footerOpenHoursContainer {
 	position: relative;
-	top: -15vh;
+	top: -200;
 	z-index: 10;
 	justify-self: flex-start;
 	width: 650px;
