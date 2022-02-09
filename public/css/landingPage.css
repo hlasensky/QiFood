@@ -56,6 +56,7 @@
 @media screen and (max-width: 550px) {
     .h1Header img {
         width: 180vw;
+        height: 60vh;
     }
     .h1Header h1{
         font-size: 8vw;
