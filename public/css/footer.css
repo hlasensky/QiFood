@@ -186,12 +186,6 @@
 }
 
 @media screen and (max-width: 700px) {
-	.footerContainer {
-		height: 80vh;
-		flex-direction: column;
-		padding: 20vh 3vw 6vh 3vw;
-		justify-content: space-evenly;
-	}
 	.footerLi {
 		font-size: 1.3rem;
 		line-height: 30px;
@@ -200,16 +194,12 @@
 		display: inline-flex;
 		align-items: center;
 	}
-	.gmap_canvas {
-		height: 30vh;
-		width: 60vw;
-	}
 	.footerOpenHoursContainer {
 		position: relative;
 		top: -80px;
 		z-index: 10;
-		width: 450px;
-		height: 250px;
+		width: 400px;
+		height: 200px;
 	}
 	.OPTitle {
 		font-size: 1.3rem;
@@ -217,7 +207,7 @@
 		line-height: 50px;
 	}
 	.OPLi {
-		font-size: 1.2rem;
+		font-size: 1rem;
 		line-height: 40px;
 	}
 	.footerOpenHoursContainer::before {
