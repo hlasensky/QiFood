@@ -132,7 +132,7 @@
 	color: #ff6d59;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1200px) {
 	.footer {
 		padding-top: 100px;
 	}
