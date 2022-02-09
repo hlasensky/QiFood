@@ -5,7 +5,7 @@
 }
 
 .footerContainer {
-	height: 80vh;
+	height: 100vh;
 	background-image: url(/images/footer.svg);
 	background-position: center;
 	background-repeat: no-repeat;
@@ -14,7 +14,7 @@
 	left: 0;
 	z-index: 5;
 	width: 100%;
-	padding: 40vh 5vw 8vh 5vw;
+	padding: 30vh 5vw 8vh 5vw;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
