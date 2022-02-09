@@ -193,6 +193,9 @@
 		display: inline-flex;
 		align-items: center;
 	}
+	.footerContainer {
+		padding: 10vh 1vw 3vh 1vw;
+	}
 	.footerOpenHoursContainer {
 		position: relative;
 		top: -80px;
@@ -208,6 +211,9 @@
 	.OPLi {
 		font-size: 1rem;
 		line-height: 40px;
+	}
+	.OPUl {
+		padding: 0;
 	}
 	.footerOpenHoursContainer::before {
 		top: -15px;
