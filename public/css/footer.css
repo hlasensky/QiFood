@@ -64,7 +64,7 @@
 
 .footerOpenHoursContainer {
 	position: relative;
-	top: -200px;
+	top: -15vh;
 	z-index: 10;
 	justify-self: flex-start;
 	width: 650px;
