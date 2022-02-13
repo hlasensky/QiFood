@@ -23,9 +23,9 @@
                 <li class="navLi">
                     <a class="<%= path === '/menu' ? 'active' : '' %>" href="/menu">Menu</a>
                 </li>
-                <li class="navLi">
+                <!--<li class="navLi">
                     <a class="<%= path === '/kontakt' ? 'active' : '' %>" href="/kontakt">Kontakt</a>
-                </li>
+                </li>-->
                 <% if (isAdmin) { %>
                     <li class="navLi">
                         <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product
@@ -41,25 +41,26 @@
                     </li>
                 <% } %> 
                 <li class="navLi">
-                    <a class="<%= path === '/cart' ? 'active' : '' %> numberOfProducts" href="/cart">Cart</a>
+                    <a class="<%= path === '/cart' ? 'active' : '' %> numberOfProducts" href="/cart">Košík</a>
                 </li>
                 <li class="navLi">
-                    <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
+                    <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Objednávky</a>
                 </li>           
             </ul>
-            <ul >
+            <ul class="constainerLS">
                 <% if (!isAuthenticated) { %>
                     <li class="navLi">
-                        <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+                        <a class="<%= path === '/login' ? 'active' : '' %> login" href="/login">Login</a>
                     </li>
+                    <hr>
                     <li class="navLi">
-                        <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
+                        <a class="<%= path === '/signup' ? 'active' : '' %> signup" href="/signup">Signup</a>
                     </li>
                 <% } else { %>
-                    <li class="navLi">
+                    <li class="navLi loggoutBtnContainer">
                         <form action="/logout" method="post">
                             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                            <button type="submit">Logout</button>
+                            <button class="btn loggoutBtn" type="submit">Logout</button>
                         </form>
                     </li>
                 <% } %>
@@ -128,9 +129,9 @@
                     <li class="mobile-navLi">
                         <a class="<%= path === '/menu' ? 'active' : '' %>" href="/menu">Menu</a>
                     </li>
-                    <li class="mobile-navLi">
+                    <!--<li class="mobile-navLi">
                         <a class="<%= path === '/kontakt' ? 'active' : '' %>" href="/kontakt">Kontakt</a>
-                    </li>
+                    </li>-->
                     <% if (isAdmin) { %>
                         <li class="mobile-navLi">
                             <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product
@@ -146,25 +147,26 @@
                         </li>
                     <% } %> 
                     <li class="mobile-navLi">
-                        <a class="<%= path === '/cart' ? 'active' : '' %> numberOfProducts" href="/cart">Cart</a>
+                        <a class="<%= path === '/cart' ? 'active' : '' %> numberOfProducts" href="/cart">Košík</a>
                     </li>
                     <li class="mobile-navLi">
-                        <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
+                        <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Objednávky</a>
                     </li>           
                 </ul>
-                <ul >
+                <ul class="constainerLS">
                     <% if (!isAuthenticated) { %>
                         <li class="mobile-navLi">
-                            <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+                            <a class="<%= path === '/login' ? 'active' : '' %> login" href="/login">Login</a>
                         </li>
+                        <hr>
                         <li class="mobile-navLi">
-                            <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
+                            <a class="<%= path === '/signup' ? 'active' : '' %> signup" href="/signup">Signup</a>
                         </li>
                     <% } else { %>
-                        <li class="mobile-navLi">
+                        <li class="mobile-navLi loggoutBtnContainer">
                             <form action="/logout" method="post">
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                <button type="submit">Logout</button>
+                                <button class="btn loggoutBtn" type="submit">Logout</button>
                             </form>
                         </li>
                     <% } %>

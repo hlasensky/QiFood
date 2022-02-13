@@ -6,9 +6,29 @@
 }
 
 .productPriceCart h2 {
-    margin: 0;
+    margin: 0 9px 0 0;
 }
 
 .productPriceCart h4 {
-    margin:  0;
+    margin:  0 9px 0 0;
+}
+
+.produtContainer {
+    margin-bottom: 50px;
+}
+
+.produtContainer h1 {
+    text-align: center;
+}
+
+.produtContainer h1 span {
+    text-decoration: underline;
+    text-decoration-color: #FF6D59;
+}
+
+.cartPriceAndButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }

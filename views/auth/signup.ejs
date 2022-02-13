@@ -10,21 +10,23 @@
         <% if (errorMessage) { %>
             <div><%= errorMessage %></div>
         <% } %>
-        <form  action="/signup" method="POST" enctype="application/x-www-form-urlencoded">
-            <div>
-                <label for="email">E-Mail</label>
-                <input type="email" name="email" id="email">
-            </div>
-            <div >
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password">
-            </div>
-            <div >
-                <label for="confirmPassword">Confirm Password</label>
-                <input type="password" name="confirmPassword" id="confirmPassword">
-            </div>
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <button  type="submit">Signup</button>
-        </form>
+        <div class="loginContainer">
+            <form class="login-form" action="/signup" method="POST" enctype="application/x-www-form-urlencoded">
+                <div class="form-control">
+                    <label for="email">E-Mail</label>
+                    <input type="email" name="email" id="email">
+                </div>
+                <div class="form-control">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password">
+                </div>
+                <div class="form-control">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" name="confirmPassword" id="confirmPassword">
+                </div>
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button class="btn loginBtn" type="submit">Signup</button>
+            </form>
+        </div>
     </main>
 <%- include('../includes/end.ejs') %>

@@ -8,7 +8,22 @@
 
 	<main>
                 <% if (orders.length === 0) {%> 
-                                <h1>Žádné objednávky</h1>
+                        <h1 class="noItems">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_231_5)">
+                                <path d="M17.75 7L14 3.25L4 13.25V17H7.75L17.75 7ZM20.71 4.04C21.1 3.65 21.1 3.02 20.71 2.63L18.37 0.289998C17.98 -0.100002 17.35 -0.100002 16.96 0.289998L15 2.25L18.75 6L20.71 4.04Z" fill="black"/>
+                                <path d="M0 21H26V24H0V21Z" fill="black" fill-opacity="0.36"/>
+                                <line y1="-1" x2="36.3483" y2="-1" transform="matrix(0.733642 0.679536 -0.697865 0.71623 -2 1.3)" stroke="black" stroke-width="2"/>
+                                <line y1="-1" x2="36.3483" y2="-1" transform="matrix(0.733642 0.679536 -0.697865 0.71623 -0.666504 0)" stroke="white" stroke-width="2"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_231_5">
+                                <rect width="24" height="24" fill="white"/>
+                                </clipPath>
+                                </defs>
+                                </svg>
+                                Žádné objednávky
+                        </h1>
                 <% } else {%> 
                         <% for (let order of orders) { %>
                         <div class="orderCard">

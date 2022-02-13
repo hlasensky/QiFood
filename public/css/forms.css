@@ -70,6 +70,16 @@
 
 .quantity {
 	width: 40px;
+	height: fit-content;
+	padding: 5px;
+	border-radius: 8px;
+	border-width: 1px;
+	box-shadow: 2px 2px 2px 1px rgba(0, 0, 7, 0.062);
+}
+
+.quantityEdit form{
+	display: flex;
+	align-items: center;
 }
 
 .formContainer {
@@ -298,6 +308,130 @@ transform: translateX(0);
 	position: absolute;
 }
 
+.btn {
+	cursor: pointer;
+	padding: 5px 10px;
+	display: inline-block;
+	margin: 5px 8px;
+	position: relative;
+	border-radius: 10px;
+	border-width: 1px;
+	box-shadow: 2px 2px 2px 1px rgba(0, 0, 7, 0.062);
+	transition: all 300ms ease-out;
+}
+
+.btn:hover {
+	cursor: pointer;
+	border: 1px solid #ff6d59;
+	box-shadow: 3px 3px 2px 1px rgba(0, 0, 7, 0.15);
+}
+
+.deleteBtn {
+	background: #FF6D59;
+}
+
+.orderBtn {
+	border-radius: 20px;
+	padding: 10px 28px;
+	font-size: 1.2rem;
+	font-weight: bold;
+	border-width: 2px;
+	transition: all 400ms ease-out;
+}
+
+
+
+.orderBtn:hover {
+	cursor: pointer;
+	border: 2px solid #ff6d59;
+	box-shadow: 5px 5px 2px 1px rgba(0, 0, 7, 0.1);
+}
+
+.constainerLS {
+	padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+	margin: 0 20px;
+}
+
+.constainerLS hr {
+	width: 90%;
+	margin: 0px;
+}
+
+.login {
+	font-weight: 600;
+}
+
+.signup {
+	font-weight: 400;
+}
+
+.loginContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.login-form {
+    background: #fafafa;
+	width: 50vw;
+    filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.25));
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px 50px;
+	margin: 50px 20px 100px 20px;
+}
+
+.form-control {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 1.5rem;
+	margin-bottom: 20px;
+}
+
+.form-control input {
+	border-radius: 10px;
+	height: 2rem;
+	border-width: 1px;
+	padding: 5px 10px;
+}
+
+.loginBtn {
+	border-radius: 12px;
+	padding: 10px 28px;
+	font-size: 1.2rem;
+	font-weight: bold;
+	border-width: 2px;
+	transition: all 400ms ease-out;
+}
+
+.loginBtn:hover {
+	cursor: pointer;
+	border: 2px solid #ff6d59;
+	box-shadow: 5px 5px 2px 1px rgba(0, 0, 7, 0.1);
+}
+
+.noItems {
+	text-align:center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 100px 20px 150px 20px;
+}
+
+.noItems svg {
+	width: 3rem;
+	height: auto;
+	margin: 0 20px;
+}
+
 @media (max-width: 810px) {
 	.nav-container {
 		display: none;
@@ -321,6 +455,14 @@ transform: translateX(0);
 	.mobile-logo {
 		display: flex;
 	}
+	.login-form {
+		width: 90vw;
+		padding: 30px 25px;
+	}
+	.noItems {
+		flex-direction: column;
+	}
+
 	
 }
   

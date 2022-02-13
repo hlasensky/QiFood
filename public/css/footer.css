@@ -2,7 +2,6 @@
 	display: flex;
 	justify-content: center;
 	padding-top: 200px;
-	overflow: hidden;
 }
 
 .footerContainer {
@@ -65,7 +64,7 @@
 
 .footerOpenHoursContainer {
 	position: relative;
-	top: -200;
+	top: -200px;
 	z-index: 10;
 	justify-self: flex-start;
 	width: 650px;
@@ -230,3 +229,9 @@
 	}
 }
 
+
+@media screen and (max-width: 500px) {
+	.footer {
+		overflow: hidden;
+	}
+}

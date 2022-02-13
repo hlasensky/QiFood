@@ -14,8 +14,17 @@
 .produtContainer {
     display: grid;
     grid-template-columns: 1fr;
+    border-radius: 50px;
+    padding: 30px 40px;
 }
 
+.produtContainerCart {
+    display: grid;
+    grid-template-columns: 1fr;
+    background: #fff3f39c;
+    border-radius: 50px;
+    padding: 30px 40px;
+}
 
 .categoryImageMenu {
     width: 45%;
@@ -51,6 +60,11 @@
     align-items: flex-end;
     justify-content: center;
     flex-direction: column;
+   
+}
+
+.productPrice h2 {
+    margin: 0 9px 0 0 ;
 }
 
 .productInfo h2{
