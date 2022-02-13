@@ -9,14 +9,15 @@ const csrf = require("csurf");
 const flash = require("connect-flash");
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
-
+const https = require("https");
 
 //internal modules
+const fs = require("fs");
 const errorController = require("./controllers/error");
 const User = require("./models/user");
 
 //.env
-require('dotenv').config();
+require("dotenv").config();
 
 const MONGODB_URI = process.env.MONGODB_URI; //taking mongoDB url from .env
 
@@ -139,8 +140,17 @@ app.use(errorController.get404); //404 error handling
 mongoose
 	.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => {
-		app.listen(process.env.PORT || 3000, 
-			() => console.log("Server is running..."));
+		https
+			.createServer(
+				{
+					key: fs.readFileSync("server.key", { encoding: "utf8" }),
+					cert: fs.readFileSync("server.cert", { encoding: "utf8" }),
+				},
+				app
+			)
+			.listen(3000, () => {
+				console.log("Listening...");
+			});
 	})
 	.catch((err) => {
 		console.log(err);
