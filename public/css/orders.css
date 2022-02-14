@@ -1,12 +1,11 @@
 .orderCard {
-	width: 30vh;
 	height: auto;
 	background: #fafafa;
-	filter: drop-shadow(8 px 8 px 8 px rgba(0, 0, 0, 0.25));
+	box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.25);
 	border-radius: 30px;
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
 	flex-direction: column;
 	padding: 30px;
 }
