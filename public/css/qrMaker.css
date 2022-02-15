@@ -25,7 +25,7 @@
     align-items: center;
 }
 
-.templateFormContainerform form{
+.templateFormContainer form{
     width: 100%;
     background: #fafafa;
     filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.25));
