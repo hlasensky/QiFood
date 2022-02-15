@@ -25,13 +25,22 @@
     align-items: center;
 }
 
-.templateFormContainerform {
+.templateFormContainerform form{
     width: 100%;
+    background: #fafafa;
+    filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.25));
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px 50px;
+	margin: 0px 20px 30px 20px;
 }
 
 .templateUploadContainer form{
     background: #fafafa;
-	width: 50vw;
+	width: 40vw;
     filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.25));
     border-radius: 30px;
     display: flex;
