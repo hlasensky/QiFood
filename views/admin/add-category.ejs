@@ -5,17 +5,17 @@
 
 <body>
    <%- include('../includes/navigation.ejs') %>
-    <form action="/admin/add-category?_csrf=<%=csrfToken%>" method="POST" enctype="multipart/form-data">
-        <div>
-            <label for="title">Title</label>
-            <input type="text" name="title" id="title">
+    <form class="formContainer" action="/admin/add-category?_csrf=<%=csrfToken%>" method="POST" enctype="multipart/form-data">
+        <div class="inputContainer">
+            <label class="label" for="title">Title</label>
+            <input type="text" name="title" id="title" required>
         </div>
-        <div>
-            <label for="categoryImage">Image</label>
-            <input type="file" name="categoryImage" id="categoryImage" >
+        <div class="inputContainer">
+            <label class="label" for="categoryImage">Image</label>
+            <input type="file" name="categoryImage" id="categoryImage" required>
         </div>
-        <div>
-            <label for="url">Url</label>
+        <div class="inputContainer">
+            <label class="label" for="url">Url</label>
             <input type="text" name="url" id="url">
         </div>
         <button class="btn" type="submit">Add category</button>
