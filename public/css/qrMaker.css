@@ -7,9 +7,18 @@
 
 .templatesContainer {
     display: flex;
+    justify-content: space-evenly;
+    margin: 30px 20px;
 }
 
 .templateUploadContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.templateFormContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,4 +36,19 @@
     flex-direction: column;
     padding: 30px 50px;
 	margin: 50px 20px 100px 20px;
+}
+
+.tableNumberInput {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tableNumber {
+    margin: 0 5px;
+}
+
+.tableNumberInput input{
+    width: 25%;
 }
