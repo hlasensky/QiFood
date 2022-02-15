@@ -8,3 +8,23 @@
 .templatesContainer {
     display: flex;
 }
+
+.templateUploadContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.templateUploadContainer form{
+    background: #fafafa;
+	width: 50vw;
+    filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.25));
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px 50px;
+	margin: 50px 20px 100px 20px;
+}
