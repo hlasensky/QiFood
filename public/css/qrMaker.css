@@ -25,6 +25,10 @@
     align-items: center;
 }
 
+.templateFormContainerform {
+    width: 100%;
+}
+
 .templateUploadContainer form{
     background: #fafafa;
 	width: 50vw;
@@ -39,7 +43,6 @@
 }
 
 .tableNumberInput {
-    width: 40%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,5 +53,5 @@
 }
 
 .tableNumberInput input{
-    width: 25%;
+    width: 10%;
 }
