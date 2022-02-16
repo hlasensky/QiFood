@@ -19,15 +19,11 @@ router.post("/make-qr", isAuth, adminController.postQR);
 
 router.post("/upload-template", isAuth, uploader.templatePdf);
 
-//router.get("/upload-template", isAuth, adminController.getQR);
-
 router.post("/edit-product", isAuth, adminController.postEditProduct);
 
 router.post("/delete-product", isAuth, adminController.postDeleteProduct);
 
-router.post("/add-category", [
-
-], isAuth, uploader.categoryImage, adminController.postAddCategory);
+router.post("/add-category", isAuth, uploader.categoryImage, adminController.postAddCategory);
 
 router.post("/add-product",
     /*body("radioCategory")
