@@ -14,7 +14,7 @@ exports.getAddProduct = (req, res, next) => {
 					path: "/admin/add-product",
 					categories: categories,
 					product: "",
-					error: ""
+					error: NaN
 				});
 			} else {
 				res.render("admin/edit-product", {
