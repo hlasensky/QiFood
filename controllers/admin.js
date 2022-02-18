@@ -8,12 +8,23 @@ exports.getAddProduct = (req, res, next) => {
 	/* Rendering site for add product, plus passing categories */
 	Category.find()
 		.then((categories) => {
-			res.render("admin/edit-product", {
-				pageTitle: "Add Product",
-				path: "/admin/add-product",
-				categories: categories,
-				product: "",
-			});
+			if (categories.length() !== 0) {
+				res.render("admin/edit-product", {
+					pageTitle: "Add Product",
+					path: "/admin/add-product",
+					categories: categories,
+					product: "",
+					error: ""
+				});
+			} else {
+				res.render("admin/edit-product", {
+					pageTitle: "Add Product",
+					path: "/admin/add-product",
+					categories: categories,
+					product: "",
+					error: "Žádné kategorie!"
+				});
+			}
 		})
 		.catch((err) => console.log(err));
 };
@@ -129,11 +140,11 @@ exports.postAddCategory = (req, res, next) => {
 	/* adding new category to db */
 	const title = req.body.title;
 	const image = req.file;
-	const url = req.body.url;
+	//const url = req.body.url;
 	const category = new Category({
 		title: title,
 		imageUrl: image.path.replace("public\\", "").replace("\\", "/"),
-		url: url,
+		url: "/menu#" + title.toLowerCase(),
 		products: [],
 	});
 	category
