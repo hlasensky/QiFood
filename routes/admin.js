@@ -25,8 +25,11 @@ router.post("/delete-product", isAuth, adminController.postDeleteProduct);
 
 router.post("/add-category", isAuth, uploader.categoryImage, adminController.postAddCategory);
 
-router.post("/add-product",
-    /*body("radioCategory")
+router.post("/add-product", isAuth, uploader.productImage, adminController.postAddProduct);
+
+module.exports = router;
+
+/*body("radioCategory")
         .custom((url) => {
         Category
             .findById(url)
@@ -37,6 +40,4 @@ router.post("/add-product",
                     );
                 }
         }).catch((err) => console.log(err));
-}),*/ isAuth, uploader.productImage, adminController.postAddProduct);
-
-module.exports = router;
+}),*/ 
