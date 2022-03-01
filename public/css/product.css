@@ -109,8 +109,8 @@
         border-radius: 15px;
         margin: 20px;
     }
-    .produtContainerCart {
-        padding: 5px;
+    .produtContainer {
+        padding: 5px 0;
     }
 }
 
