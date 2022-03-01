@@ -114,12 +114,12 @@
     }
     .productPrice form{
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: flex-start;
+        flex-wrap: wrap;
     }
     .productPrice form button{
         font-size: 0.6rem;
-        margin: 0;
+        margin: 5px 0;
         inline-size: 98px;
         overflow-wrap: break-word;
     }
