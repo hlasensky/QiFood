@@ -8,7 +8,8 @@ exports.getAddProduct = (req, res, next) => {
 	/* Rendering site for add product, plus passing categories */
 	Category.find()
 		.then((categories) => {
-			if (!categories) {
+			print(categories)
+			if (categories.length() > 0) {
 				res.render("admin/edit-product", {
 					pageTitle: "Add Product",
 					path: "/admin/add-product",
