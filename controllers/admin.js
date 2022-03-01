@@ -41,6 +41,7 @@ exports.postEditProduct = (req, res, next) => {
 						path: "/admin/edit-product",
 						categories: categories,
 						product: product,
+						error: NaN
 					});
 				})
 				.catch((err) => console.log(err));
