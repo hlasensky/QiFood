@@ -109,6 +109,9 @@
         border-radius: 15px;
         margin: 20px;
     }
+    .produtContainerCart {
+        padding: 5px;
+    }
 }
 
 @media screen and (max-width: 550px) {
