@@ -5,7 +5,7 @@
 
 <body>
    <%- include('../includes/navigation.ejs') %>
-   <% if (error !== "Žádné kategorie!") {%>
+   <% if (error.length !== 0) {%>
         <form class="formContainer" action="/admin/add-product?_csrf=<%=csrfToken%>" method="POST" enctype="multipart/form-data">
             <div class="inputContainer">
                 <label class="label" for="title">Title</label>
