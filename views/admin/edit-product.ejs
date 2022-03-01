@@ -5,7 +5,7 @@
 
 <body>
    <%- include('../includes/navigation.ejs') %>
-   <% if (error !== "Žádné kategorie!") {%>
+
         <form class="formContainer" action="/admin/add-product?_csrf=<%=csrfToken%>" method="POST" enctype="multipart/form-data">
             <div class="inputContainer">
                 <label class="label" for="title">Title</label>
@@ -39,7 +39,5 @@
             <input type="hidden" name="userId" value="<%= userId %>">
             <button class="btn" type="submit"><%= product.length !== 0 ? 'Edit Product' : 'Add Product' %></button>
         </form>
-    <% } else { %>
-        <h1><%= error %></h1>
-    <% } %>
+
 <%- include('../includes/end.ejs') %>
