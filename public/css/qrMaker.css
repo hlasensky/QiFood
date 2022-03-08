@@ -73,22 +73,29 @@
 
 .templateUploader {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-}
-
-.templateUploader {
-    display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .templateUploader label{
-    font-size: 1.5rem;
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    width: 150px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #ff6d59;
+    position: relative;
+    z-index: 5;
+    font-size: 1.2rem;
+    cursor: pointer;
 }
 
 .templateUploader input{
-    margin: 10px 0 8px 0;
-    
+    position: relative;
+    top: -28px;
+    left: 50px;
+    z-index: 1;
 }
