@@ -5,13 +5,13 @@
 
 <body>
    <%- include('../includes/navigation.ejs') %>
-   <div class="templateFormContainer">
-       <form action="/admin/add-category?_csrf=<%=csrfToken%>" method="POST" enctype="multipart/form-data">
-           <div class="inputContainer">
+   <div class="loginContainer">
+       <form class="login-form" action="/admin/add-category?_csrf=<%=csrfToken%>" method="POST" enctype="multipart/form-data">
+           <div class="form-control">
                <label class="labelCategory" for="title">Název</label>
                <input type="text" placeholder="Hotovky" name="title" id="title" required>
            </div>
-           <div class="inputContainer">
+           <div class="form-control">
                <label class="labelCategory" for="categoryImage">Obrázek</label>
                <input type="file" name="categoryImage" id="categoryImage" required>
            </div>
