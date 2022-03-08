@@ -52,7 +52,7 @@ exports.postEditProduct = (req, res, next) => {
 exports.getAddCategory = (req, res, next) => {
 	/* Rendering site for add collection */
 	res.render("admin/add-category", {
-		path: "/add-category",
+		path: "/admin/add-category",
 		pageTitle: "Add category",
 	});
 };
@@ -70,7 +70,7 @@ exports.getQR = (req, res, next) => {
 		const filesQR = fs.readdirSync(dirTablesQR);
 
 		res.render("admin/make-qr", {
-			path: "/make-qr",
+			path: "/admin/make-qr",
 			pageTitle: "Make QR code",
 			templates: files,
 			tablesQR: filesQR,
