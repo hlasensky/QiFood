@@ -26,7 +26,6 @@
 }
 
 .templateFormContainer form{
-    width: 100%;
     background: #fafafa;
     filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.25));
     border-radius: 30px;
@@ -55,9 +54,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 40%;
 }
 
-.tableNumber {
+.iframeContainer {
+    margin: 10px;
+} 
+
+.tableNumberInput label{
     margin: 0 5px;
 }
 
