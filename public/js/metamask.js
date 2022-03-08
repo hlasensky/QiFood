@@ -12,7 +12,6 @@ const pay = document.currentScript.getAttribute("pay");
 
 submit.addEventListener("click", () => {
 	const radio = document.querySelector(".radio");
-	console.log(radio.value)
 	if (radio.value === "eth") {
 		ethereum.request({ method: "eth_requestAccounts" }).then((accounts) => {
 			transaction(accounts);
