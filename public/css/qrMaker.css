@@ -71,11 +71,6 @@
     width: 10%;
 }
 
-.templateUploader {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
 .templateUploader {
     display: flex;
