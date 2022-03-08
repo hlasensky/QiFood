@@ -4,15 +4,12 @@ const submit = document.querySelector(".paymentMethod");
 const metaError = document.querySelector(".metaError");
 
 const to = document.currentScript.getAttribute("to");
-const value = document.currentScript.getAttribute("value");
+const value = document.querySelector(".amount");
 const gas = document.currentScript.getAttribute("gas");
 const pay = document.currentScript.getAttribute("pay");
 
-
-
 submit.addEventListener("click", () => {
-	const radio = document.querySelector(".radio");
-	console.log(radio.value)
+	const radio = document.querySelector('input[name="payment"]:checked');
 	if (radio.value === "eth") {
 		ethereum.request({ method: "eth_requestAccounts" }).then((accounts) => {
 			transaction(accounts);
@@ -31,7 +28,7 @@ const transaction = (accounts) => {
 				{
 					from: accounts[0],
 					to: to,
-					value: value,
+					value: value.value,
 					gas: gas,
 				},
 			],
