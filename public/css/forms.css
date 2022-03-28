@@ -432,6 +432,15 @@ transform: translateX(0);
 	margin: 0 20px;
 }
 
+.loggoutBtn {
+	font-size: 0.9rem;
+    border-width: 2px;
+}
+
+.loggoutBtn:hover {
+	transition: all 400ms ease-out;
+}
+
 .templateUploader {
     display: flex;
     flex-direction: column;
