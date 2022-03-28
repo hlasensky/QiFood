@@ -205,7 +205,7 @@ exports.postAddProduct = (req, res, next) => {
 				title: title,
 				price: price,
 				description: description,
-				imageUrl: image.path.replace("public\\", ""),
+				imageUrl: image.path.replace("public", ""),
 				category: category,
 				userId: userId,
 			}
