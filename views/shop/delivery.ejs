@@ -6,7 +6,7 @@
 <body>
    <%- include('../includes/navigation.ejs') %>
    <% if (errorMessage) { %>
-        <div><%= errorMessage %></div>
+        <div class="error"><%= errorMessage %></div>
     <% } %>
     <div class="loginContainer">
         <form id="address-form" class="login-form" action="/orderNoTable?_csrf=<%=csrfToken%>" method="POST" enctype="application/x-www-form-urlencoded">

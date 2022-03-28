@@ -70,3 +70,11 @@ img {
 	background-clip: content-box;
 	background-color: #313131;
   }
+
+.error {
+	text-align: center;
+    font-size: 2rem;
+    text-decoration-line: underline;
+    text-decoration-color: #ff6d59;
+    margin-top: 3vw;
+}

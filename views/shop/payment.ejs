@@ -6,7 +6,7 @@
 <body>
    <%- include('../includes/navigation.ejs') %>
    <% if (errorMessage) { %>
-        <div><%= errorMessage %></div>
+        <div class="error"><%= errorMessage %></div>
     <% } %>
     <div class="">
         <form id="address-form" class="formContainer" action="/pay?_csrf=<%=csrfToken%>" method="POST" >
