@@ -1,9 +1,10 @@
 <%- include('../includes/head.ejs') %>
-<link rel="stylesheet" href="/css/forms.css">
-<link rel="stylesheet" href="/css/landingPage.css">
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/landingPage.css">
 </head>
 <div class="backdrop"></div>
 <header class="header">
+
     <div class="nav-container">
         <nav class="nav">
             <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -27,7 +28,7 @@
                 </li>-->
                 <% if (isAdmin) { %>
                     <li class="navLi">
-                        <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Přidat produkt
+                        <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product
                         </a>
                     </li>
                     <li class="navLi">
@@ -35,7 +36,7 @@
                         </a>
                     </li>
                     <li class="navLi">
-                        <a class="<%= path === '/admin/add-category' ? 'active' : '' %>" href="/admin/add-category">Přidat kategorii
+                        <a class="<%= path === '/admin/add-category' ? 'active' : '' %>" href="/admin/add-category">Add Category
                         </a>
                     </li>
                 <% } %> 
@@ -133,7 +134,7 @@
                     </li>-->
                     <% if (isAdmin) { %>
                         <li class="mobile-navLi">
-                            <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Přidat produkt
+                            <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product
                             </a>
                         </li>
                         <li class="mobile-navLi">
@@ -141,7 +142,7 @@
                             </a>
                         </li>
                         <li class="mobile-navLi">
-                            <a class="<%= path === '/admin/add-category' ? 'active' : '' %>" href="/admin/add-category">přidat kategorii
+                            <a class="<%= path === '/admin/add-category' ? 'active' : '' %>" href="/admin/add-category">Add Category
                             </a>
                         </li>
                     <% } %> 
