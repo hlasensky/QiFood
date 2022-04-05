@@ -109,6 +109,20 @@
         border-radius: 15px;
         margin: 20px;
     }
+    .produtContainer {
+        padding: 5px 0;
+    }
+    .productPrice form{
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+    .productPrice form button{
+        font-size: 0.6rem;
+        margin: 5px 0;
+        inline-size: 98px;
+        overflow-wrap: break-word;
+    }
 }
 
 @media screen and (max-width: 550px) {

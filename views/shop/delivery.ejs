@@ -6,44 +6,46 @@
 <body>
    <%- include('../includes/navigation.ejs') %>
    <% if (errorMessage) { %>
-        <div><%= errorMessage %></div>
+        <div class="error"><%= errorMessage %></div>
     <% } %>
-   <form id="address-form" class="formContainer" action="/orderNoTable?_csrf=<%=csrfToken%>" method="POST" enctype="application/x-www-form-urlencoded">
-        <div class="inputContainer">
-            <label class="label" for="nameAndSecondname">Jméno a příjmení</label>
-            <input 
-            class="input" 
-            type="text" 
-            name="nameAndSecondname" 
-            id="nameAndSecondname" 
-            placeholder="Karel Novák"
-            value="<%= oldInput.name %>"
-            required>
-        </div>
-        <div class="inputContainer">
-            <label class="label" for="phoneNumber">Telefon</label>
-            <input 
-            class="input" 
-            type="tel" 
-            placeholder="111 222 333" 
-            name="phoneNumber" 
-            id="phoneNumber"  
-            value="<%= oldInput.phoneNumber %>"
-            required>
-        </div>
-        <div class="inputContainer">
-            <label class="label" for="shipAddress">Adresa doručení</label>
-            <input
-            class="input"
-            id="shipAddress"
-            name="shipAddress"
-            placeholder="Ulice 13"
-            value="<%= oldInput.shipAddress %>"
-            required
-            autocomplete="off"
-          />
-        </div>
-        <input type="hidden" name="userId" value="<%= userId %>">
-        <button class="btn sendEthButton" type="submit">btn</button>
-    </form>
+    <div class="loginContainer">
+        <form id="address-form" class="login-form" action="/orderNoTable?_csrf=<%=csrfToken%>" method="POST" enctype="application/x-www-form-urlencoded">
+             <div class="form-control">
+                 <label class="label" for="nameAndSecondname">Jméno a příjmení</label>
+                 <input 
+                 class="input" 
+                 type="text" 
+                 name="nameAndSecondname" 
+                 id="nameAndSecondname" 
+                 placeholder="Karel Novák"
+                 value="<%= oldInput.name %>"
+                 required>
+             </div>
+             <div class="form-control">
+                 <label class="label" for="phoneNumber">Telefon</label>
+                 <input 
+                 class="input" 
+                 type="tel" 
+                 placeholder="111 222 333" 
+                 name="phoneNumber" 
+                 id="phoneNumber"  
+                 value="<%= oldInput.phoneNumber %>"
+                 required>
+             </div>
+             <div class="form-control">
+                 <label class="label" for="shipAddress">Adresa doručení</label>
+                 <input
+                 class="input"
+                 id="shipAddress"
+                 name="shipAddress"
+                 placeholder="Ulice 13"
+                 value="<%= oldInput.shipAddress %>"
+                 required
+                 autocomplete="off"
+               />
+             </div>
+             <input type="hidden" name="userId" value="<%= userId %>">
+             <button class="btn sendEthButton" type="submit">Potvrdit</button>
+         </form>
+    </div>
 <%- include('../includes/end.ejs') %>

@@ -8,12 +8,23 @@ exports.getAddProduct = (req, res, next) => {
 	/* Rendering site for add product, plus passing categories */
 	Category.find()
 		.then((categories) => {
-			res.render("admin/edit-product", {
-				pageTitle: "Add Product",
-				path: "/admin/add-product",
-				categories: categories,
-				product: "",
-			});
+			if (categories.length !== 0) {
+				res.render("admin/edit-product", {
+					pageTitle: "Add Product",
+					path: "/admin/add-product",
+					categories: categories,
+					product: "",
+					error: NaN
+				});
+			} else {
+				res.render("admin/edit-product", {
+					pageTitle: "Add Product",
+					path: "/admin/add-product",
+					categories: categories,
+					product: "",
+					error: "Žádné kategorie!"
+				});
+			}
 		})
 		.catch((err) => console.log(err));
 };
@@ -30,6 +41,7 @@ exports.postEditProduct = (req, res, next) => {
 						path: "/admin/edit-product",
 						categories: categories,
 						product: product,
+						error: NaN
 					});
 				})
 				.catch((err) => console.log(err));
@@ -40,7 +52,7 @@ exports.postEditProduct = (req, res, next) => {
 exports.getAddCategory = (req, res, next) => {
 	/* Rendering site for add collection */
 	res.render("admin/add-category", {
-		path: "/add-category",
+		path: "/admin/add-category",
 		pageTitle: "Add category",
 	});
 };
@@ -58,7 +70,7 @@ exports.getQR = (req, res, next) => {
 		const filesQR = fs.readdirSync(dirTablesQR);
 
 		res.render("admin/make-qr", {
-			path: "/make-qr",
+			path: "/admin/make-qr",
 			pageTitle: "Make QR code",
 			templates: files,
 			tablesQR: filesQR,
@@ -129,11 +141,11 @@ exports.postAddCategory = (req, res, next) => {
 	/* adding new category to db */
 	const title = req.body.title;
 	const image = req.file;
-	const url = req.body.url;
+	//const url = req.body.url;
 	const category = new Category({
 		title: title,
 		imageUrl: image.path.replace("public\\", "").replace("\\", "/"),
-		url: url,
+		url: "/menu#" + title.toLowerCase(),
 		products: [],
 	});
 	category
@@ -161,7 +173,7 @@ exports.postAddProduct = (req, res, next) => {
 		title: title,
 		price: price,
 		description: description,
-		imageUrl: image.path.replace("public\\", ""), //taking path from file and removing public\ so it can show up on the site
+		imageUrl: image.path.replace("public", ""), //taking path from file and removing public\ so it can show up on the site
 		category: category,
 		userId: userId,
 	});
@@ -193,7 +205,7 @@ exports.postAddProduct = (req, res, next) => {
 				title: title,
 				price: price,
 				description: description,
-				imageUrl: image.path.replace("public\\", ""),
+				imageUrl: image.path.replace("public", ""),
 				category: category,
 				userId: userId,
 			}

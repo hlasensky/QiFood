@@ -432,6 +432,32 @@ transform: translateX(0);
 	margin: 0 20px;
 }
 
+.loggoutBtn {
+	font-size: 0.9rem;
+    border-width: 2px;
+}
+
+.loggoutBtn:hover {
+	transition: all 400ms ease-out;
+}
+
+.templateUploader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 8px;
+}
+
+.templateUploader label{
+    font-size: 1.5rem;
+    
+}
+
+.templateUploader input{
+    margin: 10px 0 8px 0;
+    
+}
+
 @media (max-width: 810px) {
 	.nav-container {
 		display: none;

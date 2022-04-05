@@ -5,20 +5,24 @@
 
 <body>
    <%- include('../includes/navigation.ejs') %>
-    <form action="/admin/add-category?_csrf=<%=csrfToken%>" method="POST" enctype="multipart/form-data">
-        <div>
-            <label for="title">Title</label>
-            <input type="text" name="title" id="title">
-        </div>
-        <div>
-            <label for="categoryImage">Image</label>
-            <input type="file" name="categoryImage" id="categoryImage" >
-        </div>
-        <div>
-            <label for="url">Url</label>
-            <input type="text" name="url" id="url">
-        </div>
-        <button class="btn" type="submit">Add category</button>
-    </form>
+   <div class="loginContainer">
+       <form class="login-form" action="/admin/add-category?_csrf=<%=csrfToken%>" method="POST" enctype="multipart/form-data">
+           <div class="form-control">
+               <label class="labelCategory" for="title">Název</label>
+               <input type="text" placeholder="Hotovky" name="title" id="title" required>
+           </div>
+           <div class="form-control">
+               <label class="labelCategory" for="categoryImage">Obrázek</label>
+               <input type="file" name="categoryImage" id="categoryImage" required>
+           </div>
+           <!--
+               <div class="inputContainer">
+                   <label class="labelCategory" for="url">Url</label>
+                   <input type="text" placeholder="/menu#hotovky" name="url" id="url">
+               </div>
+           -->
+           <button class="btn" type="submit">Přidat kategorii</button>
+       </form>
+   </div>
 
 <%- include('../includes/end.ejs') %>
