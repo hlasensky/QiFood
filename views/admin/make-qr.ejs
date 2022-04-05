@@ -5,41 +5,37 @@
 
 <body>
    <%- include('../includes/navigation.ejs') %>
-   <div class="templateUploadContainer">
-       <form action="/admin/upload-template?_csrf=<%=csrfToken%>" method="POST" enctype='multipart/form-data'>
-            <div class="templateUploader">
-                <label for="pdf">Vybrat template</label>
-                <input type="file" name="pdf" id="pdf" >
-            </div>
-            <button class="btn" type="submit">Nahrát</button>
-        </form>
-   </div>
-   <div class="templateFormContainer">
-       <form action="/admin/make-qr?_csrf=<%=csrfToken%>" method="POST">
-            <% if (templates.length !== 0) { %>
-                <div class="templatesContainer">
-                    <% for (let templateTitle of templates) { %>
-                        <div class="iframeContainer">
-                            <iframe src="/templates/<%= templateTitle %>" height="auto" width="124px">
-                            </iframe>
-                            <div class="templateLabel">
-                                <label for="<%= templateTitle %>"><%= templateTitle %></label>
-                                <input type="radio" name="radioCategory" id="<%= templateTitle %>" value="<%= templateTitle %>">
-                            </div>
+   <form action="/admin/upload-template?_csrf=<%=csrfToken%>" method="POST" enctype='multipart/form-data'>
+        <div>
+            <label for="pdf">Vybrat template</label>
+            <input type="file" name="pdf" id="pdf" >
+        </div>
+        <button class="btn" type="submit">Nahrát</button>
+    </form>
+   <form action="/admin/make-qr?_csrf=<%=csrfToken%>" method="POST">
+        <% if (templates.length !== 0) { %>
+            <div class="templatesContainer">
+                <% for (let templateTitle of templates) { %>
+                    <div class="container">
+                        <iframe src="/templates/<%= templateTitle %>" height="auto" width="124px">
+                        </iframe>
+                        <div>
+                            <label for="<%= templateTitle %>"><%= templateTitle %></label>
+                            <input type="radio" name="radioCategory" id="<%= templateTitle %>" value="<%= templateTitle %>">
                         </div>
-                        
-                    <% } %>
-                </div>
-                <div class="tableNumberInput">
-                    <label for="tableNumber">Číslo stolu: </label>
-                    <input class="input" type="number" name="tableNumber" id="tableNumber">
-                </div> 
-                <button class="btn" type="submit">Vytvořit</button>
-            <% } else { %>
-                <h1>Žádné templaty!</h1>                  
-            <% } %>
-        </form>
-   </div>
+                    </div>
+                    
+                <% } %>
+            </div>
+        <% } else { %>
+            <h1>Žádné templaty!</h1>                  
+        <% } %>
+        <div>
+            <label for="tableNumber">Číslo stolu</label>
+            <input class="input" type="number" name="tableNumber" id="tableNumber">
+        </div> 
+        <button class="btn" type="submit">Vytvořit</button>
+    </form>
     <% if (tablesQR.length !== 0) { %>
         <div class="templatesContainer">
             <% for (let tableQR of tablesQR) { %>
