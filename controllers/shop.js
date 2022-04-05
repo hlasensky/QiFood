@@ -208,7 +208,7 @@ exports.postPay = (req, res, next) => {
 	//looking for every order that user made and adding new one from cart
 	const metaError = req.body.metaError;
 	const paymentMethod = req.body.payment;
-	if (!metaError) {
+	if (metaError.length === 0) {
 		Order.updateOne(
 			{ userId: req.user },
 			{ payment: "done with " + paymentMethod }

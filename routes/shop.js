@@ -55,7 +55,15 @@ router.post('/orderNoTable', [
 
 router.get('/pay', shopController.getPay);
 
-router.post('/pay', shopController.postPay);
+router.post('/pay',
+    body("amount").custom(value => {
+        checkValue = "0x" + Math.floor((req.user.totalPrice(products.cart.items) / ethPrice) * 10 ** 18).toString(16)
+        if (value !== checkValue) {
+            return Promise.reject("Error!");
+        } else {
+            return true;
+        }
+    }),shopController.postPay);
 
 
 router.get('/order-detail:Id', shopController.getOrderDetail);
