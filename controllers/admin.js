@@ -173,7 +173,7 @@ exports.postAddProduct = (req, res, next) => {
 		title: title,
 		price: price,
 		description: description,
-		imageUrl: image.path.replace("public", "").replace("/", "\"), //taking path from file and removing public\ so it can show up on the site
+		imageUrl: image.path.replace("public", "").replace("/", "\\"), //taking path from file and removing public\ so it can show up on the site
 		category: category,
 		userId: userId,
 	});
@@ -205,7 +205,7 @@ exports.postAddProduct = (req, res, next) => {
 				title: title,
 				price: price,
 				description: description,
-				imageUrl: image.path.replace("public", "").replace("/", "\"),
+				imageUrl: image.path.replace("public", "").replace("/", "\\"),
 				category: category,
 				userId: userId,
 			}
