@@ -19,18 +19,17 @@ router.post("/make-qr", isAuth, adminController.postQR);
 
 router.post("/upload-template", isAuth, uploader.templatePdf);
 
-//router.get("/upload-template", isAuth, adminController.getQR);
-
 router.post("/edit-product", isAuth, adminController.postEditProduct);
 
 router.post("/delete-product", isAuth, adminController.postDeleteProduct);
 
-router.post("/add-category", [
+router.post("/add-category", isAuth, uploader.categoryImage, adminController.postAddCategory);
 
-], isAuth, uploader.categoryImage, adminController.postAddCategory);
+router.post("/add-product", isAuth, uploader.productImage, adminController.postAddProduct);
 
-router.post("/add-product",
-    /*body("radioCategory")
+module.exports = router;
+
+/*body("radioCategory")
         .custom((url) => {
         Category
             .findById(url)
@@ -41,6 +40,4 @@ router.post("/add-product",
                     );
                 }
         }).catch((err) => console.log(err));
-}),*/ isAuth, uploader.productImage, adminController.postAddProduct);
-
-module.exports = router;
+}),*/ 
