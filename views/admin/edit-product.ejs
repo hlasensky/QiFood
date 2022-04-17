@@ -5,43 +5,38 @@
 
 <body>
    <%- include('../includes/navigation.ejs') %>
-   <% if (error.length !== 0) {%>
-        <div class="loginContainer">
-            <form class="login-form" action="/admin/add-product?_csrf=<%=csrfToken%>" method="POST" enctype="multipart/form-data">
-                <div class="form-control">
-                    <label for="title">Název</label>
-                    <input type="text" name="title" id="title" value="<%= product.length !== 0 ? product.title : '' %>" placeholder="Řízek" required>
-                </div>
-                <div class="form-control">
-                    <label for="price">Cena</label>
-                    <input type="number" name="price" id="price" step="0.1" value="<%= product.length !== 0 ? product.price : '' %>" placeholder="150" required>
-                </div>
-                <div class="form-control">
-                    <label for="description">Popis</label>
-                    <input type="text" name="description" id="description" value="<%= product.length !== 0 ? product.description : '' %>" placeholder="s hranolkami a salátem" required>
-                </div>
-                <div class="templateUploader">
-                    <label  for="image">Nahrát obrázek</label>
-                    <input  type="file" name="image" id="image" value="<%= product.length !== 0 ? product.imageUrl : '' %>" required>
-                </div>
-                <div class="categoryContainer">
-                    <% for (let category of categories) { %>
-                        <div class="category">
-                            <label for="<%= category.title %>"><%= category.title %></label>
-                            <% if (product.length !== 0) { %>
-                                <input type="radio" name="radioCategory" required  id="<%= category.title %>" value="<%= category._id %>" <%= product.category.toString() === category._id.toString() ? 'checked="true"' : " " %>>
-                                <% } else { %>
-                                    <input type="radio" required name="radioCategory" id="<%= category.title %>" value="<%= category._id %>">                  
-                                <% } %>
-                        </div>
-                    <% } %>            
-                </div>
-                <input type="hidden" name="productId" value="<%= product.length !== 0 ? product._id : '' %>">
-                <input type="hidden" name="userId" value="<%= userId %>">
-                <button class="btn" type="submit"><%= product.length !== 0 ? 'Upravit produkt' : 'Přidat product' %></button>
-            </form>
+   <form class="formContainer" action="/admin/add-product?_csrf=<%=csrfToken%>" method="POST" enctype="multipart/form-data">
+        <div class="inputContainer">
+            <label class="label" for="title">Title</label>
+            <input class="input" type="text" name="title" id="title" value="<%= product.length !== 0 ? product.title : '' %>" placeholder="Řízek" required>
         </div>
-    <% } else { %>
-        <h1><%= error %></h1>
-    <% } %>
+        <div class="inputContainer">
+            <label class="label" for="price">Price</label>
+            <input class="input" type="number" name="price" id="price" step="0.1" value="<%= product.length !== 0 ? product.price : '' %>" placeholder="150" required>
+        </div>
+        <div class="inputContainer">
+            <label class="label" for="description">Description</label>
+            <input class="input" type="text" name="description" id="description" value="<%= product.length !== 0 ? product.description : '' %>" placeholder="s hranolkami a salátem" required>
+        </div>
+        <div class="image">
+            <label class="imageLabel" for="image">Upload Image</label>
+            <input  type="file" name="image" id="image" value="<%= product.length !== 0 ? product.imageUrl : '' %>" required>
+        </div>
+        <div class="categoryContainer">
+            <% for (let category of categories) { %>
+                <div class="category">
+                    <label for="<%= category.title %>"><%= category.title %></label>
+                    <% if (product.length !== 0) { %>
+                        <input type="radio" name="radioCategory" required  id="<%= category.title %>" value="<%= category._id %>" <%= product.category.toString() === category._id.toString() ? 'checked="true"' : " " %>>
+                        <% } else { %>
+                            <input type="radio" required name="radioCategory" id="<%= category.title %>" value="<%= category._id %>">                  
+                        <% } %>
+                </div>
+            <% } %>            
+        </div>
+        <input type="hidden" name="productId" value="<%= product.length !== 0 ? product._id : '' %>">
+        <input type="hidden" name="userId" value="<%= userId %>">
+        <button class="btn" type="submit"><%= product.length !== 0 ? 'Edit Product' : 'Add Product' %></button>
+    </form>
+
 <%- include('../includes/end.ejs') %>
