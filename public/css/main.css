@@ -10,7 +10,6 @@ body {
 	font-family: "Baloo Thambi 2", cursive;
 	font-weight: 500;
 	transition: all 300ms ease;
-	background-color: #e4e4e4;
 }
 
 main {
@@ -70,11 +69,3 @@ img {
 	background-clip: content-box;
 	background-color: #313131;
   }
-
-.error {
-	text-align: center;
-    font-size: 2rem;
-    text-decoration-line: underline;
-    text-decoration-color: #ff6d59;
-    margin-top: 3vw;
-}

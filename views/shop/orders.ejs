@@ -1,6 +1,6 @@
 <%- include('../includes/head.ejs') %>
 <link rel="stylesheet" href="/css/cart.css" />
-<link rel="stylesheet" href="/css/orders.css" />
+<link rel="stylesheet" href="/css/order.css" />
 </head>
     
 <body>
@@ -25,16 +25,15 @@
                                 Žádné objednávky
                         </h1>
                 <% } else {%> 
-                        <div class="produtContainerCart ordersContainer">
-                                <% for (let order of orders) { %>
-                                        <div class="orderCard">
-                                                <h3>Celková cena objednávky: <bold><%= order.totalPrice %>Kč</bold></h3>
-                                                <h3>Počet produktů v objednávce: <bold><%= order.totalQuantity %></bold></h3>
-                                                <h3> <%= (order.date).toString().split(" ").filter((element, index) => index < 5).join(" ") %></h3>
-                                                <%- include('../includes/button.ejs', {product:
-                                                        order.orderId, btnText: "Detail objednávky", action: "/order-detail:" + order.orderId, method: "get"}) %> 
-                                        </div>           
-                                <% } %> 
+                        <% for (let order of orders) { %>
+                        <div class="orderCard">
+                                <h3>Celková cena objednávky: <bold><%= order.totalPrice %>Kč</bold></h3>
+                                <h3>Počet produktů v objednávce: <bold><%= order.totalQuantity %></bold></h3>
+                                <h3> <%= (order.date).toString().split(" ").filter((element, index) => index < 5).join(" ") %></h3>
+                                <%- include('../includes/button.ejs', {product:
+                                        order.orderId, btnText: "Detail objednávky", action: "/order-detail:" + order.orderId, method: "get"}) %> 
+                                        
+                                        <% } %>
                         </div>
                 <% } %>
         </main>
