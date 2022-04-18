@@ -142,7 +142,7 @@ exports.postAddCategory = (req, res, next) => {
 	//const url = req.body.url;
 	const category = new Category({
 		title: title,
-		imageUrl: image.path.replace("public\\", "").replace("\\", "/"),
+		imageUrl: image.path.replace("public\\", ""),//.replace("\\", "/"),
 		url: "/menu#" + title.toLowerCase(),
 		products: [],
 	});
@@ -171,7 +171,7 @@ exports.postAddProduct = (req, res, next) => {
 		title: title,
 		price: price,
 		description: description,
-		imageUrl: image.path.replace("public\\", "").replace("\\", "/"), //taking path from file and removing public\ so it can show up on the site
+		imageUrl: image.path.replace("public\\", ""),//.replace("\\", "/"), //taking path from file and removing public\ so it can show up on the site
 		category: category,
 		userId: userId,
 	});
@@ -203,7 +203,7 @@ exports.postAddProduct = (req, res, next) => {
 				title: title,
 				price: price,
 				description: description,
-				imageUrl: image.path.replace("public\\", "").replace("\\", "/"),
+				imageUrl: image.path.replace("public\\", ""),//.replace("\\", "/"),
 				category: category,
 				userId: userId,
 			}
