@@ -210,7 +210,7 @@ exports.postAddProduct = (req, res, next) => {
 		)
 			.then(() => {
 				console.log("updated");
-				res.redirect("/admin/add-product");
+				res.status(202).redirect("/menu");
 			})
 			.catch((err) => console.log(err));
 	}
