@@ -59,8 +59,6 @@ exports.getAddCategory = (req, res, next) => {
 
 exports.getQR = (req, res, next) => {
 	/* Rendering view with all files that are in dir and dirTablesQR */
-	
-
 	const dir = "public/templates/";
 	const dirTablesQR = "public/pdf/";
 
