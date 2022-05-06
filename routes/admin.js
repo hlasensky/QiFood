@@ -25,6 +25,8 @@ router.post("/delete-product", isAuth, adminController.postDeleteProduct);
 
 router.post("/add-category", isAuth, uploader.categoryImage, adminController.postAddCategory);
 
+router.post("/delete-category", isAuth, adminController.postDeleteCategory);
+
 router.post("/add-product", isAuth, uploader.productImage, adminController.postAddProduct);
 
 module.exports = router;

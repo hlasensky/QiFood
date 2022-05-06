@@ -16,6 +16,10 @@
 					</header>
             	</div>
 			</div>
+			<% if (isAdmin) { %>
+				<%- include('../includes/button.ejs', {product:
+					category._id, btnText: "Delete category", action: "admin/delete-category",  method: "post"}) %> 
+			<% } %>
 			<div class="produtContainer">
 				<% for (let product of category.products) { %>
 				<div class="product">

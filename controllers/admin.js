@@ -237,3 +237,10 @@ exports.postDeleteProduct = (req, res, next) => {
 		})
 		.catch((err) => console.log(err));
 };
+
+exports.postDeleteCategory = (req, res, next) => {
+	/* adding new product to db and pushing it to an array in proper category in db*/
+	const categoryID = req.body.Id;
+	//deleting category
+	Category.findByIdAndDelete(categoryID).catch((err) => console.log(err));
+};
