@@ -25,11 +25,11 @@ router.post(
 			});
 		}),
 		body("password", "Enter valid email or password").custom((password) => {
-			return User.findOne({ email: req.email }).then((user) => {
+			return User.findOne({ email: email }).then((user) => {
 				bcrypt
 					.compare(password, user.password)
 					.then((doMatch) => {
-						console.log(req.email, password);
+						console.log(email, password);
 						if (!doMatch) {
 							return Promise.reject(
 								"Wrong email or password!"
