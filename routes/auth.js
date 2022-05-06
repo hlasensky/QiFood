@@ -1,5 +1,6 @@
 const express = require("express");
 const { check, body } = require("express-validator");
+const bcrypt = require("bcryptjs");
 
 const User = require("../models/user");
 
@@ -23,10 +24,20 @@ router.post(
 				}
 			});
 		}),
-        body("password", "Enter password at least 5 characters long.")
-        .isLength(
-			{ min: 5 }
-		),
+		body("password", "Enter valid email or password").custom((email, { req }) => {
+			return User.findOne({ email: email }).then((user) => {
+				bcrypt
+					.compare(password, user.password)
+					.then((doMatch) => {
+						console.log(doMatch);
+						if (!doMatch) {
+							return Promise.reject(
+								"Wrong email or password!"
+							);
+						}
+					})
+			}).catch((err) => console.log(err))
+		})
 	],
 	authController.postLogin
 );
