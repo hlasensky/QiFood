@@ -15,29 +15,26 @@ router.get("/signup", authController.getSignup);
 router.post(
 	"/login",
 	[
-		body("email", "Please enter a valid email.").isEmail().custom((email, { req }) => {
-			return User.findOne({ email: email }).then((user) => {
-				if (!user) {
-					return Promise.reject(
-						"Wrong email or password!"
-					);
-				}
-			});
-		}),
-		body("password", "Enter valid email or password").custom((password, { req }) => {
-			return User.findOne({ email: req.body.email }).then((user) => {
-				bcrypt
-					.compare(password, user.password)
-					.then((doMatch) => {
-						console.log(req.body.email, password);
+		body("email", "Please enter a valid email.")
+			.isEmail()
+			.custom((email, { req }) => {
+				return User.findOne({ email: email }).then((user) => {
+					if (!user) {
+						return Promise.reject("Wrong email or password!");
+					}
+				});
+			}),
+		body("password", "Enter valid email or password").custom(
+			(password, { req }) => {
+				return User.findOne({ email: req.body.email }).then((user) => {
+					bcrypt.compare(password, user.password).then((doMatch) => {
 						if (!doMatch) {
-							return Promise.reject(
-								"Wrong email or password!"
-							);
+							return Promise.reject("Wrong email or password!");
 						}
-					})
-			}).catch((err) => console.log(err))
-		})
+					});
+				});
+			}
+		),
 	],
 	authController.postLogin
 );
@@ -64,7 +61,7 @@ router.post(
 			if (value !== req.body.password) {
 				return Promise.reject("Password have to match!");
 			} else {
-				return true
+				return true;
 			}
 		}),
 	],
