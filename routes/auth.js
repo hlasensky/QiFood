@@ -22,7 +22,7 @@ router.post(
 					if (!user) {
 						return Promise.reject("Wrong email or password!");
 					}
-					bcrypt.compare(req.body.password, user.password).then((doMatch) => {
+					return bcrypt.compare(req.body.password, user.password).then((doMatch) => {
 						if (!doMatch) {
 							return Promise.reject("Wrong email or password!");
 						}
