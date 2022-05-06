@@ -29,7 +29,7 @@ router.post(
 				bcrypt
 					.compare(password, user.password)
 					.then((doMatch) => {
-						console.log(doMatch);
+						console.log(email, password);
 						if (!doMatch) {
 							return Promise.reject(
 								"Wrong email or password!"
