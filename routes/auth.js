@@ -31,8 +31,8 @@ router.post(
 						if (!doMatch) {
 							return Promise.reject("Wrong email or password!");
 						}
-					});
-				});
+					}).catch((err) => console.log(err))
+				}).catch((err) => console.log(err))
 			}
 		),
 	],
