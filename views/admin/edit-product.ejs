@@ -22,7 +22,7 @@
                 </div>
                 <div class="templateUploader">
                     <label  for="image">Nahrát obrázek</label>
-                    <input  type="file" name="image" id="image" value="<%= product.length !== 0 ? product.imageUrl.replace('/images/products/') : '' %>" required>
+                    <input  type="file" name="image" id="image" value="<%= product.length !== 0 ? product.imageUrl.replace('/images/products/', '') : '' %>" required>
                 </div>
                 <div class="categoryContainer">
                     <% for (let category of categories) { %>
