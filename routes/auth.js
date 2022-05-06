@@ -24,7 +24,7 @@ router.post(
 				}
 			});
 		}),
-		body("password", "Enter valid email or password").custom((email, { req }) => {
+		body("password", "Enter valid email or password").custom((email, password) => {
 			return User.findOne({ email: email }).then((user) => {
 				bcrypt
 					.compare(password, user.password)
