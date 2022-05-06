@@ -30,16 +30,3 @@ router.post("/delete-category", isAuth, adminController.postDeleteCategory);
 router.post("/add-product", isAuth, uploader.productImage, adminController.postAddProduct);
 
 module.exports = router;
-
-/*body("radioCategory")
-        .custom((url) => {
-        Category
-            .findById(url)
-                .then(result => {
-                if (!result) {
-                    return Promise.reject(
-                        "Choose valid category!"
-                    );
-                }
-        }).catch((err) => console.log(err));
-}),*/ 
