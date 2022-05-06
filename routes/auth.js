@@ -22,19 +22,13 @@ router.post(
 					if (!user) {
 						return Promise.reject("Wrong email or password!");
 					}
-				});
-			}),
-		body("password", "Enter valid email or password").custom(
-			(password, { req }) => {
-				return User.findOne({ email: req.body.email }).then((user) => {
-					bcrypt.compare(password, user.password).then((doMatch) => {
+					bcrypt.compare(req.body.password, user.password).then((doMatch) => {
 						if (!doMatch) {
 							return Promise.reject("Wrong email or password!");
 						}
-					}).catch((err) => console.log(err))
-				}).catch((err) => console.log(err))
-			}
-		),
+					})
+				});
+			})
 	],
 	authController.postLogin
 );
