@@ -183,6 +183,7 @@
 		width: 50px;
 		height: 50px;
 	}
+	
 }
 
 @media screen and (max-width: 700px) {
@@ -227,11 +228,25 @@
 		width: 50px;
 		height: 50px;
 	}
+	.footerLi img {
+		width: 3.5vw;
+		height: auto;
+		margin-right: 20px;
+	}
+	
 }
 
 
 @media screen and (max-width: 500px) {
 	.footer {
 		overflow: hidden;
+	}
+}
+
+@media screen and (max-width: 450px) {
+	.footerLi img {
+		width: 4.5vw;
+		height: auto;
+		margin-right: 20px;
 	}
 }

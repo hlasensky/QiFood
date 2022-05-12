@@ -1,5 +1,6 @@
 const express = require("express");
 const { check, body } = require("express-validator");
+const bcrypt = require("bcryptjs");
 
 const User = require("../models/user");
 
@@ -14,19 +15,20 @@ router.get("/signup", authController.getSignup);
 router.post(
 	"/login",
 	[
-		body("email", "Please enter a valid email.").isEmail().custom((email, { req }) => {
-			return User.findOne({ email: email }).then((user) => {
-				if (!user) {
-					return Promise.reject(
-						"Wrong email or password!"
-					);
-				}
-			});
-		}),
-        body("password", "Enter password at least 5 characters long.")
-        .isLength(
-			{ min: 5 }
-		),
+		body("email", "Please enter a valid email.")
+			.isEmail()
+			.custom((email, { req }) => {
+				return User.findOne({ email: email }).then((user) => {
+					if (!user) {
+						return Promise.reject("Wrong email or password!");
+					}
+					return bcrypt.compare(req.body.password, user.password).then((doMatch) => {
+						if (!doMatch) {
+							return Promise.reject("Wrong email or password!");
+						}
+					})
+				});
+			})
 	],
 	authController.postLogin
 );
@@ -53,7 +55,7 @@ router.post(
 			if (value !== req.body.password) {
 				return Promise.reject("Password have to match!");
 			} else {
-				return true
+				return true;
 			}
 		}),
 	],

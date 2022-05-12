@@ -318,6 +318,7 @@ transform: translateX(0);
 	border-width: 1px;
 	box-shadow: 2px 2px 2px 1px rgba(0, 0, 7, 0.062);
 	transition: all 300ms ease-out;
+	background-color: -internal-light-dark(rgb(239, 239, 239), rgb(59, 59, 59));
 }
 
 .btn:hover {
@@ -430,6 +431,32 @@ transform: translateX(0);
 	width: 3rem;
 	height: auto;
 	margin: 0 20px;
+}
+
+.loggoutBtn {
+	font-size: 0.9rem;
+    border-width: 2px;
+}
+
+.loggoutBtn:hover {
+	transition: all 400ms ease-out;
+}
+
+.templateUploader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 8px;
+}
+
+.templateUploader label{
+    font-size: 1.5rem;
+    
+}
+
+.templateUploader input{
+    margin: 10px 0 8px 0;
+    
 }
 
 @media (max-width: 810px) {

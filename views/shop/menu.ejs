@@ -13,6 +13,10 @@
 				<div class="categoryImageMenu" style="background-image: url('<%= category.imageUrl %>');  ">
 					<header class="categoryHeaderMenu">
 						<h2><%= category.title %></h2>
+						<% if (isAdmin) { %>
+							<%- include('../includes/button.ejs', {product:
+								category._id, btnText: "Delete category", action: "admin/delete-category",  method: "post"}) %> 
+						<% } %>
 					</header>
             	</div>
 			</div>
