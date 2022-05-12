@@ -318,6 +318,7 @@ transform: translateX(0);
 	border-width: 1px;
 	box-shadow: 2px 2px 2px 1px rgba(0, 0, 7, 0.062);
 	transition: all 300ms ease-out;
+	background-color: -internal-light-dark(rgb(239, 239, 239), rgb(59, 59, 59));
 }
 
 .btn:hover {
