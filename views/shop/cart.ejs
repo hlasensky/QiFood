@@ -48,7 +48,7 @@
 				</div>
 			<% } %>
 			<div class="cartPriceAndButton">
-				<h1>Celková cena: <span><%= totalPrice %> Kč</span></h1>
+				<h1>Celková cena: <span><%= totalPrice %>&nbsp;Kč</span></h1>
 				<% if (products.length !== 0) {%> 
 					<form action="<%= table ? '/order' : '/orderNoTable' %>" method="<%= table ? 'post' : 'get' %>">
 						<input type="hidden" name="_csrf" value="<%= csrfToken %>">
