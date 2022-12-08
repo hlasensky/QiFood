@@ -139,6 +139,7 @@ app.use(errorController.get404); //404 error handling
 mongoose
 	.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => {
+		console.log("ruuuun")
 		app.listen(process.env.PORT || 3000, 
 			() => console.log("Server is running..."));
 	})
